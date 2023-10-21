@@ -13,6 +13,7 @@
 
 /* 		MCAL LAYER 		*/
 #include "DIO_Private.h"
+#include "DIO_Interface.h"
 
 /* Arrays of pointers that point to the three DIO registers */
 u8* const directionRegisters [NUMBER_OF_PORTS] = {DDRA_REGISTER, DDRB_REGISTER, DDRC_REGISTER, DDRD_REGISTER};
@@ -24,43 +25,18 @@ volatile u8* const readRegisters [NUMBER_OF_PORTS] = {PINA_REGISTER, PINB_REGIST
 /* 							PUBLIC FUNCTIONS IMPLEMENTATION						   */
 /***********************************************************************************/
 
-u8 DIO_U8SetPortDirection (const u8 LOC_U8Port, const u8 LOC_U8Direction)
+u8 DIO_U8SetPortDirection (const DIO_Config* config)
 {
-	if (LOC_U8Port <= PORTD)
+	if (config->port <= DIO_PORTD)
 	{
-		if (LOC_U8Direction == PORT_INPUT)
+		if (config->pin == DIO_PORT_INPUT)
 		{
-			*directionRegisters[LOC_U8Port] = PORT_INPUT;
+			*directionRegisters[config->port] = DIO_PORT_INPUT;
 			return NO_ERROR;
 		}
-		else if (LOC_U8Direction == PORT_OUTPUT)
+		else if (config->pin == DIO_PORT_OUTPUT)
 		{
-			*directionRegisters[LOC_U8Port] = PORT_OUTPUT;
-			return NO_ERROR;
-		}
-		else
-		{
-			return ERROR;
-		}
-	}
-	else
-	{
-		return ERROR;
-	}
-}
-
-u8 DIO_U8SetPinDirection (const u8 LOC_U8Port, const u8 LOC_U8Pin, const u8 LOC_U8Direction)
-{
-	if (LOC_U8Port <= PORTD && LOC_U8Pin <= PIN7)
-	{
-		if (LOC_U8Direction == PIN_INPUT)
-		{
-			CLR_BIT( *directionRegisters[LOC_U8Port], LOC_U8Pin );
-			return NO_ERROR;
-		}
-		else if (LOC_U8Direction == PIN_OUTPUT)
-		{
-			SET_BIT( *directionRegisters[LOC_U8Port], LOC_U8Pin );
+			*directionRegisters[config->port] = DIO_PORT_OUTPUT;
 			return NO_ERROR;
 		}
 		else
@@ -74,31 +50,18 @@ u8 DIO_U8SetPinDirection (const u8 LOC_U8Port, const u8 LOC_U8Pin, const u8 LOC_
 	}
 }
 
-u8 DIO_U8SetPortValue (const u8 LOC_U8Port, const u8 LOC_U8Value)
+u8 DIO_U8SetPinDirection (const DIO_Config* config)
 {
-	if (LOC_U8Port <= PORTD)
+	if (config->port <= DIO_PORTD && config->pin <= DIO_PIN7)
 	{
-		*writeRegisters[LOC_U8Port] = LOC_U8Value;
-		return NO_ERROR;
-	}
-	else
-	{
-		return ERROR;
-	}
-}
-
-u8 DIO_U8SetPinValue (const u8 LOC_U8Port, const u8 LOC_U8Pin, const u8 LOC_U8Value)
-{
-	if (LOC_U8Port <= PORTD && LOC_U8Pin <= PIN7)
-	{
-		if (LOC_U8Value == PIN_HIGH)
+		if (config->direction == DIO_PIN_INPUT)
 		{
-			SET_BIT(*writeRegisters[LOC_U8Port], LOC_U8Pin);
+			CLR_BIT( *directionRegisters[config->port], config->pin );
 			return NO_ERROR;
 		}
-		else if (LOC_U8Value == PIN_LOW)
+		else if (config->direction == DIO_PIN_OUTPUT)
 		{
-			CLR_BIT(*writeRegisters[LOC_U8Port], LOC_U8Pin);
+			SET_BIT( *directionRegisters[config->port], config->pin );
 			return NO_ERROR;
 		}
 		else
@@ -112,54 +75,83 @@ u8 DIO_U8SetPinValue (const u8 LOC_U8Port, const u8 LOC_U8Pin, const u8 LOC_U8Va
 	}
 }
 
-u8 DIO_U8TogglePin (const u8 LOC_U8Port, const u8 LOC_U8Pin)
-{
-	if (LOC_U8Port <= PORTD && LOC_U8Pin <= PIN7)
-	{
-		TOG_BIT(*writeRegisters[LOC_U8Port], LOC_U8Pin);
-		return NO_ERROR;
-	}
-	else
-	{
-		return ERROR;
-	}
+u8 DIO_U8SetPortValue(const DIO_Config* config) {
+    if (config != NULL) {
+        if (config->port <= DIO_PORTD) {
+            *writeRegisters[config->port] = config->value;
+            return NO_ERROR;
+        } else {
+            return ERROR;
+        }
+    } else {
+        return ERROR;
+    }
 }
 
-u8 DIO_U8TogglePort (const u8 LOC_U8Port)
-{
-	if (LOC_U8Port <= PORTD)
-	{
-		*writeRegisters[LOC_U8Port] = ~(*writeRegisters[LOC_U8Port]);
-		return NO_ERROR;
-	}
-	else
-	{
-		return ERROR;
-	}
+u8 DIO_U8SetPinValue(const DIO_Config* config) {
+    if (config != NULL) {
+        if (config->port <= DIO_PORTD && config->pin <= DIO_PIN7) {
+            if (config->value == DIO_PIN_HIGH) {
+                SET_BIT(*writeRegisters[config->port], config->pin);
+                return NO_ERROR;
+            } else if (config->value == DIO_PIN_LOW) {
+                CLR_BIT(*writeRegisters[config->port], config->pin);
+                return NO_ERROR;
+            } else {
+                return ERROR;
+            }
+        } else {
+            return ERROR;
+        }
+    } else {
+        return ERROR;
+    }
 }
 
-u8 DIO_U8GetPinValue (const u8 LOC_U8Port, const u8 LOC_U8Pin, u8* const LOC_U8Value)
-{
-	if (LOC_U8Port <= PORTD && LOC_U8Pin <= PIN7 && LOC_U8Value != NULL)
-	{
-		*LOC_U8Value = GET_BIT(*readRegisters[LOC_U8Port], LOC_U8Pin);
-		return NO_ERROR;
-	}
-	else
-	{
-		return ERROR;
-	}
+u8 DIO_U8TogglePin(const DIO_Config* config) {
+    if (config != NULL) {
+        if (config->port <= DIO_PORTD && config->pin <= DIO_PIN7) {
+            TOG_BIT(*writeRegisters[config->port], config->pin);
+            return NO_ERROR;
+        } else {
+            return ERROR;
+        }
+    } else {
+        return ERROR;
+    }
 }
 
-u8 DIO_U8GetPortValue (const u8 LOC_U8Port, u8* const LOC_U8Value)
-{
-	if (LOC_U8Port <= PORTD && LOC_U8Value != NULL)
-	{
-		*LOC_U8Value = *readRegisters[LOC_U8Port];
-		return NO_ERROR;
-	}
-	else
-	{
-		return ERROR;
-	}
+u8 DIO_U8TogglePort(DIO_Port port) {
+    if (port <= DIO_PORTD) {
+        *writeRegisters[port] = ~(*writeRegisters[port]);
+        return NO_ERROR;
+    } else {
+        return ERROR;
+    }
+}
+
+u8 DIO_U8GetPinValue(const DIO_Config* config, u8* value) {
+    if (config != NULL && value != NULL) {
+        if (config->port <= DIO_PORTD && config->pin <= DIO_PIN7) {
+            *value = GET_BIT(*readRegisters[config->port], config->pin);
+            return NO_ERROR;
+        } else {
+            return ERROR;
+        }
+    } else {
+        return ERROR;
+    }
+}
+
+u8 DIO_U8GetPortValue(DIO_Port port, u8* value) {
+    if (value != NULL) {
+        if (port <= DIO_PORTD) {
+            *value = *readRegisters[port];
+            return NO_ERROR;
+        } else {
+            return ERROR;
+        }
+    } else {
+        return ERROR;
+    }
 }

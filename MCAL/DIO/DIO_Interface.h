@@ -18,46 +18,66 @@
 /*************************************************************************************/
 /* 								 	DIO PORTS   					 			     */
 /*************************************************************************************/
-#define DIO_PORTA 	0
-#define DIO_PORTB 	1
-#define DIO_PORTC 	2
-#define DIO_PORTD 	3
+typedef enum {
+    DIO_PORTA = 0,
+    DIO_PORTB,
+    DIO_PORTC,
+    DIO_PORTD
+} DIO_Port;
 /*************************************************************************************/
 
 /*************************************************************************************/
 /* 								 	DIO PINS	   					 			     */
 /*************************************************************************************/
-#define DIO_PIN0 	0
-#define DIO_PIN1 	1
-#define DIO_PIN2 	2
-#define DIO_PIN3 	3
-#define DIO_PIN4 	4
-#define DIO_PIN5 	5
-#define DIO_PIN6 	6
-#define DIO_PIN7 	7
+typedef enum {
+    DIO_PIN0 = 0,
+    DIO_PIN1,
+    DIO_PIN2,
+    DIO_PIN3,
+    DIO_PIN4,
+    DIO_PIN5,
+    DIO_PIN6,
+    DIO_PIN7
+} DIO_Pin;
 /*************************************************************************************/
 
 /*************************************************************************************/
 /* 								 DIO PINS DIRECTION					 			     */
 /*************************************************************************************/
-#define DIO_PIN_INPUT 	0
-#define DIO_PIN_OUTPUT 	1
+typedef enum {
+    DIO_PIN_INPUT,
+    DIO_PIN_OUTPUT
+} DIO_PinDirectionType;
 /*************************************************************************************/
 
 /*************************************************************************************/
 /* 								 DIO PORTS DIRECTION					 	         */
 /*************************************************************************************/
-#define DIO_PORT_INPUT 		0
-#define DIO_PORT_OUTPUT 	255
+typedef enum
+{
+	DIO_PORT_INPUT,
+	DIO_PORT_OUTPUT=0xFF
+}DIO_PortDirectionType;
 /*************************************************************************************/
 
 /*************************************************************************************/
 /* 								DIO PINS VALUE					 			         */
 /*************************************************************************************/
-#define DIO_PIN_LOW 	0
-#define DIO_PIN_HIGH 	1
+typedef enum {
+    DIO_PIN_LOW = 0,
+    DIO_PIN_HIGH
+} DIO_PinValue;
 /*************************************************************************************/
 
+/*************************************************************************************/
+/* DIO Configuration Structure */
+/*************************************************************************************/
+typedef struct {
+    DIO_Port port;
+    DIO_Pin pin;
+    DIO_PinDirectionType direction;
+    DIO_PinValue value;
+} DIO_Config;
 
 /*************************************************************************************/
 /* 								FUNCTIONS PROTOTYPE 								 */
@@ -68,7 +88,7 @@
 /* Input      : Port - Direction                                                     */
 /* Output     : Error Checking                                                       */
 /*************************************************************************************/
-extern u8 DIO_U8SetPortDirection (const u8 LOC_U8Port, const u8 LOC_U8Direction);
+extern u8 DIO_U8SetPortDirection (const DIO_Config* config);
 /*************************************************************************************/
 
 /**************************************************************************************/
@@ -76,7 +96,7 @@ extern u8 DIO_U8SetPortDirection (const u8 LOC_U8Port, const u8 LOC_U8Direction)
 /* Input      : Port - Pin - Direction                                                */
 /* Output     : Error Checking  	                                                  */
 /**************************************************************************************/
-extern u8 DIO_U8SetPinDirection (const u8 LOC_U8Port, const u8 LOC_U8Pin, const u8 LOC_U8Direction);
+extern u8 DIO_U8SetPinDirection (const DIO_Config* config);
 /**************************************************************************************/
 
 /**************************************************************************************/
@@ -84,7 +104,7 @@ extern u8 DIO_U8SetPinDirection (const u8 LOC_U8Port, const u8 LOC_U8Pin, const 
 /* Input      : Port - Value	                                                      */
 /* Output     : Error Checking                                                        */
 /**************************************************************************************/
-extern u8 DIO_U8SetPortValue (const u8 LOC_U8Port, const u8 LOC_U8Value);
+extern u8 DIO_U8SetPortValue(const DIO_Config* config);
 /**************************************************************************************/
 
 /**************************************************************************************/
@@ -92,7 +112,7 @@ extern u8 DIO_U8SetPortValue (const u8 LOC_U8Port, const u8 LOC_U8Value);
 /* Input      : Port - Pin - Value	                                                  */
 /* Output     : Error Checking                                                        */
 /**************************************************************************************/
-extern u8 DIO_U8SetPinValue (const u8 LOC_U8Port, const u8 LOC_U8Pin, const u8 LOC_U8Value);
+extern u8 DIO_U8SetPinValue(const DIO_Config* config);
 /**************************************************************************************/
 
 /**************************************************************************************/
@@ -100,7 +120,7 @@ extern u8 DIO_U8SetPinValue (const u8 LOC_U8Port, const u8 LOC_U8Pin, const u8 L
 /* Input      : Port - Pin		                                                      */
 /* Output     : Error Checking                                                        */
 /**************************************************************************************/
-extern u8 DIO_U8TogglePin (const u8 LOC_U8Port, const u8 LOC_U8Pin);
+extern u8 DIO_U8TogglePin(const DIO_Config* config);
 /**************************************************************************************/
 
 /**************************************************************************************/
@@ -108,7 +128,7 @@ extern u8 DIO_U8TogglePin (const u8 LOC_U8Port, const u8 LOC_U8Pin);
 /* Input      : Port			                                                      */
 /* Output     : Error Checking                                                        */
 /**************************************************************************************/
-extern u8 DIO_U8TogglePort (const u8 LOC_U8Port);
+extern u8 DIO_U8TogglePort(DIO_Port port);
 /**************************************************************************************/
 
 /**************************************************************************************/
@@ -116,7 +136,7 @@ extern u8 DIO_U8TogglePort (const u8 LOC_U8Port);
 /* Input      : Port - Pin - Pointer to value                                         */
 /* Output     : Error Checking                                                        */
 /**************************************************************************************/
-extern u8 DIO_U8GetPinValue (const u8 LOC_U8Port, const u8 LOC_U8Pin, u8* const LOC_U8Value);
+extern u8 DIO_U8GetPinValue(const DIO_Config* config, u8* value);
 /**************************************************************************************/
 
 /**************************************************************************************/
@@ -124,7 +144,7 @@ extern u8 DIO_U8GetPinValue (const u8 LOC_U8Port, const u8 LOC_U8Pin, u8* const 
 /* Input      : Port - Pointer to value		                                          */
 /* Output     : Error Checking                                                        */
 /**************************************************************************************/
-extern u8 DIO_U8GetPortValue (const u8 LOC_U8Port, u8* const LOC_U8Value);
+extern u8 DIO_U8GetPortValue(DIO_Port port, u8* value);
 /**************************************************************************************/
 
 
