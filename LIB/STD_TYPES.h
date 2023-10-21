@@ -1,8 +1,8 @@
 /*
  * STD_TYPES.h
  *
- *  Created on: July 11, 2020
- *      Author: Omar Fahmy
+ *  Created on: Oct 20, 2023
+ *      Author: Ziad Ashraf
  */
 
 #ifndef _STD_TYPES_H
