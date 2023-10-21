@@ -2,7 +2,7 @@
  * DIO_Private.h
  *
  *  Created on: Oct 20, 2023
- *      Author: Omar Fahmy
+ *      Author: Ziad Ashraf
  */
 
 #ifndef _DIO_PRIVATE_H_
