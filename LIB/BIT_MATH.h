@@ -1,8 +1,8 @@
 /*
  * BIT_MATH.h
  *
- *  Created on: July 11, 2020
- *      Author: Omar Fahmy
+ *  Created on: Oct 20, 2023
+ *      Author: Ziad Ashraf
  */
 
 #ifndef _BIT_MATH_H_
