@@ -1,12 +1,12 @@
 /*
  * DIO_Private.h
  *
- *  Created on: Oct 20, 2023
- *      Author: Ziad Ashraf
+ *  Created on: Oct 21, 2023
+ *      Author: Ziad
  */
 
-#ifndef _DIO_PRIVATE_H_
-#define _DIO_PRIVATE_H_
+#ifndef MCAL_DIO_DIO_PRIVATE_H_
+#define MCAL_DIO_DIO_PRIVATE_H_
 
 /*************************************************************************************/
 /* 								GROUP A REGISTERS									 */
@@ -98,4 +98,4 @@
 #define NUMBER_OF_PORTS	4
 /*************************************************************************************/
 
-#endif
+#endif /* MCAL_DIO_DIO_PRIVATE_H_ */

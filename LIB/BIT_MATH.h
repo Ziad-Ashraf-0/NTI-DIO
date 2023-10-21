@@ -1,12 +1,12 @@
 /*
  * BIT_MATH.h
  *
- *  Created on: Oct 20, 2023
- *      Author: Ziad Ashraf
+ *  Created on: Oct 21, 2023
+ *      Author: Ziad
  */
 
-#ifndef _BIT_MATH_H_
-#define _BIT_MATH_H_
+#ifndef LIB_BIT_MATH_H_
+#define LIB_BIT_MATH_H_
 
 /************************************************************************************/
 /*								BIT MANIPULATION									*/
@@ -27,5 +27,4 @@
 /* Writes bit number bit_num in variable var with the value val 					*/
 #define WRITE_BIT(var, bit_num, val) var = (var & (~(1 << bit_num))) | (val << bit_num)
 
-
-#endif
+#endif /* LIB_BIT_MATH_H_ */

@@ -1,12 +1,12 @@
 /*
  * DIO_Interface.h
  *
- *  Created on: Oct 20, 2023
- *      Author: Ziad Ashraf
+ *  Created on: Oct 21, 2023
+ *      Author: Ziad
  */
 
-#ifndef _DIO_INTERFACE_H_
-#define _DIO_INTERFACE_H_
+#ifndef MCAL_DIO_DIO_INTERFACE_H_
+#define MCAL_DIO_DIO_INTERFACE_H_
 
 #include "../../LIB/STD_TYPES.h"
 
@@ -128,4 +128,4 @@ extern u8 DIO_U8GetPortValue (const u8 LOC_U8Port, u8* const LOC_U8Value);
 /**************************************************************************************/
 
 
-#endif
+#endif /* MCAL_DIO_DIO_INTERFACE_H_ */
