@@ -19,17 +19,17 @@
 /* Keypad Port Configurations */
 #define KEYPAD_ROW_PORT_ID                PORTA_ID
 /*Row connections*/
-#define R1 3
-#define R2 2
-#define R3 1
-#define R4 0
+#define R1 DIO_PIN3
+#define R2 DIO_PIN5
+#define R3 DIO_PIN6
+#define R4 DIO_PIN7
 
 #define KEYPAD_COL_PORT_ID                PORTA_ID
 /*Column connections*/
-#define C1 4
-#define C2 5
-#define C3 6
-#define C4 7
+#define C1 DIO_PIN2
+#define C2 DIO_PIN3
+#define C3 DIO_PIN4
+#define C4 DIO_PIN5
 
 /* Keypad button logic configurations */
 #define KEYPAD_BUTTON_PRESSED            LOGIC_LOW

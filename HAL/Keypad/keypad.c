@@ -19,21 +19,30 @@ static u8 KEYPAD_4x4_adjustKeyNumber(u8 button_number);
 
 u8 KEYPAD_getPressedKey(void){
 	u8 col,row;
-    DIO_Config keypadPins[] = {
-        {DIO_PORTB, DIO_PIN0, DIO_PIN_OUTPUT},
-        {DIO_PORTB, DIO_PIN1, DIO_PIN_OUTPUT},
-        {DIO_PORTB, DIO_PIN2, DIO_PIN_OUTPUT},
-        {DIO_PORTB, DIO_PIN4, DIO_PIN_OUTPUT},
-        {DIO_PORTB, DIO_PIN6, DIO_PIN_OUTPUT},
-        {DIO_PORTB, DIO_PIN5, DIO_PIN_OUTPUT},
-        {DIO_PORTA, DIO_PIN2, DIO_PIN_OUTPUT},
-        {DIO_PORTA, DIO_PIN3, DIO_PIN_OUTPUT}
-    };
+    DIO_Config colPins[] = {
+           {DIO_PORTD, DIO_PIN3, DIO_PIN_INPUT},
+           {DIO_PORTD, DIO_PIN5, DIO_PIN_INPUT},
+           {DIO_PORTD, DIO_PIN6, DIO_PIN_INPUT},
+           {DIO_PORTD, DIO_PIN7, DIO_PIN_INPUT},
+       };
 
-    // Initialize the keypad pins
-    for (u8 i = 0; i < sizeof(keypadPins) / sizeof(keypadPins[0]); i++) {
-        DIO_U8SetPinDirection(&keypadPins[i]);
-        DIO_U8SetPinValue(&keypadPins[i]);
+    DIO_Config rowPins[] = {
+           {DIO_PORTC, DIO_PIN2, DIO_PIN_OUTPUT},
+           {DIO_PORTC, DIO_PIN3, DIO_PIN_OUTPUT},
+           {DIO_PORTC, DIO_PIN4, DIO_PIN_OUTPUT},
+           {DIO_PORTC, DIO_PIN5, DIO_PIN_OUTPUT}
+       };
+
+    // Initialize the keypad col pins
+    for (u8 i = 0; i < sizeof(colPins) / sizeof(colPins[0]); i++) {
+        DIO_U8SetPinDirection(&colPins[i]);
+        //DIO_U8SetPinValue(&keypadPins[i]);
+    }
+
+    // Initialize the keypad row pins
+    for (u8 i = 0; i < sizeof(rowPins) / sizeof(rowPins[0]); i++) {
+        DIO_U8SetPinDirection(&rowPins[i]);
+        //DIO_U8SetPinValue(&keypadPins[i]);
     }
 
     while(1)
@@ -41,8 +50,9 @@ u8 KEYPAD_getPressedKey(void){
     	/*for loop to set all column pins HIGH*/
     		for (u8 i = 0; i<4 ;i++ )
     		{
-    			/*set current pin in ColumnArray HIGH*/
-    			MDIO_u8WriteBit(KEYPAD_PORT,HKPD_u8ColumnArray[i],MDIO_HIGH);
+    			/*set current pin in Column HIGH*/
+    			rowPins[i].value = DIO_PIN_HIGH;
+    			DIO_U8SetPinValue(&rowPins[i]);
 
     		}/*end of for loop*/
 
@@ -51,21 +61,25 @@ u8 KEYPAD_getPressedKey(void){
     		for (u8 i = 0 ; i<4 ; i++)
     		{
     			/*set current column pin low to test all row pins to find out which button has been pressed*/
-    			MDIO_u8WriteBit(KEYPAD_PORT,HKPD_u8ColumnArray[i],MDIO_LOW);
+    			rowPins[i].value = DIO_PIN_LOW;
+    			DIO_U8SetPinValue(&rowPins[i]);
 
     			/*for loop to scan and test all keypad row pins*/
     			for (u8 j = 0 ; j<4 ; j++)
     			{
+    				u8 key;
+    				DIO_U8GetPinValue(&colPins[i], &key);
     				/*check current row pin value*/
-    				if ( MDIO_LOW == MDIO_u8ReadBit(KEYPAD_PORT,HKPD_u8RowArray[j]) )
+    				if ( DIO_PIN_LOW == key )
     				{
     					/*return pressed button value*/
-    					return KeyPadArr[j][i];
+    					return KEYPAD_4x4_adjustKeyNumber((j*KEYPAD_NUM_COLS)+i+1);
     				}
     			}/*end of for loop*/
 
     			/*set current column pin HIGH again*/
-    			MDIO_u8WriteBit(KEYPAD_PORT,HKPD_u8ColumnArray[i],MDIO_HIGH);
+    			rowPins[i].value = DIO_PIN_HIGH;
+    			DIO_U8SetPinValue(&colPins[i]);
 
     		}/*end of for loop*/
 

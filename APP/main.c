@@ -7,6 +7,7 @@
 
 #include "../MCAL/DIO/DIO_Interface.h"
 #include "../HAL/Segment/segment.h"
+#include "../HAL/Keypad/keypad.h"
 #include <util/delay.h>
 
 int main(void) {
@@ -23,13 +24,18 @@ int main(void) {
     // Initialize the 7-segment display
     segment_Init();
 
+    u8 key;
+
     while (1) {
-        // Display the number 5 on the 7-segment display
-        segment_Num(5, 4);
+        // Display the number 0 on the 7-segment display
+        segment_Num(0, 4);
 
         // Turn on the LED
         ledPin.value = DIO_PIN_HIGH;
         DIO_U8SetPinValue(&ledPin);
+
+        key = KEYPAD_getPressedKey();
+        segment_Num(key,4);
         _delay_ms(2000);
 
         // Turn off the LED
