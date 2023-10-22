@@ -4,11 +4,7 @@
  *  Created on: Oct 21, 2023
  *      Author: zashr
  */
-#include "../../LIB/STD_TYPES.h"
-#include "../../LIB/COMMON_MACROS.h"
-#include "../../LIB/BIT_MATH.h"
 #include "../../MCAL/DIO/DIO_Interface.h"
-#include <avr/io.h>
 #include <util/delay.h>
 #include "keypad.h"
 
@@ -20,12 +16,6 @@ static u8 KEYPAD_4x4_adjustKeyNumber(u8 button_number);
 
 
 u8 KEYPAD_getPressedKey(void){
-	char keymap[4][4] = {
-	        {'1', '2', '3', '+'},
-	        {'4', '5', '6', '-'},
-	        {'7', '8', '9', '*'},
-	        {'*', '0', '#', '/'}
-	    };
 	u8 col,row;
     DIO_Config colPins[] = {
            {DIO_PORTD, DIO_PIN7, DIO_PIN_INPUT,DIO_PIN_HIGH},
@@ -51,13 +41,13 @@ u8 KEYPAD_getPressedKey(void){
     while(1)
     	{
     	/*for loop to scan all keypad columns*/
-    		for (u8 row = 0 ; row < 4 ; row++)
+    		for (row = 0 ; row < 4 ; row++)
     		{
     			/*set current row pin low to test all col pins to find out which button has been pressed*/
     			rowPins[row].value = DIO_PIN_LOW;
     			DIO_U8SetPinValue(&rowPins[row]);
     			/*for loop to scan and test all keypad row pins*/
-    			for (u8 col = 0 ; col < 4 ; col++)
+    			for (col = 0 ; col < 4 ; col++)
     			{
     				u8 key;
     				DIO_U8GetPinValue(&colPins[col], &key);
