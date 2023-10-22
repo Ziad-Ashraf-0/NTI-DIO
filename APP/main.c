@@ -42,14 +42,14 @@ int main(void) {
 	EXTI_enable(EXTI_INT1_ID,FALLING_EDGE);
 	EXTI_setCallBack(EXTI_INT1_ID,testCallback);
 	// Initialize the 7-segment display
-	//segment_Init();
+	segment_Init();
 	//u8 key;
 
 
 	while (1) {
 
 		// key = KEYPAD_getPressedKey();
-		//segment_Num(key,4);
+		segment_Num(15,0);
 
 
 
