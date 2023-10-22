@@ -36,20 +36,21 @@ void init(){
 }
 
 int main(void) {
-	init();
+	//init();
 	// Enable global interrupts
-	GIE_enable();
-	EXTI_enable(EXTI_INT1_ID,FALLING_EDGE);
-	EXTI_setCallBack(EXTI_INT1_ID,testCallback);
+	//GIE_enable();
+	//EXTI_enable(EXTI_INT1_ID,FALLING_EDGE);
+	//EXTI_setCallBack(EXTI_INT1_ID,testCallback);
 	// Initialize the 7-segment display
 	segment_Init();
-	//u8 key;
+	u8 key;
 
 
 	while (1) {
 
-		// key = KEYPAD_getPressedKey();
-		segment_Num(15,0);
+		key = KEYPAD_getPressedKey();
+		_delay_ms(500);
+		segment_Num(key,0);
 
 
 
