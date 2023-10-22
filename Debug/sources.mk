@@ -26,4 +26,5 @@ HAL/Keypad \
 HAL/Segment \
 MCAL/DIO \
 MCAL/EXTI \
+MCAL/GIE \
 
