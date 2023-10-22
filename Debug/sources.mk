@@ -25,4 +25,5 @@ APP \
 HAL/Keypad \
 HAL/Segment \
 MCAL/DIO \
+MCAL/EXTI \
 

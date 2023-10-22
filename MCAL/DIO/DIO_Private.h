@@ -13,7 +13,7 @@ typedef struct {
 	u8 DDR_Reg;
 	u8 PORT_Reg;
 }DIO_Type;
-#define PORTA_BASE ((volatile DIO_TYPE *) 0x39);
+#define PORTA_BASE ((volatile DIO_TYPE *) 0x39)
 
 /*************************************************************************************/
 /* 								GROUP A REGISTERS									 */
