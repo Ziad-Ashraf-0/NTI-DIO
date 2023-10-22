@@ -20,7 +20,7 @@ void (*Action[3])(void) = {NULL, NULL, NULL};
 
 void EXTI_enable(u8 Int_ID, u8 trigger){
 
-	if(Int_ID < EXTI_INT1_ID){
+	if(Int_ID <= EXTI_INT1_ID){
 		SET_BIT(EXTI_BASE->GICR, Int_ID);
 	}
 
@@ -44,7 +44,7 @@ void EXTI_enable(u8 Int_ID, u8 trigger){
 
 void EXTI_disable(u8 Int_ID)
 {
-	if(Int_ID < EXTI_INT1_ID){
+	if(Int_ID <= EXTI_INT1_ID){
 		CLR_BIT(EXTI_BASE->GICR, Int_ID);
 	}
 }
