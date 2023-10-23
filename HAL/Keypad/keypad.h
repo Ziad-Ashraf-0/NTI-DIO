@@ -22,7 +22,6 @@
 #define KEYPAD_BUTTON_RELEASED           LOGIC_HIGH
 
 
-
 /*
  * Description :
  * Get the Keypad pressed button

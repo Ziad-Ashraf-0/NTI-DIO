@@ -10,6 +10,7 @@
 #include "../HAL/Keypad/keypad.h"
 #include "../MCAL/EXTI/EXTI_interface.h"
 #include "../MCAL/GIE/GIE_interface.h"
+#include "../MCAL/ADC/ADC_interface.h"
 #include "../HAL/LCD/LCD_interface.h"
 #include <util/delay.h>
 
@@ -53,7 +54,11 @@ int main(void) {
 	//EXTI_enable(EXTI_INT1_ID,FALLING_EDGE);
 	//EXTI_setCallBack(EXTI_INT1_ID,testCallback);
 	// Initialize the 7-segment display
-	//segment_Init();
+	segment_Init();
+
+
+//	ADC_config adcConfig;
+//	ADC_Init(&adcConfig);
 	//u8 key;
 	//yellowLed();
 
@@ -72,7 +77,8 @@ int main(void) {
 //		key = KEYPAD_getPressedKey();
 //		if(key != 'x'){
 //			_delay_ms(500);
-//			segment_Num(key,3);
+
+//			segment_Num(g_adcResult,3);
 //
 //		}
 

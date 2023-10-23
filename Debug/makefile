@@ -11,7 +11,9 @@ RM := rm -rf
 -include MCAL/GIE/subdir.mk
 -include MCAL/EXTI/subdir.mk
 -include MCAL/DIO/subdir.mk
+-include MCAL/ADC/subdir.mk
 -include HAL/Segment/subdir.mk
+-include HAL/LCD/subdir.mk
 -include HAL/Keypad/subdir.mk
 -include APP/subdir.mk
 -include .metadata/.plugins/org.eclipse.cdt.make.core/subdir.mk
