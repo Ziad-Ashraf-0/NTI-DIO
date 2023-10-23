@@ -57,20 +57,20 @@ int main(void) {
 	//u8 key;
 	//yellowLed();
 
-	H_LCD_void_Init();
-	_delay_ms(500);
+	//H_LCD_void_Init();
+	//_delay_ms(500);
 	//H_LCD_void_gotoXY(2,5);
 	//H_LCD_void_sendIntNum(14356);
 
-	unsigned char Character1[8] = { 0x00, 0x0A, 0x15, 0x11, 0x0A, 0x04, 0x00, 0x00 };  /* Custom char set for alphanumeric LCD Module */
-	H_LCD_void_creatCustomChar(Character1,0);
-	H_LCD_void_displayCustomChar(0);
+	//unsigned char Character1[8] = { 0x00, 0x0A, 0x15, 0x11, 0x0A, 0x04, 0x00, 0x00 };  /* Custom char set for alphanumeric LCD Module */
+	//H_LCD_void_creatCustomChar(Character1,0);
+	//H_LCD_void_displayCustomChar(0);
 
 
 	while (1) {
 
 		//key = KEYPAD_getPressedKey();
-		_delay_ms(500);
+		//_delay_ms(500);
 		//segment_Num(key,3);
 
 	}
