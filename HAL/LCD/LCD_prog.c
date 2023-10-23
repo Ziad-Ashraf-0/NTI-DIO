@@ -39,6 +39,9 @@ void H_LCD_void_Init(void){
 
 	//Function Set Corner Case
 	functionSet();
+	//H_LCD_void_sendCommand(0x02);
+	//	_delay_ms(1);
+	//	H_LCD_void_sendCommand(0x28);
 	_delay_ms(1);
 	H_LCD_void_sendCommand(0x0F);
 	_delay_ms(1);
