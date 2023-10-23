@@ -69,9 +69,12 @@ int main(void) {
 
 	while (1) {
 
-		//key = KEYPAD_getPressedKey();
-		//_delay_ms(500);
-		//segment_Num(key,3);
+//		key = KEYPAD_getPressedKey();
+//		if(key != 'x'){
+//			_delay_ms(500);
+//			segment_Num(key,3);
+//
+//		}
 
 	}
 

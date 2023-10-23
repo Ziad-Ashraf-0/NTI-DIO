@@ -66,6 +66,8 @@ u8 KEYPAD_getPressedKey(void){
     		}/*end of for loop*/
     	}
 
+    return 'x';
+
 }
 
 
