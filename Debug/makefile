@@ -12,6 +12,7 @@ RM := rm -rf
 -include MCAL/EXTI/subdir.mk
 -include MCAL/DIO/subdir.mk
 -include HAL/Segment/subdir.mk
+-include HAL/LCD/subdir.mk
 -include HAL/Keypad/subdir.mk
 -include APP/subdir.mk
 -include .metadata/.plugins/org.eclipse.cdt.make.core/subdir.mk
@@ -41,17 +42,17 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := NTI-DIO
+BUILD_ARTIFACT_NAME := NTI-GPIO
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 LSS += \
-NTI-DIO.lss \
+NTI-GPIO.lss \
 
 FLASH_IMAGE += \
-NTI-DIO.hex \
+NTI-GPIO.hex \
 
 SIZEDUMMY += \
 sizedummy \
@@ -61,37 +62,37 @@ sizedummy \
 all: main-build
 
 # Main-build Target
-main-build: NTI-DIO.elf secondary-outputs
+main-build: NTI-GPIO.elf secondary-outputs
 
 # Tool invocations
-NTI-DIO.elf: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+NTI-GPIO.elf: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: AVR C Linker'
-	avr-gcc -Wl,-Map,NTI-DIO.map -mmcu=atmega16 -o "NTI-DIO.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	avr-gcc -Wl,-Map,NTI-GPIO.map -mmcu=atmega16 -o "NTI-GPIO.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-NTI-DIO.lss: NTI-DIO.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+NTI-GPIO.lss: NTI-GPIO.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Invoking: AVR Create Extended Listing'
-	-avr-objdump -h -S NTI-DIO.elf  >"NTI-DIO.lss"
+	-avr-objdump -h -S NTI-GPIO.elf  >"NTI-GPIO.lss"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-NTI-DIO.hex: NTI-DIO.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+NTI-GPIO.hex: NTI-GPIO.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Create Flash image (ihex format)'
-	-avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex NTI-DIO.elf  "NTI-DIO.hex"
+	-avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex NTI-GPIO.elf  "NTI-GPIO.hex"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-sizedummy: NTI-DIO.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+sizedummy: NTI-GPIO.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Invoking: Print Size'
-	-avr-size --format=avr --mcu=atmega16 NTI-DIO.elf
+	-avr-size --format=avr --mcu=atmega16 NTI-GPIO.elf
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(FLASH_IMAGE)$(ELFS)$(OBJS)$(ASM_DEPS)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(LSS)$(C_DEPS) NTI-DIO.elf
+	-$(RM) $(FLASH_IMAGE)$(ELFS)$(OBJS)$(ASM_DEPS)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(LSS)$(C_DEPS) NTI-GPIO.elf
 	-@echo ' '
 
 secondary-outputs: $(LSS) $(FLASH_IMAGE) $(SIZEDUMMY)

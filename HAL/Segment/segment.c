@@ -26,7 +26,7 @@ void segment_Init() {
     };
 
     // Initialize the segment pins
-    for (u8 i = 0; i < 4; i++) {
+    for (u8 i = 0; i < 8; i++) {
         DIO_U8SetPinDirection(&segmentPins[i]);
     }
 }
