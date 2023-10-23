@@ -69,4 +69,8 @@ void H_LCD_void_sendIntNum(s32 copy_s32Num);
  */
 void LCD_clearScreen(void);
 
+
+void H_LCD_void_creatCustomChar(const u8 * ArrPattern,u8 copy_u8charCode);
+void H_LCD_void_displayCustomChar(u8 copy_u8charCode);
+
 #endif /* HAL_LCD_LCD_INTERFACE_H_ */

@@ -139,6 +139,26 @@ void H_LCD_void_gotoXY(u8 copy_u8Row,u8 copy_u8Col){
 }
 
 
+void H_LCD_void_creatCustomChar(const u8 * ArrPattern,u8 copy_u8charCode){
+	unsigned char i;
+	if(copy_u8charCode<8)
+	{
+		H_LCD_void_sendCommand(0x40 + (copy_u8charCode*8));	/* Command 0x40 and onwards forces the device to point CGRAM address */
+		for(i=0;i<8;i++){	/* Write 8 byte for generation of 1 character */
+			H_LCD_void_sendData(ArrPattern[i]);
+		}
+	}
+}
+
+
+void H_LCD_void_displayCustomChar(u8 copy_u8charCode){
+
+	H_LCD_void_sendCommand(0xc0);
+	H_LCD_void_sendData(copy_u8charCode);
+
+}
+
+
 
 void functionSet(){
 	DIO_Config dataPins[] = {
