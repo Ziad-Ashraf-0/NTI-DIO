@@ -47,26 +47,30 @@ void yellowLed(){
 	DIO_U8TogglePin(&pinTest);
 }
 
+u16 adcValue = 0;
+void getADCValue(u16 value){
+	adcValue = value;
+}
+
 int main(void) {
 	//init();
 	// Enable global interrupts
-	//GIE_enable();
+	GIE_enable();
 	//EXTI_enable(EXTI_INT1_ID,FALLING_EDGE);
 	//EXTI_setCallBack(EXTI_INT1_ID,testCallback);
 	// Initialize the 7-segment display
-	segment_Init();
+	//segment_Init();
 
-
-//	ADC_config adcConfig;
-//	ADC_Init(&adcConfig);
+	//adcA1init();
+	ADC_config adcConfig = {AVCC, LeftAdj, SingleADC0, Prescaler_128,Free};
+	ADC_Init(&adcConfig);
 	//u8 key;
 	//yellowLed();
-
-	//H_LCD_void_Init();
-	//_delay_ms(500);
+	_delay_ms(5000);
+	H_LCD_void_Init();
+	_delay_ms(5000);
 	//H_LCD_void_gotoXY(2,5);
 	//H_LCD_void_sendIntNum(14356);
-
 	//unsigned char Character1[8] = { 0x00, 0x0A, 0x15, 0x11, 0x0A, 0x04, 0x00, 0x00 };  /* Custom char set for alphanumeric LCD Module */
 	//H_LCD_void_creatCustomChar(Character1,0);
 	//H_LCD_void_displayCustomChar(0);
@@ -74,13 +78,22 @@ int main(void) {
 
 	while (1) {
 
-//		key = KEYPAD_getPressedKey();
-//		if(key != 'x'){
-//			_delay_ms(500);
+		//		key = KEYPAD_getPressedKey();
+		//		if(key != 'x'){
+		//			_delay_ms(3000);
+		//			segment_Num(key,3);
+		//
+		//		}
 
-//			segment_Num(g_adcResult,3);
-//
-//		}
+		_delay_ms(3000);
+		//ADC pooling
+		//H_LCD_void_sendIntNum(ADC_getDigitalValueSynchNonBlocking(SingleADC0));
+		ADC_getDigitalValueAsynchCallBack(SingleADC0,getADCValue);
+		_delay_ms(3000);
+		if(adcValue){
+			H_LCD_void_sendIntNum(adcValue);
+			_delay_ms(3000);
+		}
 
 	}
 

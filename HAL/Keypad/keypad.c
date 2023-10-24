@@ -64,9 +64,10 @@ u8 KEYPAD_getPressedKey(void){
     			DIO_U8SetPinValue(&rowPins[row]);
 
     		}/*end of for loop*/
+    		return 'x';
     	}
 
-    return 'x';
+
 
 }
 

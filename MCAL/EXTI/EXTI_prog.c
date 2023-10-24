@@ -65,18 +65,21 @@ void EXTI_setCallBack(u8 Int_ID, void (*localPtr)(void))
 	}
 }
 
+//EXIT0 ISR
 void __vector_1 (void){
 	if(Action[0]!= NULL){
 		Action[0]();
 	}
 }
 
+//EXIT1 ISR
 void __vector_2 (void){
 	if(Action[1]!= NULL){
 		Action[1]();
 	}
 }
 
+//EXIT2 ISR
 void __vector_18 (void){
 	if(Action[2]!= NULL){
 		Action[2]();

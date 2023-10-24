@@ -10,9 +10,6 @@
 #include "../../LIB/STD_TYPES.h"
 
 
-/* Extern Public global variables to be used by other modules */
-extern volatile u16 g_adcResult;
-
 /************ ADMUX *************/
 
 enum ADMUXRef {
@@ -100,9 +97,9 @@ void ADC_Init(const ADC_config *config);
 The Function returns 0 "ADC_enuNormalState" when the ADC is ready for the user
 and the ADC is functioning in normal state.
 Otherwise, returns any other state type from the ADC_enuState enum */
-u8 ADC_getDigitalValueSynchNonBlocking (void);
+void ADC_getDigitalValueAsynchCallBack(u8 channel_num,void (*localPtr)(void));
 
 /* Get ADC value, This Functions returns the value converted by the ADC ( directly from ADCH ) */
-u8 ADC_getDigitalValueAsynchCallBack(u8 channel_num);
+u16 ADC_getDigitalValueSynchNonBlocking (u8 channel_num);
 
 #endif /* MCAL_ADC_ADC_INTERFACE_H_ */
