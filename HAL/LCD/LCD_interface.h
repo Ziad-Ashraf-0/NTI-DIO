@@ -69,8 +69,22 @@ void H_LCD_void_sendIntNum(s32 copy_s32Num);
  */
 void H_LCD_void_clearScreen(void);
 
-
+/*
+ * Description :
+ * Send Custom char to GCRAM
+ */
 void H_LCD_void_creatCustomChar(const u8 * ArrPattern,u8 copy_u8charCode);
+
+/*
+ * Description :
+ * Display the required custom char number 
+ */
 void H_LCD_void_displayCustomChar(u8 copy_u8charCode);
+
+/*
+ * Description :
+ * Display float number 
+ */
+void H_LCD_void_displayFloat(f64 copy_u8floatNumber);
 
 #endif /* HAL_LCD_LCD_INTERFACE_H_ */

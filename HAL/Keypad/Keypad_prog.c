@@ -6,28 +6,26 @@
 */
 #include "../../MCAL/DIO/DIO_Interface.h"
 #include "Keypad_interface.h"
+#include "Keypad_config.h"
+#include "Keypad_private.h"
 
-/*
-* Function responsible for mapping the switch number in the keypad to
-* its corresponding functional number for 4x4 keypad
-*/
-static u8 KEYPAD_4x4_adjustKeyNumber(u8 button_number);
 
 
 u8 KEYPAD_getPressedKey(){
 	u8 col,row;
+	// Configuration for the columns
 	DIO_Config colPins[] = {
-		{DIO_PORTD, DIO_PIN7, DIO_PIN_INPUT,DIO_PIN_HIGH},
-		{DIO_PORTD, DIO_PIN6, DIO_PIN_INPUT,DIO_PIN_HIGH},
-		{DIO_PORTD, DIO_PIN5, DIO_PIN_INPUT,DIO_PIN_HIGH},
-		{DIO_PORTD, DIO_PIN3, DIO_PIN_INPUT,DIO_PIN_HIGH},
+		{COL1_PORT, COL1_PIN, DIO_PIN_INPUT, DIO_PIN_HIGH},
+		{COL2_PORT, COL2_PIN, DIO_PIN_INPUT, DIO_PIN_HIGH},
+		{COL3_PORT, COL3_PIN, DIO_PIN_INPUT, DIO_PIN_HIGH},
+		{COL4_PORT, COL4_PIN, DIO_PIN_INPUT, DIO_PIN_HIGH},
 	};
-
+	// Configuration for the rows
 	DIO_Config rowPins[] = {
-		{DIO_PORTC, DIO_PIN5, DIO_PIN_OUTPUT},
-		{DIO_PORTC, DIO_PIN4, DIO_PIN_OUTPUT},
-		{DIO_PORTC, DIO_PIN3, DIO_PIN_OUTPUT},
-		{DIO_PORTC, DIO_PIN2, DIO_PIN_OUTPUT}
+		{ROW1_PORT, ROW1_PIN, DIO_PIN_OUTPUT},
+		{ROW2_PORT, ROW2_PIN, DIO_PIN_OUTPUT},
+		{ROW3_PORT, ROW3_PIN, DIO_PIN_OUTPUT},
+		{ROW4_PORT, ROW4_PIN, DIO_PIN_OUTPUT},
 	};
 
 	// Initialize the keypad pins
@@ -67,7 +65,6 @@ u8 KEYPAD_getPressedKey(){
 
 		}
 		/*end of for loop*/
-
 	}
 }
 
