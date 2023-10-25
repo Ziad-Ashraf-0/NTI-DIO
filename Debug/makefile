@@ -2,102 +2,221 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
--include ../makefile.init
-
+SHELL := cmd.exe
 RM := rm -rf
 
-# All of the sources participating in the build are defined here
--include sources.mk
--include MCAL/GIE/subdir.mk
--include MCAL/EXTI/subdir.mk
--include MCAL/DIO/subdir.mk
--include MCAL/ADC/subdir.mk
--include HAL/Segment/subdir.mk
--include HAL/LCD/subdir.mk
--include HAL/Keypad/subdir.mk
--include APP/subdir.mk
--include .metadata/.plugins/org.eclipse.cdt.make.core/subdir.mk
--include subdir.mk
--include objects.mk
+USER_OBJS :=
+
+LIBS := 
+PROJ := 
+
+O_SRCS := 
+C_SRCS := 
+S_SRCS := 
+S_UPPER_SRCS := 
+OBJ_SRCS := 
+ASM_SRCS := 
+PREPROCESSING_SRCS := 
+OBJS := 
+OBJS_AS_ARGS := 
+C_DEPS := 
+C_DEPS_AS_ARGS := 
+EXECUTABLES := 
+OUTPUT_FILE_PATH :=
+OUTPUT_FILE_PATH_AS_ARGS :=
+AVR_APP_PATH :=$$$AVR_APP_PATH$$$
+QUOTE := "
+ADDITIONAL_DEPENDENCIES:=
+OUTPUT_FILE_DEP:=
+LIB_DEP:=
+LINKER_SCRIPT_DEP:=
+
+# Every subdirectory with source files must be described here
+SUBDIRS :=  \
+../APP \
+../HAL/ \
+../HAL/Keypad/ \
+../HAL/LCD/ \
+../HAL/Segment/ \
+../LIB/ \
+../MCAL/ \
+../MCAL/ADC/ \
+../MCAL/DIO/ \
+../MCAL/EXTI/ \
+../MCAL/GIE/
+
+
+# Add inputs and outputs from these tool invocations to the build variables 
+C_SRCS +=  \
+../APP/main.c \
+../HAL/Keypad/keypad.c \
+../HAL/LCD/LCD_prog.c \
+../HAL/Segment/segment.c \
+../MCAL/ADC/ADC_prog.c \
+../MCAL/DIO/DIO_Program.c \
+../MCAL/EXTI/EXTI_prog.c \
+../MCAL/GIE/GIE_prog.c
+
+
+PREPROCESSING_SRCS += 
+
+
+ASM_SRCS += 
+
+
+OBJS +=  \
+APP/main.o \
+HAL/Keypad/keypad.o \
+HAL/LCD/LCD_prog.o \
+HAL/Segment/segment.o \
+MCAL/ADC/ADC_prog.o \
+MCAL/DIO/DIO_Program.o \
+MCAL/EXTI/EXTI_prog.o \
+MCAL/GIE/GIE_prog.o
+
+OBJS_AS_ARGS +=  \
+APP/main.o \
+HAL/Keypad/keypad.o \
+HAL/LCD/LCD_prog.o \
+HAL/Segment/segment.o \
+MCAL/ADC/ADC_prog.o \
+MCAL/DIO/DIO_Program.o \
+MCAL/EXTI/EXTI_prog.o \
+MCAL/GIE/GIE_prog.o
+
+C_DEPS +=  \
+APP/main.d \
+HAL/Keypad/keypad.d \
+HAL/LCD/LCD_prog.d \
+HAL/Segment/segment.d \
+MCAL/ADC/ADC_prog.d \
+MCAL/DIO/DIO_Program.d \
+MCAL/EXTI/EXTI_prog.d \
+MCAL/GIE/GIE_prog.d
+
+C_DEPS_AS_ARGS +=  \
+APP/main.d \
+HAL/Keypad/keypad.d \
+HAL/LCD/LCD_prog.d \
+HAL/Segment/segment.d \
+MCAL/ADC/ADC_prog.d \
+MCAL/DIO/DIO_Program.d \
+MCAL/EXTI/EXTI_prog.d \
+MCAL/GIE/GIE_prog.d
+
+OUTPUT_FILE_PATH +=NTI_AVR_Drivers.elf
+
+OUTPUT_FILE_PATH_AS_ARGS +=NTI_AVR_Drivers.elf
+
+ADDITIONAL_DEPENDENCIES:=
+
+OUTPUT_FILE_DEP:= ./makedep.mk
+
+LIB_DEP+= 
+
+LINKER_SCRIPT_DEP+= 
+
+
+# AVR32/GNU C Compiler
+APP/main.o: ../APP/main.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+HAL/Keypad/keypad.o: ../HAL/Keypad/keypad.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+HAL/LCD/LCD_prog.o: ../HAL/LCD/LCD_prog.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+HAL/Segment/segment.o: ../HAL/Segment/segment.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+MCAL/ADC/ADC_prog.o: ../MCAL/ADC/ADC_prog.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+MCAL/DIO/DIO_Program.o: ../MCAL/DIO/DIO_Program.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+MCAL/EXTI/EXTI_prog.o: ../MCAL/EXTI/EXTI_prog.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+MCAL/GIE/GIE_prog.o: ../MCAL/GIE/GIE_prog.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+
+
+
+# AVR32/GNU Preprocessing Assembler
+
+
+
+# AVR32/GNU Assembler
+
+
+
 
 ifneq ($(MAKECMDGOALS),clean)
-ifneq ($(strip $(ASM_DEPS)),)
--include $(ASM_DEPS)
-endif
-ifneq ($(strip $(S_DEPS)),)
--include $(S_DEPS)
-endif
-ifneq ($(strip $(S_UPPER_DEPS)),)
--include $(S_UPPER_DEPS)
-endif
 ifneq ($(strip $(C_DEPS)),)
 -include $(C_DEPS)
 endif
 endif
 
--include ../makefile.defs
-
-OPTIONAL_TOOL_DEPS := \
-$(wildcard ../makefile.defs) \
-$(wildcard ../makefile.init) \
-$(wildcard ../makefile.targets) \
-
-
-BUILD_ARTIFACT_NAME := NTI-GPIO
-BUILD_ARTIFACT_EXTENSION := elf
-BUILD_ARTIFACT_PREFIX :=
-BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
-
 # Add inputs and outputs from these tool invocations to the build variables 
-LSS += \
-NTI-GPIO.lss \
-
-FLASH_IMAGE += \
-NTI-GPIO.hex \
-
-SIZEDUMMY += \
-sizedummy \
-
 
 # All Target
-all: main-build
+all: $(OUTPUT_FILE_PATH) $(ADDITIONAL_DEPENDENCIES)
 
-# Main-build Target
-main-build: NTI-GPIO.elf secondary-outputs
+$(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP) $(LINKER_SCRIPT_DEP)
+	@echo Building target: $@
+	@echo Invoking: AVR/GNU Linker : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -Wl,-Map="NTI_AVR_Drivers.map" -Wl,--start-group -Wl,-lm  -Wl,--end-group -Wl,--gc-sections -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32"  
+	@echo Finished building target: $@
+	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures  "NTI_AVR_Drivers.elf" "NTI_AVR_Drivers.hex"
+	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -j .eeprom  --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0  --no-change-warnings -O ihex "NTI_AVR_Drivers.elf" "NTI_AVR_Drivers.eep" || exit 0
+	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objdump.exe" -h -S "NTI_AVR_Drivers.elf" > "NTI_AVR_Drivers.lss"
+	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures "NTI_AVR_Drivers.elf" "NTI_AVR_Drivers.srec"
+	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-size.exe" "NTI_AVR_Drivers.elf"
+	
+	
 
-# Tool invocations
-NTI-GPIO.elf: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
-	@echo 'Building target: $@'
-	@echo 'Invoking: AVR C Linker'
-	avr-gcc -Wl,-Map,NTI-GPIO.map -mmcu=atmega16 -o "NTI-GPIO.elf" $(OBJS) $(USER_OBJS) $(LIBS)
-	@echo 'Finished building target: $@'
-	@echo ' '
 
-NTI-GPIO.lss: NTI-GPIO.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
-	@echo 'Invoking: AVR Create Extended Listing'
-	-avr-objdump -h -S NTI-GPIO.elf  >"NTI-GPIO.lss"
-	@echo 'Finished building: $@'
-	@echo ' '
 
-NTI-GPIO.hex: NTI-GPIO.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
-	@echo 'Create Flash image (ihex format)'
-	-avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex NTI-GPIO.elf  "NTI-GPIO.hex"
-	@echo 'Finished building: $@'
-	@echo ' '
 
-sizedummy: NTI-GPIO.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
-	@echo 'Invoking: Print Size'
-	-avr-size --format=avr --mcu=atmega16 NTI-GPIO.elf
-	@echo 'Finished building: $@'
-	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(FLASH_IMAGE)$(ELFS)$(OBJS)$(ASM_DEPS)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(LSS)$(C_DEPS) NTI-GPIO.elf
-	-@echo ' '
-
-secondary-outputs: $(LSS) $(FLASH_IMAGE) $(SIZEDUMMY)
-
-.PHONY: all clean dependents main-build
-
--include ../makefile.targets
+	-$(RM) $(OBJS_AS_ARGS) $(EXECUTABLES)  
+	-$(RM) $(C_DEPS_AS_ARGS)   
+	rm -rf "NTI_AVR_Drivers.elf" "NTI_AVR_Drivers.a" "NTI_AVR_Drivers.hex" "NTI_AVR_Drivers.lss" "NTI_AVR_Drivers.eep" "NTI_AVR_Drivers.map" "NTI_AVR_Drivers.srec" "NTI_AVR_Drivers.usersignatures"
+	

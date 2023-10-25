@@ -36,7 +36,7 @@ void ADC_Init(const ADC_config *config) {
 }
 
 // Function to initiate an asynchronous ADC conversion with a callback function
-void ADC_getDigitalValueAsynchCallBack(u8 channel_num, void (*localPtr)(void)) {
+void ADC_getDigitalValueAsynchCallBack(u8 channel_num, void (*localPtr)(u16 value)) {
     // ADIE = 1 Enable ADC interrupt
     SET_BIT(ADC_BASE->ADCSRA, ADIE);
 

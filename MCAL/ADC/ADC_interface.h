@@ -97,7 +97,7 @@ void ADC_Init(const ADC_config *config);
 The Function returns 0 "ADC_enuNormalState" when the ADC is ready for the user
 and the ADC is functioning in normal state.
 Otherwise, returns any other state type from the ADC_enuState enum */
-void ADC_getDigitalValueAsynchCallBack(u8 channel_num,void (*localPtr)(void));
+void ADC_getDigitalValueAsynchCallBack(u8 channel_num,void (*localPtr)(u16 value));
 
 /* Get ADC value, This Functions returns the value converted by the ADC ( directly from ADCH ) */
 u16 ADC_getDigitalValueSynchNonBlocking (u8 channel_num);

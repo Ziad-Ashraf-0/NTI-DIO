@@ -4,7 +4,6 @@
  *  Created on: Oct 21, 2023
  *      Author: Ziad Ashraf
  */
-
 #include "../MCAL/DIO/DIO_Interface.h"
 #include "../HAL/Segment/segment.h"
 #include "../HAL/Keypad/keypad.h"
@@ -53,22 +52,22 @@ void getADCValue(u16 value){
 }
 
 int main(void) {
-	//init();
+	init();
 	// Enable global interrupts
 	GIE_enable();
-	//EXTI_enable(EXTI_INT1_ID,FALLING_EDGE);
-	//EXTI_setCallBack(EXTI_INT1_ID,testCallback);
+	EXTI_enable(EXTI_INT1_ID,FALLING_EDGE);
+	EXTI_setCallBack(EXTI_INT1_ID,testCallback);
 	// Initialize the 7-segment display
 	//segment_Init();
 
 	//adcA1init();
-	ADC_config adcConfig = {AVCC, LeftAdj, SingleADC0, Prescaler_128,Free};
-	ADC_Init(&adcConfig);
+	//ADC_config adcConfig = {AVCC, LeftAdj, SingleADC0, Prescaler_128,Free};
+	//ADC_Init(&adcConfig);
 	//u8 key;
 	//yellowLed();
-	_delay_ms(5000);
-	H_LCD_void_Init();
-	_delay_ms(5000);
+	//_delay_ms(500);
+	//H_LCD_void_Init();
+	//_delay_ms(500);
 	//H_LCD_void_gotoXY(2,5);
 	//H_LCD_void_sendIntNum(14356);
 	//unsigned char Character1[8] = { 0x00, 0x0A, 0x15, 0x11, 0x0A, 0x04, 0x00, 0x00 };  /* Custom char set for alphanumeric LCD Module */
@@ -85,15 +84,13 @@ int main(void) {
 		//
 		//		}
 
-		_delay_ms(3000);
 		//ADC pooling
 		//H_LCD_void_sendIntNum(ADC_getDigitalValueSynchNonBlocking(SingleADC0));
-		ADC_getDigitalValueAsynchCallBack(SingleADC0,getADCValue);
-		_delay_ms(3000);
-		if(adcValue){
-			H_LCD_void_sendIntNum(adcValue);
-			_delay_ms(3000);
-		}
+		//ADC_getDigitalValueAsynchCallBack(SingleADC0,getADCValue);
+		//_delay_ms(500);
+		//if(adcValue){
+			//H_LCD_void_sendIntNum(adcValue);
+		//}
 
 	}
 
