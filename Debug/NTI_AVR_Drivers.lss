@@ -135,14 +135,14 @@ Disassembly of section .text:
 	//H_LCD_void_displayCustomChar(0);
 	
 	
-	 // Display a message to enter the ID
-	 H_LCD_void_sendString("Enter ID: ");
+	// Display a message to enter the ID
+	H_LCD_void_sendString("Enter ID: ");
   c2:	84 e9       	ldi	r24, 0x94	; 148
   c4:	90 e0       	ldi	r25, 0x00	; 0
   c6:	0e 94 b2 03 	call	0x764	; 0x764 <H_LCD_void_sendString>
 
-	 // Get the user's input for ID using the keypad
-	 for (u8 i = 0; i < 4; i++) {
+	// Get the user's input for ID using the keypad
+	for (u8 i = 0; i < 4; i++) {
   ca:	c0 e0       	ldi	r28, 0x00	; 0
 
 
@@ -154,15 +154,15 @@ int main(void) {
   ce:	d1 2c       	mov	r13, r1
   d0:	76 01       	movw	r14, r12
 	
-	 // Display a message to enter the ID
-	 H_LCD_void_sendString("Enter ID: ");
+	// Display a message to enter the ID
+	H_LCD_void_sendString("Enter ID: ");
 
-	 // Get the user's input for ID using the keypad
-	 for (u8 i = 0; i < 4; i++) {
+	// Get the user's input for ID using the keypad
+	for (u8 i = 0; i < 4; i++) {
   d2:	21 c0       	rjmp	.+66     	; 0x116 <main+0x64>
-		 u8 key = KEYPAD_getPressedKey();
+		u8 key = KEYPAD_getPressedKey();
   d4:	0e 94 4e 01 	call	0x29c	; 0x29c <KEYPAD_getPressedKey>
-		 H_LCD_void_sendIntNum(key);
+		H_LCD_void_sendIntNum(key);
   d8:	88 2e       	mov	r8, r24
   da:	91 2c       	mov	r9, r1
   dc:	a1 2c       	mov	r10, r1
@@ -170,7 +170,7 @@ int main(void) {
   e0:	c5 01       	movw	r24, r10
   e2:	b4 01       	movw	r22, r8
   e4:	0e 94 c5 03 	call	0x78a	; 0x78a <H_LCD_void_sendIntNum>
-		 enteredID = enteredID * 10 + key;
+		enteredID = enteredID * 10 + key;
   e8:	cc 0c       	add	r12, r12
   ea:	dd 1c       	adc	r13, r13
   ec:	ee 1c       	adc	r14, r14
@@ -194,30 +194,30 @@ int main(void) {
  110:	ea 1c       	adc	r14, r10
  112:	fb 1c       	adc	r15, r11
 	
-	 // Display a message to enter the ID
-	 H_LCD_void_sendString("Enter ID: ");
+	// Display a message to enter the ID
+	H_LCD_void_sendString("Enter ID: ");
 
-	 // Get the user's input for ID using the keypad
-	 for (u8 i = 0; i < 4; i++) {
+	// Get the user's input for ID using the keypad
+	for (u8 i = 0; i < 4; i++) {
  114:	cf 5f       	subi	r28, 0xFF	; 255
  116:	c4 30       	cpi	r28, 0x04	; 4
  118:	e8 f2       	brcs	.-70     	; 0xd4 <main+0x22>
-		 u8 key = KEYPAD_getPressedKey();
-		 H_LCD_void_sendIntNum(key);
-		 enteredID = enteredID * 10 + key;
-	 }
-	 // Clear the LCD screen
-	 H_LCD_void_clearScreen();
+		u8 key = KEYPAD_getPressedKey();
+		H_LCD_void_sendIntNum(key);
+		enteredID = enteredID * 10 + key;
+	}
+	// Clear the LCD screen
+	H_LCD_void_clearScreen();
  11a:	0e 94 e4 03 	call	0x7c8	; 0x7c8 <H_LCD_void_clearScreen>
 
-	 // Display a message to enter the password
-	 H_LCD_void_sendString("Enter Password: ");
+	// Display a message to enter the password
+	H_LCD_void_sendString("Enter Password: ");
  11e:	8f e9       	ldi	r24, 0x9F	; 159
  120:	90 e0       	ldi	r25, 0x00	; 0
  122:	0e 94 b2 03 	call	0x764	; 0x764 <H_LCD_void_sendString>
 
-	 // Get the user's input for the password using the keypad and display '*' characters
-	 for (u8 i = 0; i < 4; i++) {
+	// Get the user's input for the password using the keypad and display '*' characters
+	for (u8 i = 0; i < 4; i++) {
  126:	c0 e0       	ldi	r28, 0x00	; 0
 
 int main(void) {
@@ -229,15 +229,15 @@ int main(void) {
  12a:	91 2c       	mov	r9, r1
  12c:	54 01       	movw	r10, r8
 
-	 // Display a message to enter the password
-	 H_LCD_void_sendString("Enter Password: ");
+	// Display a message to enter the password
+	H_LCD_void_sendString("Enter Password: ");
 
-	 // Get the user's input for the password using the keypad and display '*' characters
-	 for (u8 i = 0; i < 4; i++) {
+	// Get the user's input for the password using the keypad and display '*' characters
+	for (u8 i = 0; i < 4; i++) {
  12e:	1c c0       	rjmp	.+56     	; 0x168 <main+0xb6>
-		 u8 key = KEYPAD_getPressedKey();
+		u8 key = KEYPAD_getPressedKey();
  130:	0e 94 4e 01 	call	0x29c	; 0x29c <KEYPAD_getPressedKey>
-		 enteredPassword = enteredPassword * 10 + key;
+		enteredPassword = enteredPassword * 10 + key;
  134:	88 0c       	add	r8, r8
  136:	99 1c       	adc	r9, r9
  138:	aa 1c       	adc	r10, r10
@@ -260,34 +260,34 @@ int main(void) {
  15a:	91 1c       	adc	r9, r1
  15c:	a1 1c       	adc	r10, r1
  15e:	b1 1c       	adc	r11, r1
-		 H_LCD_void_sendData('*');
+		H_LCD_void_sendData('*');
  160:	8a e2       	ldi	r24, 0x2A	; 42
  162:	0e 94 6f 03 	call	0x6de	; 0x6de <H_LCD_void_sendData>
 
-	 // Display a message to enter the password
-	 H_LCD_void_sendString("Enter Password: ");
+	// Display a message to enter the password
+	H_LCD_void_sendString("Enter Password: ");
 
-	 // Get the user's input for the password using the keypad and display '*' characters
-	 for (u8 i = 0; i < 4; i++) {
+	// Get the user's input for the password using the keypad and display '*' characters
+	for (u8 i = 0; i < 4; i++) {
  166:	cf 5f       	subi	r28, 0xFF	; 255
  168:	c4 30       	cpi	r28, 0x04	; 4
  16a:	10 f3       	brcs	.-60     	; 0x130 <main+0x7e>
-		 u8 key = KEYPAD_getPressedKey();
-		 enteredPassword = enteredPassword * 10 + key;
-		 H_LCD_void_sendData('*');
-	 }
-	 
-	 H_LCD_void_clearScreen();
+		u8 key = KEYPAD_getPressedKey();
+		enteredPassword = enteredPassword * 10 + key;
+		H_LCD_void_sendData('*');
+	}
+	
+	H_LCD_void_clearScreen();
  16c:	0e 94 e4 03 	call	0x7c8	; 0x7c8 <H_LCD_void_clearScreen>
-	 // You can compare these values with the database as shown in the previous response.
-	 // The following code assumes that you have a database as mentioned earlier.
+	// You can compare these values with the database as shown in the previous response.
+	// The following code assumes that you have a database as mentioned earlier.
 
-	 int found = 0;
-	 u8 i;
-	 for (u8 i = 0; i < databaseSize; i++) {
+	int found = 0;
+	u8 i;
+	for (u8 i = 0; i < databaseSize; i++) {
  170:	20 e0       	ldi	r18, 0x00	; 0
  172:	23 c0       	rjmp	.+70     	; 0x1ba <main+0x108>
-		 if (enteredID == IDs[i] && enteredPassword == passwords[i]) {
+		if (enteredID == IDs[i] && enteredPassword == passwords[i]) {
  174:	82 2f       	mov	r24, r18
  176:	90 e0       	ldi	r25, 0x00	; 0
  178:	fc 01       	movw	r30, r24
@@ -322,12 +322,12 @@ int main(void) {
  1b2:	aa 06       	cpc	r10, r26
  1b4:	bb 06       	cpc	r11, r27
  1b6:	61 f0       	breq	.+24     	; 0x1d0 <main+0x11e>
-	 // You can compare these values with the database as shown in the previous response.
-	 // The following code assumes that you have a database as mentioned earlier.
+	// You can compare these values with the database as shown in the previous response.
+	// The following code assumes that you have a database as mentioned earlier.
 
-	 int found = 0;
-	 u8 i;
-	 for (u8 i = 0; i < databaseSize; i++) {
+	int found = 0;
+	u8 i;
+	for (u8 i = 0; i < databaseSize; i++) {
  1b8:	2f 5f       	subi	r18, 0xFF	; 255
  1ba:	82 2f       	mov	r24, r18
  1bc:	90 e0       	ldi	r25, 0x00	; 0
@@ -337,43 +337,43 @@ int main(void) {
  1c4:	a1 05       	cpc	r26, r1
  1c6:	b1 05       	cpc	r27, r1
  1c8:	ac f2       	brlt	.-86     	; 0x174 <main+0xc2>
-	 
-	 // At this point, 'enteredID' and 'enteredPassword' variables hold the user's input.
-	 // You can compare these values with the database as shown in the previous response.
-	 // The following code assumes that you have a database as mentioned earlier.
+	
+	// At this point, 'enteredID' and 'enteredPassword' variables hold the user's input.
+	// You can compare these values with the database as shown in the previous response.
+	// The following code assumes that you have a database as mentioned earlier.
 
-	 int found = 0;
+	int found = 0;
  1ca:	80 e0       	ldi	r24, 0x00	; 0
  1cc:	90 e0       	ldi	r25, 0x00	; 0
  1ce:	02 c0       	rjmp	.+4      	; 0x1d4 <main+0x122>
-	 u8 i;
-	 for (u8 i = 0; i < databaseSize; i++) {
-		 if (enteredID == IDs[i] && enteredPassword == passwords[i]) {
-			 found = 1;
+	u8 i;
+	for (u8 i = 0; i < databaseSize; i++) {
+		if (enteredID == IDs[i] && enteredPassword == passwords[i]) {
+			found = 1;
  1d0:	81 e0       	ldi	r24, 0x01	; 1
  1d2:	90 e0       	ldi	r25, 0x00	; 0
-			 break;
-		 }
-	 }
+			break;
+		}
+	}
 
-	 // Display appropriate messages based on the comparison results
-	 if (found) {
+	// Display appropriate messages based on the comparison results
+	if (found) {
  1d4:	89 2b       	or	r24, r25
  1d6:	f1 f0       	breq	.+60     	; 0x214 <main+0x162>
-		 H_LCD_void_sendString("Welcome, ");
+		H_LCD_void_sendString("Welcome, ");
  1d8:	80 eb       	ldi	r24, 0xB0	; 176
  1da:	90 e0       	ldi	r25, 0x00	; 0
  1dc:	0e 94 b2 03 	call	0x764	; 0x764 <H_LCD_void_sendString>
-		 H_LCD_void_sendString(names[i]);
+		H_LCD_void_sendString(names[i]);
  1e0:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
  1e4:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
  1e8:	0e 94 b2 03 	call	0x764	; 0x764 <H_LCD_void_sendString>
  1ec:	2d c0       	rjmp	.+90     	; 0x248 <main+0x196>
-		 } else {
-		  // Check if the ID is incorrect
-		  int incorrectID = 1;
-		  for (u8 i = 0; i < databaseSize; i++) {
-			  if (enteredID == IDs[i]) {
+		} else {
+		// Check if the ID is incorrect
+		int incorrectID = 1;
+		for (u8 i = 0; i < databaseSize; i++) {
+			if (enteredID == IDs[i]) {
  1ee:	e8 2f       	mov	r30, r24
  1f0:	f0 e0       	ldi	r31, 0x00	; 0
  1f2:	ee 0f       	add	r30, r30
@@ -391,12 +391,12 @@ int main(void) {
  20a:	e6 06       	cpc	r14, r22
  20c:	f7 06       	cpc	r15, r23
  20e:	79 f0       	breq	.+30     	; 0x22e <main+0x17c>
-		 H_LCD_void_sendString("Welcome, ");
-		 H_LCD_void_sendString(names[i]);
-		 } else {
-		  // Check if the ID is incorrect
-		  int incorrectID = 1;
-		  for (u8 i = 0; i < databaseSize; i++) {
+		H_LCD_void_sendString("Welcome, ");
+		H_LCD_void_sendString(names[i]);
+		} else {
+		// Check if the ID is incorrect
+		int incorrectID = 1;
+		for (u8 i = 0; i < databaseSize; i++) {
  210:	8f 5f       	subi	r24, 0xFF	; 255
  212:	01 c0       	rjmp	.+2      	; 0x216 <main+0x164>
  214:	80 e0       	ldi	r24, 0x00	; 0
@@ -409,34 +409,34 @@ int main(void) {
  222:	61 05       	cpc	r22, r1
  224:	71 05       	cpc	r23, r1
  226:	1c f3       	brlt	.-58     	; 0x1ee <main+0x13c>
-	 if (found) {
-		 H_LCD_void_sendString("Welcome, ");
-		 H_LCD_void_sendString(names[i]);
-		 } else {
-		  // Check if the ID is incorrect
-		  int incorrectID = 1;
+	if (found) {
+		H_LCD_void_sendString("Welcome, ");
+		H_LCD_void_sendString(names[i]);
+		} else {
+		// Check if the ID is incorrect
+		int incorrectID = 1;
  228:	81 e0       	ldi	r24, 0x01	; 1
  22a:	90 e0       	ldi	r25, 0x00	; 0
  22c:	02 c0       	rjmp	.+4      	; 0x232 <main+0x180>
-		  for (u8 i = 0; i < databaseSize; i++) {
-			  if (enteredID == IDs[i]) {
-				  incorrectID = 0;
+		for (u8 i = 0; i < databaseSize; i++) {
+			if (enteredID == IDs[i]) {
+				incorrectID = 0;
  22e:	80 e0       	ldi	r24, 0x00	; 0
  230:	90 e0       	ldi	r25, 0x00	; 0
-				  break;
-			  }
-		  }
+				break;
+			}
+		}
 
-		  if (incorrectID) {
+		if (incorrectID) {
  232:	89 2b       	or	r24, r25
  234:	29 f0       	breq	.+10     	; 0x240 <main+0x18e>
-			  H_LCD_void_sendString("Wrong ID");
+			H_LCD_void_sendString("Wrong ID");
  236:	8a eb       	ldi	r24, 0xBA	; 186
  238:	90 e0       	ldi	r25, 0x00	; 0
  23a:	0e 94 b2 03 	call	0x764	; 0x764 <H_LCD_void_sendString>
  23e:	04 c0       	rjmp	.+8      	; 0x248 <main+0x196>
-			  } else {
-			  H_LCD_void_sendString("Wrong Password");
+			} else {
+			H_LCD_void_sendString("Wrong Password");
  240:	83 ec       	ldi	r24, 0xC3	; 195
  242:	90 e0       	ldi	r25, 0x00	; 0
  244:	0e 94 b2 03 	call	0x764	; 0x764 <H_LCD_void_sendString>
