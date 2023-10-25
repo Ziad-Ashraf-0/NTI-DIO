@@ -4,7 +4,7 @@
 
 APP\main.c
 
-HAL\Keypad\keypad.c
+HAL\Keypad\Keypad_prog.c
 
 HAL\LCD\LCD_prog.c
 

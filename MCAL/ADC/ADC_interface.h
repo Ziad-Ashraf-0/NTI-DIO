@@ -90,16 +90,22 @@ typedef struct{
 
 
 
-/* Initalization Method*/
+/* Initialization Method*/
 void ADC_Init(const ADC_config *config);
 
-/*Polling the ADC,
-The Function returns 0 "ADC_enuNormalState" when the ADC is ready for the user
-and the ADC is functioning in normal state.
-Otherwise, returns any other state type from the ADC_enuState enum */
+/*
+Enables ADC interrupt and takes two arguments: channel number and a pointer to a function that handles the ADC reading.
+This function configures the ADC to use the specified channel and enables the ADC interrupt.
+ When the ADC conversion is complete,
+  the provided callback function will be called with the ADC reading as an argument.
+*/
 void ADC_getDigitalValueAsynchCallBack(u8 channel_num,void (*localPtr)(u16 value));
 
-/* Get ADC value, This Functions returns the value converted by the ADC ( directly from ADCH ) */
+/*
+Get ADC value asynchronously with a timeout of 50ms.
+This function takes the channel number as an argument and returns the ADC reading after pooling for the specified channel.
+If the ADC conversion does not complete within 50ms, it returns a default or error value.
+*/
 u16 ADC_getDigitalValueSynchNonBlocking (u8 channel_num);
 
 #endif /* MCAL_ADC_ADC_INTERFACE_H_ */

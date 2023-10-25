@@ -1,7 +1,8 @@
 APP/main.d APP/main.o: ../APP/main.c ../APP/../MCAL/DIO/DIO_Interface.h \
  ../APP/../MCAL/DIO/../../LIB/STD_TYPES.h ../APP/../HAL/Segment/segment.h \
- ../APP/../HAL/Keypad/keypad.h ../APP/../MCAL/EXTI/EXTI_interface.h \
- ../APP/../MCAL/GIE/GIE_interface.h ../APP/../MCAL/ADC/ADC_interface.h \
+ ../APP/../HAL/Keypad/Keypad_interface.h \
+ ../APP/../MCAL/EXTI/EXTI_interface.h ../APP/../MCAL/GIE/GIE_interface.h \
+ ../APP/../MCAL/ADC/ADC_interface.h \
  ../APP/../MCAL/ADC/../../LIB/STD_TYPES.h \
  ../APP/../HAL/LCD/LCD_interface.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay.h \
@@ -17,7 +18,7 @@ APP/main.d APP/main.o: ../APP/main.c ../APP/../MCAL/DIO/DIO_Interface.h \
 
 ../APP/../HAL/Segment/segment.h:
 
-../APP/../HAL/Keypad/keypad.h:
+../APP/../HAL/Keypad/Keypad_interface.h:
 
 ../APP/../MCAL/EXTI/EXTI_interface.h:
 

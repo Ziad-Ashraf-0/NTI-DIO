@@ -123,10 +123,13 @@
     <Compile Include="APP\main.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="HAL\Keypad\keypad.c">
+    <Compile Include="HAL\Keypad\Keypad_private.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="HAL\Keypad\keypad.h">
+    <Compile Include="HAL\Keypad\Keypad_prog.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\Keypad\Keypad_interface.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="HAL\LCD\LCD_config.h">
