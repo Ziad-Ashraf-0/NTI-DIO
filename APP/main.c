@@ -1,9 +1,9 @@
 /*
- * main.c
- *
- *  Created on: Oct 21, 2023
- *      Author: Ziad Ashraf
- */
+* main.c
+*
+*  Created on: Oct 21, 2023
+*      Author: Ziad Ashraf
+*/
 #include "../MCAL/DIO/DIO_Interface.h"
 #include "../HAL/Segment/segment.h"
 #include "../HAL/Keypad/keypad.h"
@@ -89,7 +89,7 @@ int main(void) {
 		//ADC_getDigitalValueAsynchCallBack(SingleADC0,getADCValue);
 		//_delay_ms(500);
 		//if(adcValue){
-			//H_LCD_void_sendIntNum(adcValue);
+		//H_LCD_void_sendIntNum(adcValue);
 		//}
 
 	}

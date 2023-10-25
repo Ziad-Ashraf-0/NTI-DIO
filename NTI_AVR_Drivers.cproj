@@ -183,6 +183,9 @@
     <Compile Include="MCAL\EXTI\EXTI_interface.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MCAL\EXTI\EXTI_private.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="MCAL\EXTI\EXTI_prog.c">
       <SubType>compile</SubType>
     </Compile>

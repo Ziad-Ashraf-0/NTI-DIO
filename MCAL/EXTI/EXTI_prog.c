@@ -10,7 +10,7 @@
 #include "../../LIB/BIT_MATH.h"
 #include "../../LIB/HW_REG.h"
 #include "EXTI_interface.h"
-
+#include "EXTI_private.h"
 
 
 // Array of three pointers to functions
@@ -66,21 +66,20 @@ void EXTI_setCallBack(u8 Int_ID, void (*localPtr)(void))
 }
 
 //EXIT0 ISR
-void __vector_1 (void){
+ISR(INT0_vect){
 	if(Action[0]!= NULL){
 		Action[0]();
 	}
 }
 
 //EXIT1 ISR
-void __vector_2 (void){
+ISR(INT1_vect){
 	if(Action[1]!= NULL){
 		Action[1]();
 	}
 }
-
 //EXIT2 ISR
-void __vector_18 (void){
+ISR(INT2_vect){
 	if(Action[2]!= NULL){
 		Action[2]();
 	}

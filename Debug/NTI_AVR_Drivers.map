@@ -415,7 +415,6 @@ END GROUP
                 0x0000008e                __vector_12
                 0x0000008e                __bad_interrupt
                 0x0000008e                __vector_6
-                0x0000008e                __vector_3
                 0x0000008e                __vector_11
                 0x0000008e                __vector_13
                 0x0000008e                __vector_17
@@ -428,6 +427,7 @@ END GROUP
                 0x0000008e                __vector_8
                 0x0000008e                __vector_14
                 0x0000008e                __vector_10
+                0x0000008e                __vector_18
                 0x0000008e                __vector_20
                 0x00000092                . = ALIGN (0x2)
  *(.text.*)
@@ -462,9 +462,9 @@ END GROUP
  .text.__vector_2
                 0x0000037c       0x52 MCAL/EXTI/EXTI_prog.o
                 0x0000037c                __vector_2
- .text.__vector_18
+ .text.__vector_3
                 0x000003ce       0x52 MCAL/EXTI/EXTI_prog.o
-                0x000003ce                __vector_18
+                0x000003ce                __vector_3
  .text.GIE_enable
                 0x00000420        0x4 MCAL/GIE/GIE_prog.o
                 0x00000420                GIE_enable
@@ -651,18 +651,18 @@ END GROUP
  .debug_frame   0x00000184      0x14c MCAL/EXTI/EXTI_prog.o
  .debug_frame   0x000002d0       0x34 MCAL/GIE/GIE_prog.o
 
-.debug_str      0x00000000      0x94b
+.debug_str      0x00000000      0x984
  *(.debug_str)
  .debug_str     0x00000000      0x196 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_str     0x00000196      0x362 APP/main.o
-                                0x39d (size before relaxing)
- .debug_str     0x000004f8      0x2ed MCAL/ADC/ADC_prog.o
-                                0x4be (size before relaxing)
- .debug_str     0x000007e5       0xc9 MCAL/DIO/DIO_Program.o
+ .debug_str     0x00000196      0x35c APP/main.o
+                                0x397 (size before relaxing)
+ .debug_str     0x000004f2      0x2ed MCAL/ADC/ADC_prog.o
+                                0x4b8 (size before relaxing)
+ .debug_str     0x000007df      0x109 MCAL/DIO/DIO_Program.o
                                 0x385 (size before relaxing)
- .debug_str     0x000008ae       0x7a MCAL/EXTI/EXTI_prog.o
-                                0x22c (size before relaxing)
- .debug_str     0x00000928       0x23 MCAL/GIE/GIE_prog.o
+ .debug_str     0x000008e8       0x79 MCAL/EXTI/EXTI_prog.o
+                                0x225 (size before relaxing)
+ .debug_str     0x00000961       0x23 MCAL/GIE/GIE_prog.o
                                 0x119 (size before relaxing)
 
 .debug_loc      0x00000000      0x8ba

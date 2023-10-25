@@ -23,11 +23,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   9 .debug_frame  00000304  00000000  00000000  00002d50  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    0000094b  00000000  00000000  00003054  2**0
+ 10 .debug_str    00000984  00000000  00000000  00003054  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000008ba  00000000  00000000  0000399f  2**0
+ 11 .debug_loc    000008ba  00000000  00000000  000039d8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000000f0  00000000  00000000  00004259  2**0
+ 12 .debug_ranges 000000f0  00000000  00000000  00004292  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -36,7 +36,7 @@ Disassembly of section .text:
    0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
    4:	0c 94 95 01 	jmp	0x32a	; 0x32a <__vector_1>
    8:	0c 94 be 01 	jmp	0x37c	; 0x37c <__vector_2>
-   c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+   c:	0c 94 e7 01 	jmp	0x3ce	; 0x3ce <__vector_3>
   10:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   14:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   18:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
@@ -51,7 +51,7 @@ Disassembly of section .text:
   3c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   40:	0c 94 90 00 	jmp	0x120	; 0x120 <__vector_16>
   44:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
-  48:	0c 94 e7 01 	jmp	0x3ce	; 0x3ce <__vector_18>
+  48:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   4c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   50:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
 
@@ -212,12 +212,6 @@ void __vector_16(void) {
  150:	08 95       	ret
 
 00000152 <DIO_U8SetPinDirection>:
-            return ERROR;
-        }
-    } else {
-        return ERROR;
-    }
-}
  152:	dc 01       	movw	r26, r24
  154:	ec 91       	ld	r30, X
  156:	e4 30       	cpi	r30, 0x04	; 4
@@ -282,12 +276,8 @@ void __vector_16(void) {
  1cc:	08 95       	ret
 
 000001ce <DIO_U8SetPinValue>:
-
-u8 DIO_U8SetPinValue(const DIO_Config* config) {
-    if (config != NULL) {
  1ce:	00 97       	sbiw	r24, 0x00	; 0
  1d0:	c1 f1       	breq	.+112    	; 0x242 <DIO_U8SetPinValue+0x74>
-        if (config->port <= DIO_PORTD && config->pin <= DIO_PIN7) {
  1d2:	dc 01       	movw	r26, r24
  1d4:	ec 91       	ld	r30, X
  1d6:	e4 30       	cpi	r30, 0x04	; 4
@@ -297,12 +287,10 @@ u8 DIO_U8SetPinValue(const DIO_Config* config) {
  1de:	11 97       	sbiw	r26, 0x01	; 1
  1e0:	28 30       	cpi	r18, 0x08	; 8
  1e2:	98 f5       	brcc	.+102    	; 0x24a <DIO_U8SetPinValue+0x7c>
-            if (config->value == DIO_PIN_HIGH) {
  1e4:	13 96       	adiw	r26, 0x03	; 3
  1e6:	8c 91       	ld	r24, X
  1e8:	81 30       	cpi	r24, 0x01	; 1
  1ea:	a1 f4       	brne	.+40     	; 0x214 <DIO_U8SetPinValue+0x46>
-                SET_BIT(*writeRegisters[config->port], config->pin);
  1ec:	f0 e0       	ldi	r31, 0x00	; 0
  1ee:	ee 0f       	add	r30, r30
  1f0:	ff 1f       	adc	r31, r31
@@ -321,13 +309,10 @@ u8 DIO_U8SetPinValue(const DIO_Config* config) {
  20a:	90 81       	ld	r25, Z
  20c:	89 2b       	or	r24, r25
  20e:	80 83       	st	Z, r24
-                return NO_ERROR;
  210:	80 e0       	ldi	r24, 0x00	; 0
  212:	08 95       	ret
-            } else if (config->value == DIO_PIN_LOW) {
  214:	81 11       	cpse	r24, r1
  216:	1b c0       	rjmp	.+54     	; 0x24e <DIO_U8SetPinValue+0x80>
-                CLR_BIT(*writeRegisters[config->port], config->pin);
  218:	f0 e0       	ldi	r31, 0x00	; 0
  21a:	ee 0f       	add	r30, r30
  21c:	ff 1f       	adc	r31, r31
@@ -347,49 +332,20 @@ u8 DIO_U8SetPinValue(const DIO_Config* config) {
  238:	90 81       	ld	r25, Z
  23a:	89 23       	and	r24, r25
  23c:	80 83       	st	Z, r24
-                return NO_ERROR;
  23e:	80 e0       	ldi	r24, 0x00	; 0
  240:	08 95       	ret
-            }
-        } else {
-            return ERROR;
-        }
-    } else {
-        return ERROR;
  242:	81 e0       	ldi	r24, 0x01	; 1
  244:	08 95       	ret
-                return NO_ERROR;
-            } else {
-                return ERROR;
-            }
-        } else {
-            return ERROR;
  246:	81 e0       	ldi	r24, 0x01	; 1
  248:	08 95       	ret
  24a:	81 e0       	ldi	r24, 0x01	; 1
  24c:	08 95       	ret
-                return NO_ERROR;
-            } else if (config->value == DIO_PIN_LOW) {
-                CLR_BIT(*writeRegisters[config->port], config->pin);
-                return NO_ERROR;
-            } else {
-                return ERROR;
  24e:	81 e0       	ldi	r24, 0x01	; 1
-            return ERROR;
-        }
-    } else {
-        return ERROR;
-    }
-}
  250:	08 95       	ret
 
 00000252 <DIO_U8TogglePin>:
-
-u8 DIO_U8TogglePin(const DIO_Config* config) {
-    if (config != NULL) {
  252:	00 97       	sbiw	r24, 0x00	; 0
  254:	e1 f0       	breq	.+56     	; 0x28e <DIO_U8TogglePin+0x3c>
-        if (config->port <= DIO_PORTD && config->pin <= DIO_PIN7) {
  256:	dc 01       	movw	r26, r24
  258:	ec 91       	ld	r30, X
  25a:	e4 30       	cpi	r30, 0x04	; 4
@@ -398,7 +354,6 @@ u8 DIO_U8TogglePin(const DIO_Config* config) {
  260:	2c 91       	ld	r18, X
  262:	28 30       	cpi	r18, 0x08	; 8
  264:	c0 f4       	brcc	.+48     	; 0x296 <DIO_U8TogglePin+0x44>
-            TOG_BIT(*writeRegisters[config->port], config->pin);
  266:	f0 e0       	ldi	r31, 0x00	; 0
  268:	ee 0f       	add	r30, r30
  26a:	ff 1f       	adc	r31, r31
@@ -417,30 +372,13 @@ u8 DIO_U8TogglePin(const DIO_Config* config) {
  284:	90 81       	ld	r25, Z
  286:	89 27       	eor	r24, r25
  288:	80 83       	st	Z, r24
-            return NO_ERROR;
  28a:	80 e0       	ldi	r24, 0x00	; 0
  28c:	08 95       	ret
-        } else {
-            return ERROR;
-        }
-    } else {
-        return ERROR;
  28e:	81 e0       	ldi	r24, 0x01	; 1
  290:	08 95       	ret
-    if (config != NULL) {
-        if (config->port <= DIO_PORTD && config->pin <= DIO_PIN7) {
-            TOG_BIT(*writeRegisters[config->port], config->pin);
-            return NO_ERROR;
-        } else {
-            return ERROR;
  292:	81 e0       	ldi	r24, 0x01	; 1
  294:	08 95       	ret
  296:	81 e0       	ldi	r24, 0x01	; 1
-        }
-    } else {
-        return ERROR;
-    }
-}
  298:	08 95       	ret
 
 0000029a <EXTI_enable>:
@@ -540,7 +478,7 @@ void EXTI_setCallBack(u8 Int_ID, void (*localPtr)(void))
 }
 
 //EXIT0 ISR
-void __vector_1 (void){
+ISR(INT0_vect){
  32a:	1f 92       	push	r1
  32c:	0f 92       	push	r0
  32e:	0f b6       	in	r0, 0x3f	; 63
@@ -588,7 +526,7 @@ void __vector_1 (void){
 0000037c <__vector_2>:
 
 //EXIT1 ISR
-void __vector_2 (void){
+ISR(INT1_vect){
  37c:	1f 92       	push	r1
  37e:	0f 92       	push	r0
  380:	0f b6       	in	r0, 0x3f	; 63
@@ -633,10 +571,9 @@ void __vector_2 (void){
  3ca:	1f 90       	pop	r1
  3cc:	18 95       	reti
 
-000003ce <__vector_18>:
-
+000003ce <__vector_3>:
 //EXIT2 ISR
-void __vector_18 (void){
+ISR(INT2_vect){
  3ce:	1f 92       	push	r1
  3d0:	0f 92       	push	r0
  3d2:	0f b6       	in	r0, 0x3f	; 63
@@ -658,7 +595,7 @@ void __vector_18 (void){
  3f0:	e0 91 76 00 	lds	r30, 0x0076	; 0x800076 <Action+0x4>
  3f4:	f0 91 77 00 	lds	r31, 0x0077	; 0x800077 <Action+0x5>
  3f8:	30 97       	sbiw	r30, 0x00	; 0
- 3fa:	09 f0       	breq	.+2      	; 0x3fe <__vector_18+0x30>
+ 3fa:	09 f0       	breq	.+2      	; 0x3fe <__vector_3+0x30>
 		Action[2]();
  3fc:	09 95       	icall
 	}
@@ -682,12 +619,6 @@ void __vector_18 (void){
  41e:	18 95       	reti
 
 00000420 <GIE_enable>:
-#include "GIE_interface.h"
-
-
-// Enable Global Interrupts
-void GIE_enable(){
-    __asm__ __volatile__ ("sei" ::);
  420:	78 94       	sei
  422:	08 95       	ret
 
