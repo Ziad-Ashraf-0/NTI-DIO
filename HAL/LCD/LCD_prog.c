@@ -38,10 +38,10 @@ void H_LCD_void_Init(void){
 	}
 
 	//Function Set Corner Case
-	functionSet();
-	//H_LCD_void_sendCommand(0x02);
-	//	_delay_ms(1);
-	//	H_LCD_void_sendCommand(0x28);
+	//functionSet();
+	H_LCD_void_sendCommand(0x02);
+	_delay_ms(1);
+	H_LCD_void_sendCommand(0x28);
 	_delay_ms(1);
 	H_LCD_void_sendCommand(0x0F);
 	_delay_ms(1);
@@ -159,6 +159,10 @@ void H_LCD_void_displayCustomChar(u8 copy_u8charCode){
 	H_LCD_void_sendCommand(0xc0);
 	H_LCD_void_sendData(copy_u8charCode);
 
+}
+
+void H_LCD_void_clearScreen(void){
+	H_LCD_void_sendCommand(0x01);
 }
 
 

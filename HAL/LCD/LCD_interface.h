@@ -67,7 +67,7 @@ void H_LCD_void_sendIntNum(s32 copy_s32Num);
  * Description :
  * Send the clear screen command
  */
-void LCD_clearScreen(void);
+void H_LCD_void_clearScreen(void);
 
 
 void H_LCD_void_creatCustomChar(const u8 * ArrPattern,u8 copy_u8charCode);
