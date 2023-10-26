@@ -11,15 +11,26 @@
 #include "../MCAL/GIE/GIE_interface.h"
 #include "../MCAL/ADC/ADC_interface.h"
 #include "../HAL/LCD/LCD_interface.h"
+#include "../MCAL/TIMER0/TIMER0_interface.h"
 #include <util/delay.h>
 
-
+void timerCallback(){
+	DIO_Config led = {DIO_PORTA,DIO_PIN6,DIO_PIN_OUTPUT,DIO_PIN_HIGH};
+	DIO_U8SetPinDirection(&led);
+	DIO_U8SetPinValue(&led);
+}
 
 int main(void) {
-
-
-	_delay_ms(50);
-	H_LCD_void_Init();
+	
+	GIE_enable();
+	
+    M_TIMER0_void_setCallBack(timerCallback,OVERFLOW);
+	M_TIMER0_void_Init();
+	M_TIMER0_void_IntEnable(OVERFLOW);
+	M_TIMER0_void_setDelayTimeMilliSec(2500);
+	M_TIMER0_void_start();
+	//_delay_ms(50);
+	//H_LCD_void_Init();
 	
 	//H_LCD_void_gotoXY(2,5);
 	//H_LCD_void_sendIntNum(14356);

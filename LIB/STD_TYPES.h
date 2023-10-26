@@ -8,6 +8,10 @@
 #ifndef LIB_STD_TYPES_H_
 #define LIB_STD_TYPES_H_
 
+
+/*** 	NULL DEFINITION		***/
+#define NULL 		( (void*) 0 )
+
 /* PORTABLE DATA TYPES	*/
 
 typedef unsigned char u8;

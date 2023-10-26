@@ -32,7 +32,7 @@
 	TIMER0_MODE_PHASE_CORRECT_PWM
 */
 
-#define TIMER0_MODE
+#define TIMER0_MODE	TIMER0_MODE_NORMAL
 
 /*
 	Choose one of the following :
@@ -43,7 +43,7 @@
 	TIMER0_OC0_TOGGLE
 */
 
-#define TIMER0_OC0_MODE
+#define TIMER0_OC0_MODE TIMER0_OC0_DISCONNECTED
 
 
 #endif /* TIMER0_CONFIG_H_ */

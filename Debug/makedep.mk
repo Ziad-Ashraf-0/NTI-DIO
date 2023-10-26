@@ -18,3 +18,5 @@ MCAL\EXTI\EXTI_prog.c
 
 MCAL\GIE\GIE_prog.c
 
+MCAL\TIMER0\TIMER0_prog.c
+

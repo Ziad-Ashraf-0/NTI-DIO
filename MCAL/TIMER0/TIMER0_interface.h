@@ -10,12 +10,17 @@
 #define TIMER0_INTERFACE_H_
 
 
+typedef enum
+{
+	OVERFLOW,COMPARE
+}IntID;
+
 
 void M_TIMER0_void_Init(void);
 void M_TIMER0_void_start(void);
 void M_TIMER0_void_stop(void);
 void M_TIMER0_void_setDelayTimeMilliSec(u32 copy_u32TimeMS);
-void M_TIMER0_void_IntEnable(u8 copy_u8IntID);
+void M_TIMER0_void_IntEnable(u8 copy_u8IntID); // id overflow or comparematch
 void M_TIMER0_void_IntDisable(u8 copy_u8IntID);
 void M_TIMER0_void_setCallBack(void (*ptrfn)(void),u8 copy_u8IntID);
 
