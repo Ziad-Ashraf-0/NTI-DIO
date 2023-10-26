@@ -87,4 +87,17 @@ void H_LCD_void_displayCustomChar(u8 copy_u8charCode);
  */
 void H_LCD_void_displayFloat(f64 copy_u8floatNumber);
 
+
+/*
+ * Description :
+ * Display Hex value 
+ */
+void H_LCD_void_sendHexNum(u32 copy_u32Num);
+
+/*
+ * Description :
+ * Display char as binary 
+ */
+void H_LCD_void_sendBinaryNum(u8 copy_u8Num);
+
 #endif /* HAL_LCD_LCD_INTERFACE_H_ */

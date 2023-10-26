@@ -33,11 +33,15 @@ void M_TIMER0_void_Init(void){
 	#endif
 }
 
-//prescaler
 void M_TIMER0_void_start(void){
 	
 	TCCR0_REG &= TIMER0_PRESCALER_MASK;
 	TCCR0_REG |= TIMER0_PRESCALER;
+}
+
+
+void M_TIMER0_void_stop(void){
+	TCCR0_REG = TIMER0_NO_CLK;
 }
 
 void M_TIMER0_void_setDelayTimeMilliSec(u32 copy_u32TimeMS){

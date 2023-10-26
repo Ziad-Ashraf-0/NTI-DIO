@@ -180,6 +180,40 @@ void H_LCD_void_displayFloat(f64 copy_u8floatNumber){
 	H_LCD_void_sendIntNum(fractional); // Display the fractional part
 }
 
+void H_LCD_void_sendHexNum(u32 copy_u32Num) {
+ s8 buff[16]; // String to hold the hexadecimal result
+ itoa(copy_u32Num, buff, 16); // Convert to hexadecimal ASCII value (base 16)
+ 
+ // Convert the string to uppercase by adding the ASCII difference
+ for (u8 i = 0; buff[i]; i++) {
+	 if (buff[i] >= 'a' && buff[i] <= 'f') {
+		 buff[i] = (s8)(buff[i] - 32);
+	 }
+ }
+
+ H_LCD_void_sendString("0x"); // Display "0x" as a prefix for hexadecimal numbers
+ H_LCD_void_sendString(buff); // Display the uppercase hexadecimal string
+}
+
+
+void H_LCD_void_sendBinaryNum(u8 copy_u8Num) {
+	s8 buff[9]; // String to hold the binary result (8 bits + '\0')
+	
+	// Convert the byte to an 8-bit binary string
+	for (u8 i = 0; i < 8; i++) {
+		if (copy_u8Num & (1 << (7 - i))) {
+			buff[i] = '1';
+			} else {
+			buff[i] = '0';
+		}
+	}
+	buff[8] = '\0'; // Null-terminate the string
+	
+	H_LCD_void_sendString("0b"); // Display "0b" as a prefix for binary numbers
+	H_LCD_void_sendString(buff); // Display the binary string
+}
+
+
 
 static void H_LCD_void_latchByte(u8 copy_u8Byte){
 	DIO_Config dataPins[] = {

@@ -22,15 +22,16 @@ void timerCallback(){
 
 int main(void) {
 	
-	GIE_enable();
+	//GIE_enable();
 	
-    M_TIMER0_void_setCallBack(timerCallback,OVERFLOW);
-	M_TIMER0_void_Init();
-	M_TIMER0_void_IntEnable(OVERFLOW);
-	M_TIMER0_void_setDelayTimeMilliSec(2500);
-	M_TIMER0_void_start();
+    //M_TIMER0_void_setCallBack(timerCallback,OVERFLOW);
+	//M_TIMER0_void_Init();
+	//M_TIMER0_void_IntEnable(OVERFLOW);
+	//M_TIMER0_void_setDelayTimeMilliSec(2500);
+	//M_TIMER0_void_start();
 	//_delay_ms(50);
-	//H_LCD_void_Init();
+	H_LCD_void_Init();
+	H_LCD_void_sendBinaryNum(001); // Display the binary value on the LCD
 	
 	//H_LCD_void_gotoXY(2,5);
 	//H_LCD_void_sendIntNum(14356);
