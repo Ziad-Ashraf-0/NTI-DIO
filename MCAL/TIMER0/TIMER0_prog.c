@@ -14,6 +14,8 @@
 //global -> number of overflows=0 , remaing counts =0
 u32 numOverflows = 0;
 u32 remainingCounts = 0;
+Prescaler prescaler = 0;
+Oc0 fast_oc0_mode = 0;
 
 // Array of three pointers to functions
 void (*Action_Timer[2])(void) = {NULL, NULL};
@@ -21,6 +23,7 @@ void (*Action_Timer[2])(void) = {NULL, NULL};
 
 // mode and oc0 pin mode
 void M_TIMER0_void_Init(const Timer0_Config* config){
+	prescaler = config->prescaler;
 	
 	if(config->mode == TIMER0_MODE_NORMAL){
 		/* Configure the timer control register
@@ -39,6 +42,7 @@ void M_TIMER0_void_Init(const Timer0_Config* config){
 		OCR0_REG = config->ocr0;
 		TCCR0_REG = (1<<FOC_BIT) | (1<< WGM01_BIT) | (config->oc0 << 4);
 		}else if(config->mode == TIMER0_MODE_FAST_PWM){
+		fast_oc0_mode = config->oc0;
 		/* Configure timer control register
 		* 1. Fast PWM mode FOC0=0
 		* 2. Fast PWM Mode WGM01=1 & WGM00=1
@@ -55,10 +59,10 @@ void M_TIMER0_void_Init(const Timer0_Config* config){
 	}
 }
 
-void M_TIMER0_void_start(const Timer0_Config* config){
+void M_TIMER0_void_start(void){
 	
 	TCCR0_REG &= TIMER0_PRESCALER_MASK;
-	TCCR0_REG |= config->prescaler;
+	TCCR0_REG |= prescaler;
 }
 
 
@@ -79,7 +83,7 @@ void M_TIMER0_void_setDelayTimeMilliSec(u32 copy_u32TimeMS){
 		1024,	//TIMER0_PRESCALER_1024
 	};
 
-	u32 tickTime = prescalerMap[TIMER0_PRESCALER] / FCPU;
+	u32 tickTime = prescalerMap[prescaler] / FCPU;
 	u32 totalCounts = (copy_u32TimeMS * 1000) / tickTime;
 	
 	// Calculate the number of overflows required
@@ -104,6 +108,22 @@ void M_TIMER0_void_IntDisable(u8 copy_u8IntID){
 		}else if(copy_u8IntID == COMPARE){
 		CLR_BIT(TIMSK_REG,OCIE0_BIT); // Disable Timer0 Compare Interrupt
 	}
+}
+
+void M_TIMER0_void_setFastPWM(u8 freq, u8 duty){
+	u8 ocr0_value = (duty * 255) / 100 ;
+	OCR0_REG = ocr0_value;
+	TCCR0_REG &= TIMER0_PRESCALER_MASK;
+	//are they constants??
+	TCCR0_REG |= prescaler;
+}
+
+void M_TIMER0_void_setPhaseCorrectPWM(u8 freq, u8 duty){
+	u8 ocr0_value = (duty * 255) / 100 ;
+	OCR0_REG = 255- ocr0_value;
+	TCCR0_REG &= TIMER0_PRESCALER_MASK;
+	//are they constants??
+	TCCR0_REG |= prescaler;
 }
 
 

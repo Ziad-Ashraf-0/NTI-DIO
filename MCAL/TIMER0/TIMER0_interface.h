@@ -14,6 +14,7 @@ typedef enum
 	OVERFLOW,
 	COMPARE
 }IntID;
+
 typedef enum
 {
 	NORMAL = 0,
@@ -39,8 +40,7 @@ typedef enum{
 	OC0_DISCONNECTED = 0,
 	OC0_SET = 3,
 	OC0_CLR = 2,
-	OC0_TOGGLE = 1,
-	
+	OC0_TOGGLE = 1,		
 }Oc0;
 
 
@@ -56,12 +56,14 @@ typedef struct {
 
 
 void M_TIMER0_void_Init(const Timer0_Config* config);
-void M_TIMER0_void_start(const Timer0_Config* config);
+void M_TIMER0_void_start(void);
 void M_TIMER0_void_stop(void);
 void M_TIMER0_void_setDelayTimeMilliSec(u32 copy_u32TimeMS);
-void M_TIMER0_void_IntEnable(u8 copy_u8IntID); // id overflow or comparematch
+void M_TIMER0_void_IntEnable(u8 copy_u8IntID); // id overflow or compare match
 void M_TIMER0_void_IntDisable(u8 copy_u8IntID);
 void M_TIMER0_void_setCallBack(void (*ptrfn)(void),u8 copy_u8IntID);
+void M_TIMER0_void_setFastPWM(u8 freq, u8 duty);
+void M_TIMER0_void_setPhaseCorrectPWM(u8 freq, u8 duty);
 
 
 

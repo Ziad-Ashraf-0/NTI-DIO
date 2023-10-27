@@ -26,12 +26,14 @@ int main(void) {
 		
 	GIE_enable();
 	
-	Timer0_Config timerConfig = {CTC, PRESCALER_1024, OC0_TOGGLE, 250};
+	Timer0_Config timerConfig = {PHASE_CORRECT_PWM, PRESCALER_1024, OC0_SET, 250};
     //M_TIMER0_void_setCallBack(timerCallback,COMPARE);
 	M_TIMER0_void_Init(&timerConfig);
 	//M_TIMER0_void_IntEnable(COMPARE);
 	//M_TIMER0_void_setDelayTimeMilliSec(3000);
-	M_TIMER0_void_start(&timerConfig);
+	//M_TIMER0_void_start();
+	//M_TIMER0_void_setFastPWM(1,80);
+	M_TIMER0_void_setPhaseCorrectPWM(1,80);
 	
 	//_delay_ms(50);
 	//H_LCD_void_Init();
