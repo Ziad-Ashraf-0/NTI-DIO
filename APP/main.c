@@ -21,14 +21,18 @@ void timerCallback(){
 }
 
 int main(void) {
-	
+	DIO_Config led = {DIO_PORTB,DIO_PIN3,DIO_PIN_OUTPUT};
+	DIO_U8SetPinDirection(&led);
+		
 	GIE_enable();
 	
-    M_TIMER0_void_setCallBack(timerCallback,OVERFLOW);
-	M_TIMER0_void_Init();
-	M_TIMER0_void_IntEnable(OVERFLOW);
-	M_TIMER0_void_setDelayTimeMilliSec(3000);
-	M_TIMER0_void_start();
+	Timer0_Config timerConfig = {CTC, PRESCALER_1024, OC0_TOGGLE, 250};
+    //M_TIMER0_void_setCallBack(timerCallback,COMPARE);
+	M_TIMER0_void_Init(&timerConfig);
+	//M_TIMER0_void_IntEnable(COMPARE);
+	//M_TIMER0_void_setDelayTimeMilliSec(3000);
+	M_TIMER0_void_start(&timerConfig);
+	
 	//_delay_ms(50);
 	//H_LCD_void_Init();
 	//H_LCD_void_sendBinaryNum(001); // Display the binary value on the LCD
