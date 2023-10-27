@@ -29,7 +29,7 @@ void M_TIMER0_void_Init(const Timer0_Config* config){
 		* 3. Normal Mode COM00=0 & COM01=0
 		*/
 		TCCR0_REG = (1<<FOC_BIT);
-	}else if(config->mode == TIMER0_MODE_CTC){
+		}else if(config->mode == TIMER0_MODE_CTC){
 		/* Configure the timer control register
 		* 1. Non PWM mode FOC0=1
 		* 2. CTC Mode WGM01=1 & WGM00=0
@@ -38,20 +38,20 @@ void M_TIMER0_void_Init(const Timer0_Config* config){
 		*/
 		OCR0_REG = config->ocr0;
 		TCCR0_REG = (1<<FOC_BIT) | (1<< WGM01_BIT) | (config->oc0 << 4);
-	}else if(config->mode == TIMER0_MODE_FAST_PWM){
-		/* Configure the timer control register
-		* 1. Non PWM mode FOC0=1
-		* 2. Normal Mode WGM01=0 & WGM00=0
-		* 3. Normal Mode COM00=0 & COM01=0
+		}else if(config->mode == TIMER0_MODE_FAST_PWM){
+		/* Configure timer control register
+		* 1. Fast PWM mode FOC0=0
+		* 2. Fast PWM Mode WGM01=1 & WGM00=1
+		* 3. Select OC0 mode throw COM00 & COM01
 		*/
-		TCCR0_REG = (1<<FOC_BIT);
-	}else if(config->mode == TIMER0_MODE_PHASE_CORRECT_PWM){
+		TCCR0_REG = (1<<WGM01_BIT) | (1<<WGM00_BIT) | (config->oc0 << 4);
+		}else if(config->mode == TIMER0_MODE_PHASE_CORRECT_PWM){
 		/* Configure the timer control register
-		* 1. Non PWM mode FOC0=1
-		* 2. Normal Mode WGM01=0 & WGM00=0
-		* 3. Normal Mode COM00=0 & COM01=0
+		* 1. PWM mode FOC0=0
+		* 2. Phase PWM Mode WGM01=0 & WGM00=1
+		* 3. Select OC0 mode throw COM00 & COM01
 		*/
-		TCCR0_REG = (1<<FOC_BIT);
+		TCCR0_REG = (1<<WGM00_BIT) | (config->oc0 << 4);
 	}
 }
 
@@ -142,7 +142,7 @@ ISR(TIMER0_OVF_vect){
 ISR(TIMER0_COMP_vect){
 
 	if(Action_Timer[1]!= NULL){
-			Action_Timer[1]();
+		Action_Timer[1]();
 		
 	}
 }
