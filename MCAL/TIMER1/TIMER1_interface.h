@@ -13,20 +13,27 @@
 
 #if (FCPU == 16)
 
-//typedef enum{
-//	FREQ_625000_HZ	=	1,
-//	FREQ_7812_HZ	=	2,
-//	FREQ_976_HZ		=	3,
-//	FREQ_244_HZ		=	4,
-//	FREQ_61_HZ		=	5
-//}Valid_Freq;
+typedef enum{
+	TIMER1_FREQ_244_HZ		=	1,
+	TIMER1_FREQ_30_HZ		=	2,
+	TIMER1_FREQ_4_HZ		=	3,
+	TIMER1_FREQ_1_HZ		=	4,
+	TIMER1_FREQ_Quarter_HZ	=	5
+}TIMER1_Valid_Freq;
 
 #endif
 
 typedef enum
 {
+	FALLING,RISING
+}Icu_EdgeType;
+
+typedef enum
+{
 	TIMER1_OVERFLOW,
-	TIMER1_COMPARE
+	TIMER1_COMPARE_A,
+	TIMER1_COMPARE_B,
+	TIMER1_ICU,
 }Timer1_IntID;
 
 typedef enum
@@ -61,11 +68,11 @@ typedef enum
 }Timer1_Prescaler;
 
 typedef enum{
-	Timer1_OC0_DISCONNECTED = 0,
-	Timer1_OC0_SET = 3,
-	Timer1_OC0_CLR = 2,
-	Timer1_OC0_TOGGLE = 1,
-}Timer1_Oc0;
+	Timer1_OC1A_OC1B_DISCONNECTED = 0,
+	Timer1_OC1A_TOGGLE = 1,
+	Timer1_OC1A_OC1B_CLR = 2,
+	Timer1_OC1A_OC1B_SET = 3,
+}Timer1_Oc1;
 
 /*************************************************************************************/
 /* TIMER0 Configuration Structure */
@@ -73,8 +80,8 @@ typedef enum{
 typedef struct {
 	Timer1_Mode mode;
 	Timer1_Prescaler prescaler;
-	Timer1_Oc0 oc0;
-	u8 ocr0;
+	Timer1_Oc1 oc1;
+	u16 ocr1;
 } Timer1_Config;
 
 
@@ -85,8 +92,9 @@ void M_TIMER1_void_setDelayTimeMilliSec(u32 copy_u32TimeMS);
 void M_TIMER1_void_IntEnable(Timer1_IntID copy_u8IntID); // id overflow or compare match
 void M_TIMER1_void_IntDisable(u8 copy_u8IntID);
 void M_TIMER1_void_setCallBack(void (*ptrfn)(void),Timer1_IntID copy_u8IntID);
-void M_TIMER1_void_setFastPWM(u8 freq, u8 duty);
+void M_TIMER1_void_setFastPWM(TIMER1_Valid_Freq freq, u8 duty);
 void M_TIMER1_void_setPhaseCorrectPWM(u8 freq, u8 duty);
+u32 M_TIMER1_void_measureDutyCycle(void);
 
 
 #endif /* TIMER1_INTERFACE_H_ */

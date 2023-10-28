@@ -58,8 +58,10 @@ typedef struct {
 #define OCIE1B_BIT 3
 #define TOIE1_BIT  2
 
-// Bit mask to isolate the prescaler bits
-#define TIMER1_PRESCALER_MASK    0xF8
+// Bit masks
+#define TIMER1_PRESCALER_MASK    0xF8   //Prescaler
+#define TIMER1_WGM11_WGM10_MASK  0x03
+#define TIMER1_WGM12_WGM12_MASK  0xE7   
 
 
 

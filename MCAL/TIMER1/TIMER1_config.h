@@ -10,11 +10,6 @@
 #define TIMER1_CONFIG_H_
 
 
-typedef enum
-{
-	OVERFLOW,
-	COMPARE
-}IntID;
 
 
 #endif /* TIMER1_CONFIG_H_ */
