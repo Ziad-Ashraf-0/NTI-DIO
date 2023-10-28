@@ -18,6 +18,18 @@ numOverflows:
 	.size	remainingCounts, 4
 remainingCounts:
 	.skip 4,0
+.global	prescaler
+.global	prescaler
+	.type	prescaler, @object
+	.size	prescaler, 2
+prescaler:
+	.skip 2,0
+.global	fast_oc0_mode
+.global	fast_oc0_mode
+	.type	fast_oc0_mode, @object
+	.size	fast_oc0_mode, 2
+fast_oc0_mode:
+	.skip 2,0
 .global	Action_Timer
 .global	Action_Timer
 	.type	Action_Timer, @object
@@ -37,6 +49,12 @@ M_TIMER0_void_Init:
 /* frame size = 2 */
 	std Y+2,r25
 	std Y+1,r24
+	ldd r30,Y+1
+	ldd r31,Y+2
+	ldd r24,Z+2
+	ldd r25,Z+3
+	sts (prescaler)+1,r25
+	sts prescaler,r24
 	ldd r30,Y+1
 	ldd r31,Y+2
 	ld r24,Z
@@ -81,6 +99,12 @@ M_TIMER0_void_Init:
 	cpi r24,3
 	cpc r25,__zero_reg__
 	brne .L5
+	ldd r30,Y+1
+	ldd r31,Y+2
+	ldd r24,Z+4
+	ldd r25,Z+5
+	sts (fast_oc0_mode)+1,r25
+	sts fast_oc0_mode,r24
 	ldi r26,lo8(83)
 	ldi r27,hi8(83)
 	ldd r30,Y+1
@@ -123,13 +147,10 @@ M_TIMER0_void_Init:
 M_TIMER0_void_start:
 	push r29
 	push r28
-	rcall .
 	in r28,__SP_L__
 	in r29,__SP_H__
 /* prologue: function */
-/* frame size = 2 */
-	std Y+2,r25
-	std Y+1,r24
+/* frame size = 0 */
 	ldi r26,lo8(83)
 	ldi r27,hi8(83)
 	ldi r30,lo8(83)
@@ -142,15 +163,11 @@ M_TIMER0_void_start:
 	ldi r30,lo8(83)
 	ldi r31,hi8(83)
 	ld r18,Z
-	ldd r30,Y+1
-	ldd r31,Y+2
-	ldd r24,Z+2
-	ldd r25,Z+3
+	lds r24,prescaler
+	lds r25,(prescaler)+1
 	or r24,r18
 	st X,r24
 /* epilogue start */
-	pop __tmp_reg__
-	pop __tmp_reg__
 	pop r28
 	pop r29
 	ret
@@ -177,9 +194,9 @@ M_TIMER0_void_stop:
 	ret
 	.size	M_TIMER0_void_stop, .-M_TIMER0_void_stop
 	.data
-	.type	prescalerMap.1297, @object
-	.size	prescalerMap.1297, 12
-prescalerMap.1297:
+	.type	prescalerMap.1307, @object
+	.size	prescalerMap.1307, 12
+prescalerMap.1307:
 	.word	0
 	.word	1
 	.word	8
@@ -206,8 +223,16 @@ M_TIMER0_void_setDelayTimeMilliSec:
 	std Y+10,r23
 	std Y+11,r24
 	std Y+12,r25
-	lds r24,prescalerMap.1297+10
-	lds r25,(prescalerMap.1297+10)+1
+	lds r24,prescaler
+	lds r25,(prescaler)+1
+	lsl r24
+	rol r25
+	mov r30,r24
+	mov r31,r25
+	subi r30,lo8(-(prescalerMap.1307))
+	sbci r31,hi8(-(prescalerMap.1307))
+	ld r24,Z
+	ldd r25,Z+1
 	swap r25
 	swap r24
 	andi r24,0x0f
@@ -366,6 +391,151 @@ M_TIMER0_void_IntDisable:
 	pop r29
 	ret
 	.size	M_TIMER0_void_IntDisable, .-M_TIMER0_void_IntDisable
+.global	M_TIMER0_void_setFastPWM
+	.type	M_TIMER0_void_setFastPWM, @function
+M_TIMER0_void_setFastPWM:
+	push r29
+	push r28
+	rcall .
+	push __tmp_reg__
+	in r28,__SP_L__
+	in r29,__SP_H__
+/* prologue: function */
+/* frame size = 3 */
+	std Y+2,r24
+	std Y+3,r22
+	ldd r24,Y+3
+	mov r18,r24
+	ldi r19,lo8(0)
+	mov r24,r18
+	mov r25,r19
+	swap r24
+	swap r25
+	andi r25,0xf0
+	eor r25,r24
+	andi r24,0xf0
+	eor r25,r24
+	sub r24,r18
+	sbc r25,r19
+	mov r18,r24
+	mov r19,r25
+	swap r18
+	swap r19
+	andi r19,0xf0
+	eor r19,r18
+	andi r18,0xf0
+	eor r19,r18
+	add r24,r18
+	adc r25,r19
+	ldi r18,lo8(100)
+	ldi r19,hi8(100)
+	mov r22,r18
+	mov r23,r19
+	rcall __divmodhi4
+	mov r24,r22
+	mov r25,r23
+	std Y+1,r24
+	ldi r30,lo8(92)
+	ldi r31,hi8(92)
+	ldd r24,Y+1
+	st Z,r24
+	ldi r26,lo8(83)
+	ldi r27,hi8(83)
+	ldi r30,lo8(83)
+	ldi r31,hi8(83)
+	ld r24,Z
+	andi r24,lo8(-8)
+	st X,r24
+	ldi r26,lo8(83)
+	ldi r27,hi8(83)
+	ldi r30,lo8(83)
+	ldi r31,hi8(83)
+	ld r18,Z
+	lds r24,prescaler
+	lds r25,(prescaler)+1
+	or r24,r18
+	st X,r24
+/* epilogue start */
+	pop __tmp_reg__
+	pop __tmp_reg__
+	pop __tmp_reg__
+	pop r28
+	pop r29
+	ret
+	.size	M_TIMER0_void_setFastPWM, .-M_TIMER0_void_setFastPWM
+.global	M_TIMER0_void_setPhaseCorrectPWM
+	.type	M_TIMER0_void_setPhaseCorrectPWM, @function
+M_TIMER0_void_setPhaseCorrectPWM:
+	push r29
+	push r28
+	rcall .
+	push __tmp_reg__
+	in r28,__SP_L__
+	in r29,__SP_H__
+/* prologue: function */
+/* frame size = 3 */
+	std Y+2,r24
+	std Y+3,r22
+	ldd r24,Y+3
+	mov r18,r24
+	ldi r19,lo8(0)
+	mov r24,r18
+	mov r25,r19
+	swap r24
+	swap r25
+	andi r25,0xf0
+	eor r25,r24
+	andi r24,0xf0
+	eor r25,r24
+	sub r24,r18
+	sbc r25,r19
+	mov r18,r24
+	mov r19,r25
+	swap r18
+	swap r19
+	andi r19,0xf0
+	eor r19,r18
+	andi r18,0xf0
+	eor r19,r18
+	add r24,r18
+	adc r25,r19
+	ldi r18,lo8(100)
+	ldi r19,hi8(100)
+	mov r22,r18
+	mov r23,r19
+	rcall __divmodhi4
+	mov r24,r22
+	mov r25,r23
+	std Y+1,r24
+	ldi r30,lo8(92)
+	ldi r31,hi8(92)
+	ldd r24,Y+1
+	com r24
+	st Z,r24
+	ldi r26,lo8(83)
+	ldi r27,hi8(83)
+	ldi r30,lo8(83)
+	ldi r31,hi8(83)
+	ld r24,Z
+	andi r24,lo8(-8)
+	st X,r24
+	ldi r26,lo8(83)
+	ldi r27,hi8(83)
+	ldi r30,lo8(83)
+	ldi r31,hi8(83)
+	ld r18,Z
+	lds r24,prescaler
+	lds r25,(prescaler)+1
+	or r24,r18
+	st X,r24
+/* epilogue start */
+	pop __tmp_reg__
+	pop __tmp_reg__
+	pop __tmp_reg__
+	pop r28
+	pop r29
+	ret
+	.size	M_TIMER0_void_setPhaseCorrectPWM, .-M_TIMER0_void_setPhaseCorrectPWM
 .global	M_TIMER0_void_setCallBack
 	.type	M_TIMER0_void_setCallBack, @function
 M_TIMER0_void_setCallBack:
@@ -382,21 +552,21 @@ M_TIMER0_void_setCallBack:
 	std Y+3,r22
 	ldd r24,Y+3
 	tst r24
-	brne .L22
+	brne .L26
 	ldd r24,Y+1
 	ldd r25,Y+2
 	sts (Action_Timer)+1,r25
 	sts Action_Timer,r24
-	rjmp .L24
-.L22:
+	rjmp .L28
+.L26:
 	ldd r24,Y+3
 	cpi r24,lo8(1)
-	brne .L24
+	brne .L28
 	ldd r24,Y+1
 	ldd r25,Y+2
 	sts (Action_Timer+2)+1,r25
 	sts Action_Timer+2,r24
-.L24:
+.L28:
 /* epilogue start */
 	pop __tmp_reg__
 	pop __tmp_reg__
@@ -405,7 +575,7 @@ M_TIMER0_void_setCallBack:
 	pop r29
 	ret
 	.size	M_TIMER0_void_setCallBack, .-M_TIMER0_void_setCallBack
-	.lcomm counter.1354,4
+	.lcomm counter.1405,4
 .global	__vector_11
 	.type	__vector_11, @function
 __vector_11:
@@ -436,22 +606,22 @@ __vector_11:
 	lds r25,(Action_Timer)+1
 	sbiw r24,0
 	brne .+2
-	rjmp .L27
-	lds r24,counter.1354
-	lds r25,(counter.1354)+1
-	lds r26,(counter.1354)+2
-	lds r27,(counter.1354)+3
+	rjmp .L31
+	lds r24,counter.1405
+	lds r25,(counter.1405)+1
+	lds r26,(counter.1405)+2
+	lds r27,(counter.1405)+3
 	adiw r24,1
 	adc r26,__zero_reg__
 	adc r27,__zero_reg__
-	sts counter.1354,r24
-	sts (counter.1354)+1,r25
-	sts (counter.1354)+2,r26
-	sts (counter.1354)+3,r27
-	lds r18,counter.1354
-	lds r19,(counter.1354)+1
-	lds r20,(counter.1354)+2
-	lds r21,(counter.1354)+3
+	sts counter.1405,r24
+	sts (counter.1405)+1,r25
+	sts (counter.1405)+2,r26
+	sts (counter.1405)+3,r27
+	lds r18,counter.1405
+	lds r19,(counter.1405)+1
+	lds r20,(counter.1405)+2
+	lds r21,(counter.1405)+3
 	lds r24,numOverflows
 	lds r25,(numOverflows)+1
 	lds r26,(numOverflows)+2
@@ -460,7 +630,7 @@ __vector_11:
 	cpc r19,r25
 	cpc r20,r26
 	cpc r21,r27
-	brne .L27
+	brne .L31
 	ldi r30,lo8(82)
 	ldi r31,hi8(82)
 	lds r24,remainingCounts
@@ -469,14 +639,14 @@ __vector_11:
 	lds r27,(remainingCounts)+3
 	neg r24
 	st Z,r24
-	sts counter.1354,__zero_reg__
-	sts (counter.1354)+1,__zero_reg__
-	sts (counter.1354)+2,__zero_reg__
-	sts (counter.1354)+3,__zero_reg__
+	sts counter.1405,__zero_reg__
+	sts (counter.1405)+1,__zero_reg__
+	sts (counter.1405)+2,__zero_reg__
+	sts (counter.1405)+3,__zero_reg__
 	lds r30,Action_Timer
 	lds r31,(Action_Timer)+1
 	icall
-.L27:
+.L31:
 /* epilogue start */
 	pop r28
 	pop r29
@@ -527,11 +697,11 @@ __vector_10:
 	lds r24,Action_Timer+2
 	lds r25,(Action_Timer+2)+1
 	sbiw r24,0
-	breq .L30
+	breq .L34
 	lds r30,Action_Timer+2
 	lds r31,(Action_Timer+2)+1
 	icall
-.L30:
+.L34:
 /* epilogue start */
 	pop r28
 	pop r29

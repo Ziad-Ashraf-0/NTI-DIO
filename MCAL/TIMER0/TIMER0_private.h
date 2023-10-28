@@ -9,7 +9,7 @@
 #define TIMER0_PRIVATE_H_
 
 /* Definitions for Timer0 Register Addresses */
-#define FCPU 16
+
 #define TCCR0_REG    (*((u8*)0x53))  // Timer Control Register
 #define TCNT0_REG    (*((u8*)0x52))  // Timer Counter Register
 #define OCR0_REG     (*((u8*)0x5C))  // Output Compare Register

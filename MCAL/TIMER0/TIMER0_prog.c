@@ -17,7 +17,7 @@ u32 remainingCounts = 0;
 Prescaler prescaler = 0;
 Oc0 fast_oc0_mode = 0;
 
-// Array of three pointers to functions
+// Array of two pointers to functions
 void (*Action_Timer[2])(void) = {NULL, NULL};
 
 
@@ -110,20 +110,26 @@ void M_TIMER0_void_IntDisable(u8 copy_u8IntID){
 	}
 }
 
-void M_TIMER0_void_setFastPWM(u8 freq, u8 duty){
+void M_TIMER0_void_setFastPWM(Valid_Freq freq, u8 duty){
 	u8 ocr0_value = (duty * 255) / 100 ;
+	if(fast_oc0_mode == OC0_CLR){
+		OCR0_REG = ocr0_value;
+	}else if(fast_oc0_mode == OC0_SET){
+		OCR0_REG = ocr0_value;
+	}
+	
+	TCCR0_REG &= TIMER0_PRESCALER_MASK;
+	//are they constants??
+
+	TCCR0_REG |= freq;
+}
+
+void M_TIMER0_void_setPhaseCorrectPWM(Valid_Freq freq, u8 duty){
+	u8 ocr0_value = ((duty/2) * 255) / 100 ;
 	OCR0_REG = ocr0_value;
 	TCCR0_REG &= TIMER0_PRESCALER_MASK;
 	//are they constants??
-	TCCR0_REG |= prescaler;
-}
-
-void M_TIMER0_void_setPhaseCorrectPWM(u8 freq, u8 duty){
-	u8 ocr0_value = (duty * 255) / 100 ;
-	OCR0_REG = 255- ocr0_value;
-	TCCR0_REG &= TIMER0_PRESCALER_MASK;
-	//are they constants??
-	TCCR0_REG |= prescaler;
+	TCCR0_REG |= freq;
 }
 
 

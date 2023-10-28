@@ -20,3 +20,5 @@ MCAL\GIE\GIE_prog.c
 
 MCAL\TIMER0\TIMER0_prog.c
 
+MCAL\TIMER1\TIMER1_prog.c
+

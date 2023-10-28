@@ -9,6 +9,20 @@
 #ifndef TIMER0_INTERFACE_H_
 #define TIMER0_INTERFACE_H_
 
+#define FCPU 16
+
+#if (FCPU == 16)
+
+typedef enum{
+	FREQ_625000_HZ	=	1,
+	FREQ_7812_HZ	=	2,
+	FREQ_976_HZ		=	3,
+	FREQ_244_HZ		=	4,
+	FREQ_61_HZ		=	5
+}Valid_Freq;
+
+#endif
+
 typedef enum
 {
 	OVERFLOW,
@@ -62,8 +76,8 @@ void M_TIMER0_void_setDelayTimeMilliSec(u32 copy_u32TimeMS);
 void M_TIMER0_void_IntEnable(u8 copy_u8IntID); // id overflow or compare match
 void M_TIMER0_void_IntDisable(u8 copy_u8IntID);
 void M_TIMER0_void_setCallBack(void (*ptrfn)(void),u8 copy_u8IntID);
-void M_TIMER0_void_setFastPWM(u8 freq, u8 duty);
-void M_TIMER0_void_setPhaseCorrectPWM(u8 freq, u8 duty);
+void M_TIMER0_void_setFastPWM(Valid_Freq freq, u8 duty);
+void M_TIMER0_void_setPhaseCorrectPWM(Valid_Freq freq, u8 duty);
 
 
 
