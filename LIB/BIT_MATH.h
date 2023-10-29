@@ -27,4 +27,10 @@
 /* Writes bit number bit_num in variable var with the value val 					*/
 #define WRITE_BIT(var, bit_num, val) var = (var & (~(1 << bit_num))) | (val << bit_num)
 
+/* Check if a specific bit is set in any register and return true if yes			*/
+#define BIT_IS_SET(REG,BIT) ( REG & (1<<BIT) )
+
+/* Check if a specific bit is cleared in any register and return true if yes		*/
+#define BIT_IS_CLEAR(REG,BIT) ( !(REG & (1<<BIT)) )
+
 #endif /* LIB_BIT_MATH_H_ */

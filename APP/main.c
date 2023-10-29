@@ -14,6 +14,7 @@
 #include "../HAL/LCD/LCD_interface.h"
 #include "../MCAL/TIMER0/TIMER0_interface.h"
 #include "../MCAL/TIMER1/TIMER1_interface.h"
+#include "../MCAL/USART/USART_interface.h"
 #include <util/delay.h>
 
 
@@ -55,41 +56,44 @@ void ICUtimerCallback(){
 
 int main(void) {
 	//ICU input pin
-	DIO_Config icu_bit = {DIO_PORTD,DIO_PIN6,DIO_PIN_INPUT};
-	DIO_U8SetPinDirection(&icu_bit);
+	//DIO_Config icu_bit = {DIO_PORTD,DIO_PIN6,DIO_PIN_INPUT};
+	//DIO_U8SetPinDirection(&icu_bit);
 	
 	//TIMER0 output pin OC0
-	DIO_Config oc0_bit = {DIO_PORTB,DIO_PIN3,DIO_PIN_OUTPUT};
-	DIO_U8SetPinDirection(&oc0_bit);
+	//DIO_Config oc0_bit = {DIO_PORTB,DIO_PIN3,DIO_PIN_OUTPUT};
+	//DIO_U8SetPinDirection(&oc0_bit);
 	
-	GIE_enable();
+	//GIE_enable();
 	H_LCD_void_Init();
 	
 
 	
-	Timer0_Config timerConfig0 = {FAST_PWM,PRESCALER_1024,OC0_CLR};
-	M_TIMER0_void_Init(&timerConfig0);
-	M_TIMER0_void_setFastPWM(FREQ_976_HZ,30);
+	//Timer0_Config timerConfig0 = {FAST_PWM,PRESCALER_1024,OC0_CLR};
+	//M_TIMER0_void_Init(&timerConfig0);
+	//M_TIMER0_void_setFastPWM(FREQ_976_HZ,30);
+	//
+	//Timer1_Config timerConfig1 = {Timer1_NORMAL,Timer1_PRESCALER_64};
+	//M_TIMER1_void_setCallBack(ICUtimerCallback,TIMER1_ICU);
+	//M_TIMER1_void_setCallBack(TimerOVFCallBack,TIMER1_OVERFLOW);
+	//M_TIMER1_void_Init(&timerConfig1);
+	//M_TIMER1_void_IntEnable(TIMER1_ICU);
+	//M_TIMER1_void_IntEnable(TIMER1_OVERFLOW);
+	//M_TIMER1_void_setEdgeDetectionType(RISING);
+	//M_TIMER1_void_start();
+	//while(g_edgeCount < 4);
+	//u32 dutyCycle = ((float)(g_timeHigh) / (g_timePeriod)) * 100;
+	//H_LCD_void_sendIntNum(dutyCycle);
+	//H_LCD_void_sendData('%');
 	
-	Timer1_Config timerConfig1 = {Timer1_NORMAL,Timer1_PRESCALER_64};
-	M_TIMER1_void_setCallBack(ICUtimerCallback,TIMER1_ICU);
-	M_TIMER1_void_setCallBack(TimerOVFCallBack,TIMER1_OVERFLOW);
-	M_TIMER1_void_Init(&timerConfig1);
-	M_TIMER1_void_IntEnable(TIMER1_ICU);
-	M_TIMER1_void_IntEnable(TIMER1_OVERFLOW);
-	M_TIMER1_void_setEdgeDetectionType(RISING);
-	M_TIMER1_void_start();
-	while(g_edgeCount < 4);
-	u32 dutyCycle = ((float)(g_timeHigh) / (g_timePeriod)) * 100;
-	H_LCD_void_sendIntNum(dutyCycle);
-	H_LCD_void_sendData('%');
 	
+	M_USART_void_Init();
+
 
 	while (1) {
 		
-		for (u8 i =0;i<100;i++){
-
-		}
+			u8 key = KEYPAD_getPressedKey();
+			UART_sendByte(key);
+			H_LCD_void_sendData(key);
 		
 	}
 

@@ -11,6 +11,9 @@
 
 
 
+void M_USART_void_Init(void);
+void UART_sendByte(const u8 data);
+u8 UART_recieveByte(void);
 
 
 #endif /* USART_INTERFACE_H_ */
