@@ -225,6 +225,18 @@
     <Compile Include="MCAL\TIMER1\TIMER1_prog.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MCAL\USART\USART_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\USART\USART_interface.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\USART\USART_private.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\USART\USART_prog.c">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APP" />
@@ -238,6 +250,7 @@
     <Folder Include="MCAL\DIO\" />
     <Folder Include="MCAL\EXTI\" />
     <Folder Include="MCAL\GIE\" />
+    <Folder Include="MCAL\USART" />
     <Folder Include="MCAL\TIMER1" />
     <Folder Include="MCAL\TIMER0" />
   </ItemGroup>
