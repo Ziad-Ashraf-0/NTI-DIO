@@ -14,14 +14,12 @@
 /*************************************************************************************/
 
 typedef struct {
-	u8 ICR1L;
-	u8 ICR1H;
+	u16 ICR1;
 	u8 OCR1BL;
 	u8 OCR1BH;
 	u8 OCR1AL;
 	u8 OCR1AH;
-	u8 TCNT1L;
-	u8 TCNT1H;
+	u16 TCNT1;
 	u8 TCCR1B;
 	u8 TCCR1A;
 	u8 padding[9];

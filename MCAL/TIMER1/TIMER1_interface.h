@@ -95,6 +95,9 @@ void M_TIMER1_void_setCallBack(void (*ptrfn)(void),Timer1_IntID copy_u8IntID);
 void M_TIMER1_void_setFastPWM(TIMER1_Valid_Freq freq, u8 duty);
 void M_TIMER1_void_setPhaseCorrectPWM(u8 freq, u8 duty);
 u32 M_TIMER1_void_measureDutyCycle(void);
+u16 M_TIMER1_void_getInputCaptureValue(void);
+void M_TIMER1_void_setEdgeDetectionType(const Icu_EdgeType a_edgeType);
+void M_TIMER1_void_clearTimerValue(void);
 
 
 #endif /* TIMER1_INTERFACE_H_ */

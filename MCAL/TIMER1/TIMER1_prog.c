@@ -17,15 +17,15 @@
 //#define ICR1    _SFR_IO16(0x26)
 
 //global -> number of overflows=0 , remaing counts =0
-static u32 numOverflows = 0;
+static u32 req_numOverflows = 0;
 static u32 remainingCounts = 0;
 static Timer1_Prescaler prescaler = 0;
 
-
-volatile u8 g_edgeCount = 0;
-volatile u16 g_timeHigh = 0;
-volatile u16 g_timePeriod = 0;
-volatile u16 g_timePeriodPlusHigh = 0;
+static u32 numOverflows = 0;
+static u8 g_edgeCount = 0;
+static u16 g_timeHigh = 0;
+static u16 g_timePeriod = 0;
+static u16 g_timePeriodPlusHigh = 0;
 
 
 
@@ -104,7 +104,7 @@ void M_TIMER1_void_setDelayTimeMilliSec(u32 copy_u32TimeMS){
 	u32 totalCounts = (copy_u32TimeMS * 1000) / tickTime;
 	
 	// Calculate the number of overflows required
-	numOverflows = totalCounts / 65536;
+	req_numOverflows = totalCounts / 65536;
 	// Calculate the remaining counts
 	remainingCounts = totalCounts % 65536;
 
@@ -120,6 +120,26 @@ void M_TIMER1_void_setCallBack(void (*ptrfn)(void),Timer1_IntID copy_u8IntID){
 	}
 }
 
+u16 M_TIMER1_void_getInputCaptureValue(void){
+	return TIMER1_BASE->ICR1;
+}
+
+void M_TIMER1_void_setEdgeDetectionType(const Icu_EdgeType a_edgeType)
+{
+	/*
+	 * insert the required edge type in ICES1 bit in TCCR1B Register
+	 */
+	TIMER1_BASE-> TCCR1B = (TIMER1_BASE-> TCCR1B & 0xBF) | (a_edgeType << 6);
+}
+
+/*
+ * Description: Function to clear the Timer1 Value to start count from ZERO
+ */
+void M_TIMER1_void_clearTimerValue(void)
+{
+	TIMER1_BASE->TCNT1 = 0;
+}
+
 u32 M_TIMER1_void_measureDutyCycle(void){
 	u32 dutyCycle = 0;
 	/*
@@ -133,24 +153,60 @@ u32 M_TIMER1_void_measureDutyCycle(void){
 	*/
 	TIMER1_BASE-> TCCR1B = (TIMER1_BASE-> TCCR1B & 0xBF) | (RISING << 6);
 	/* Initial Value for Timer1 */
-	TIMER1_BASE->TCNT1L = 0;
-	TIMER1_BASE->TCNT1H = 0;
+	TIMER1_BASE->TCNT1 = 0;
 	/* Initial Value for the input capture register */
-	TIMER1_BASE->ICR1L = 0;
-	TIMER1_BASE->ICR1H = 0;
+	TIMER1_BASE->ICR1 = 0;
 	
 	while(g_edgeCount < 5);
 	
-	dutyCycle = ((float)(g_timePeriodPlusHigh-g_timePeriod) / (g_timePeriod)) * 100;
+	dutyCycle = ((float)(g_timePeriodPlusHigh-g_timePeriod) / (g_timePeriodPlusHigh - g_timeHigh)) * 100;
+
+	
 	return dutyCycle;
 	
 }
 
+u32 M_TIMER1_void_freq(void){
+	u32 freq = 0;
+	/*
+	* insert the required clock value in the first three bits (CS10, CS11 and CS12)
+	* of TCCR1B Register
+	*/
+	TIMER1_BASE-> TCCR1B &= TIMER1_PRESCALER_MASK;
+	TIMER1_BASE-> TCCR1B |= prescaler;
+	/*
+	* insert Rising EDGE at beginning
+	*/
+	TIMER1_BASE-> TCCR1B = (TIMER1_BASE-> TCCR1B & 0xBF) | (RISING << 6);
+	/* Initial Value for Timer1 */
+	TIMER1_BASE->TCNT1 = 0;
+	/* Initial Value for the input capture register */
+	TIMER1_BASE->ICR1 = 0;
+	
+	while(g_edgeCount < 5);
+	
+	const u16 prescalerMap[] = {
+		0,		// 0 is not used
+		1,		//TIMER1_PRESCALER_1
+		8,		//TIMER1_PRESCALER_8
+		64,		//TIMER1_PRESCALER_64
+		256,	//TIMER1_PRESCALER_256
+		1024,	//TIMER1_PRESCALER_1024
+	};
+
+	u32 tickTime = prescalerMap[prescaler] / FCPU;
+	
+	freq = g_timePeriod * tickTime;
+	return freq;
+}
+
 ISR(TIMER1_OVF_vect){
+	Action_Timer[0]();
+	numOverflows++;
 	static u32 counter = 0;
-	if(Action_Timer[0]!= NULL){	
+	if(Action_Timer[0]!= NULL){
 		counter++;
-		if(counter == numOverflows){
+		if(counter == req_numOverflows){
 			//TIMER1_BASE-> = 256 - remainingCounts;
 			counter = 0;
 			Action_Timer[0]();
@@ -167,38 +223,9 @@ ISR(TIMER1_COMPA_vect){
 
 
 ISR(TIMER1_CAPT_vect){
-	g_edgeCount++;
-	if(g_edgeCount == 1)
-	{
-		/*
-		* Clear the timer counter register to start measurements from the
-		* first detected rising edge
-		*/
-		TIMER1_BASE->TCNT1L = 0;
-		TIMER1_BASE->TCNT1H = 0;
-		/* Detect falling edge */
-		TIMER1_BASE-> TCCR1B = (TIMER1_BASE-> TCCR1B & 0xBF) | (FALLING << 6);
-	}
-	else if(g_edgeCount == 2)
-	{
-		/* Store the High time value */
-		g_timeHigh = TIMER1_BASE->ICR1H;
-		g_timeHigh = TIMER1_BASE->ICR1L;
-		/* Detect rising edge */
-		TIMER1_BASE-> TCCR1B = (TIMER1_BASE-> TCCR1B & 0xBF) | (RISING << 6);
-	}
-	else if(g_edgeCount == 3)
-	{
-		/* Store the Period time value */
-		g_timePeriod = TIMER1_BASE->ICR1H;
-		g_timePeriod = g_timePeriod << 8 | TIMER1_BASE->ICR1L;
-		/* Detect falling edge */
-		TIMER1_BASE-> TCCR1B = (TIMER1_BASE-> TCCR1B & 0xBF) | (FALLING << 6);
-	}
-	else if(g_edgeCount == 4)
-	{
-		/* Store the Period time value + High time value */
-		g_timePeriodPlusHigh = TIMER1_BASE->ICR1H;
-		g_timePeriodPlusHigh = g_timePeriodPlusHigh << 8 | TIMER1_BASE->ICR1L;
-	}
+		if(Action_Timer[3]!= NULL){
+			Action_Timer[3]();
+			
+			
+		}
 }
