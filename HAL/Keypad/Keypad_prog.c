@@ -13,6 +13,8 @@
 
 u8 KEYPAD_getPressedKey(){
 	u8 col,row;
+	u8 prevKey = 0; // Previous key state
+	u8 currentKey = 0; // Current key state
 	// Configuration for the columns
 	DIO_Config colPins[] = {
 		{COL1_PORT, COL1_PIN, DIO_PIN_INPUT, DIO_PIN_HIGH},
@@ -46,17 +48,18 @@ u8 KEYPAD_getPressedKey(){
 			/*for loop to scan and test all keypad row pins*/
 			for (col = 0 ; col < 4 ; col++)
 			{
-				u8 key;
-				DIO_U8GetPinValue(&colPins[col], &key);
-				/*check current row pin value*/
-				if ( DIO_PIN_LOW == key )
-				{
-					/*return pressed button value*/
-					while(key != DIO_PIN_HIGH){
-						DIO_U8GetPinValue(&colPins[col], &key);
+				DIO_U8GetPinValue(&colPins[col], &currentKey);
+
+				/* Check current row pin value */
+				if (DIO_PIN_LOW == currentKey && DIO_PIN_HIGH == prevKey) {
+					/* Key is pressed, return the pressed button value */
+					while (currentKey != DIO_PIN_HIGH) {
+						DIO_U8GetPinValue(&colPins[col], &currentKey);
 					}
-					return KEYPAD_4x4_adjustKeyNumber((col*KEYPAD_NUM_COLS)+row+1);
+					return KEYPAD_4x4_adjustKeyNumber((row * KEYPAD_NUM_COLS) + col + 1);
 				}
+
+				prevKey = currentKey; // Update the previous key state
 				/*end of for loop*/
 			}
 			/*set current column pin HIGH again*/
