@@ -43,6 +43,10 @@ void Ultrasonic_init(void){
 	/* setup the direction of the trigger to be output pin */
 	DIO_Config trig_bin = {ULTRASONIC_TRIGGER_PORTID,ULTRASONIC_TRIGGER_PINID,DIO_PIN_OUTPUT};
 	DIO_U8SetPinDirection(&trig_bin);
+	
+		/* setup the direction of the trigger to be output pin */
+		DIO_Config trig_bin1 = {DIO_PORTD,DIO_PIN3,DIO_PIN_INPUT};
+		DIO_U8SetPinDirection(&trig_bin1);
 }
 
 

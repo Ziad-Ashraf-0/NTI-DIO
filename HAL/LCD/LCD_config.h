@@ -31,7 +31,7 @@
 #define LCD_D4_PIN DIO_PIN0
 #define LCD_D5_PIN DIO_PIN1
 #define LCD_D6_PIN DIO_PIN2
-#define LCD_D7_PIN DIO_PIN3
+#define LCD_D7_PIN DIO_PIN4
 
 
 /* LCD Commands */
