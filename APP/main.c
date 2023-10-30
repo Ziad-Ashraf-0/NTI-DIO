@@ -15,6 +15,8 @@
 #include "../MCAL/TIMER0/TIMER0_interface.h"
 #include "../MCAL/TIMER1/TIMER1_interface.h"
 #include "../MCAL/USART/USART_interface.h"
+#include "../HAL/Ultrasonic/Ultrasonic_interface.h"
+#include "../MCAL/SPI/SPI_interface.h"
 #include <util/delay.h>
 
 
@@ -25,7 +27,7 @@ u8 g_recievedData =0;
 
 static u32 ovFCounter = 0;
 void TimerOVFCallBack()
-{	
+{
 	ovFCounter++;
 }
 void ICUtimerCallback(){
@@ -57,7 +59,6 @@ void ICUtimerCallback(){
 
 void UartCallback(u8 data){
 	g_recievedData = data;
-	UART_sendByte(g_recievedData);
 }
 
 int main(void) {
@@ -92,13 +93,37 @@ int main(void) {
 	//H_LCD_void_sendData('%');
 	
 	
-	USART_Init();
-	UART_setReceiveCallback(UartCallback);
-	UART_receiveByteAsynchCallBack();
+	//USART_Init();
+	//UART_setReceiveCallback(UartCallback);
+	//UART_receiveByteAsynchCallBack();
+	/******** Configure SPI Slave Pins *********
+	 * SS(PB4)   --> Input
+	 * MOSI(PB5) --> Input
+	 * MISO(PB6) --> Output
+	 * SCK(PB7) --> Input
+	 ********************************************/
+	DIO_Config dataPins[] = {
+		{DIO_PORTB, DIO_PIN4, DIO_PIN_INPUT},//PD4 data bin
+		{DIO_PORTB, DIO_PIN5, DIO_PIN_INPUT},//PD5 data bin
+		{DIO_PORTB, DIO_PIN6, DIO_PIN_OUTPUT},//PD6 data bin
+		{DIO_PORTB, DIO_PIN7, DIO_PIN_INPUT},
+	};
+	// Initialize RS EN pins
+	for (u8 i = 0; i < 4; i++) {
+		DIO_U8SetPinDirection(&dataPins[i]);
+	}
+	
+	SPI_Config spi_config = {SPI_SLAVE,MSB_FIRST,IDLE_LOW,F_4,SPEED_NORMAL};
+	SPI_init(&spi_config);
+	u8 key;
+	
 
-	while (1) {		
-			
-		
+
+	while (1) {
+		SPI_sendReceiveByte(0x55,&key);
+		_delay_ms(1000);
+		//H_LCD_void_sendData(key);
+		//_delay_ms(1000);
 	}
 
 	return 0;

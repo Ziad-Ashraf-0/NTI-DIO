@@ -13,7 +13,7 @@
 
 
 // Array of pointers to functions
-void (*Action_Uart[4])(u8) = {NULL, NULL, NULL};
+void (*Action_Uart[3])(u8) = {NULL, NULL, NULL};
 
 
 void USART_Init(void){

@@ -10,6 +10,8 @@ HAL\LCD\LCD_prog.c
 
 HAL\Segment\segment.c
 
+HAL\Ultrasonic\Ultrasonic_prog.c
+
 MCAL\ADC\ADC_prog.c
 
 MCAL\DIO\DIO_Program.c
@@ -17,6 +19,8 @@ MCAL\DIO\DIO_Program.c
 MCAL\EXTI\EXTI_prog.c
 
 MCAL\GIE\GIE_prog.c
+
+MCAL\SPI\SPI_prog.c
 
 MCAL\TIMER0\TIMER0_prog.c
 

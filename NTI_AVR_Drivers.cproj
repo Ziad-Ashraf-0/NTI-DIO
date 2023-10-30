@@ -153,6 +153,18 @@
     <Compile Include="HAL\Segment\segment.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="HAL\Ultrasonic\Ultrasonic_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\Ultrasonic\Ultrasonic_interface.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\Ultrasonic\Ultrasonic_private.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\Ultrasonic\Ultrasonic_prog.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="LIB\BIT_MATH.h">
       <SubType>compile</SubType>
     </Compile>
@@ -201,6 +213,18 @@
     <Compile Include="MCAL\GIE\GIE_prog.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MCAL\SPI\SPI_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\SPI\SPI_interface.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\SPI\SPI_private.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\SPI\SPI_prog.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="MCAL\TIMER0\TIMER0_config.h">
       <SubType>compile</SubType>
     </Compile>
@@ -243,6 +267,7 @@
     <Folder Include="HAL\" />
     <Folder Include="HAL\Keypad\" />
     <Folder Include="HAL\LCD\" />
+    <Folder Include="HAL\Ultrasonic" />
     <Folder Include="HAL\Segment\" />
     <Folder Include="LIB\" />
     <Folder Include="MCAL\" />
@@ -250,6 +275,7 @@
     <Folder Include="MCAL\DIO\" />
     <Folder Include="MCAL\EXTI\" />
     <Folder Include="MCAL\GIE\" />
+    <Folder Include="MCAL\SPI" />
     <Folder Include="MCAL\USART" />
     <Folder Include="MCAL\TIMER1" />
     <Folder Include="MCAL\TIMER0" />
