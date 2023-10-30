@@ -11,6 +11,8 @@
 #include "SPI_private.h"
 
 
+// Array of pointers to functions
+void (*Action_Spi)(u8) = NULL;
 
 /*
  * Description :
@@ -51,4 +53,29 @@ void SPI_sendReceiveByte(u8 copy_u8ch, u8* ch)
 	 * and then accessing SPDR like the below line.
 	 */
 	*ch = SPI->SPDR;
+}
+
+/*
+ * Description :
+ * Send the required data through SPI to the other SPI device.
+ * In the same time data will be received from the other device.
+ */
+void SPI_sendReceiveByteAsync(u8 copy_u8Data,void (*ptrfn)(u8))
+{
+	//set callback function
+	Action_Spi = ptrfn;
+	
+	// Enable SPI interrupt
+	SPI->SPCR |= (1 << SPIE);
+	
+	// Start transmission
+	SPI->SPDR = copy_u8Data;
+}
+
+
+ISR(SPI_STC_vect){
+	if(Action_Spi != NULL){
+		u8 reveivedData = SPI->SPDR;
+		Action_Spi(reveivedData);
+	}
 }

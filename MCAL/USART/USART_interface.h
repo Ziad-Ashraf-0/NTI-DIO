@@ -15,8 +15,7 @@ void USART_Init(void);
 void UART_sendByte(const u8 data);
 u8 MUART_voidRecieveByteSynch(void);
 // Set the callback function for UART receive
-void UART_setReceiveCallback(void (*ptrfn)(u8));
-void UART_receiveByteAsynchCallBack(void);
+void UART_receiveByteAsynchCallBack(void (*ptrfn)(u8));
 void UART_sendString(const u8 *Str);
 void UART_receiveString(u8 *Str);
 

@@ -38,6 +38,15 @@ typedef struct {
 
 
 
+// Define the SPI vector
+#define SPI_STC_vect     __vector_12 // SPI,STC Interrupt Vector
+
+
+
+#  define ISR(vector, ...)            \
+void vector (void) __attribute__ ((signal)); \
+void vector (void)
+
 
 
 #endif /* SPI_PRIVATE_H_ */

@@ -128,12 +128,10 @@ void UART_receiveString(u8 *Str)
 	Str[i] = '\0';
 }
 
-void UART_receiveByteAsynchCallBack() {
+void UART_receiveByteAsynchCallBack(void (*ptrfn)(u8)) {
 	// Enable UART receiver interrupt
 	UCSRB |= (1 << RXCIE);
-}
-
-void UART_setReceiveCallback(void (*ptrfn)(u8)){
+	//set callback
 	Action_Uart[0] = ptrfn;
 }
 

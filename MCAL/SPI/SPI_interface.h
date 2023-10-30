@@ -41,5 +41,6 @@ typedef struct{
 
 void SPI_init(const SPI_Config* config);
 void SPI_sendReceiveByte(u8 copy_u8ch, u8* ch);
+void SPI_sendReceiveByteAsync(u8 copy_u8Data,void (*ptrfn)(u8));
 
 #endif /* SPI_INTERFACE_H_ */
