@@ -12,10 +12,11 @@
 
 
 
+// Array of pointers to functions
+void (*Action_Uart[4])(u8) = {NULL, NULL, NULL};
 
 
-
-void M_USART_void_Init(void){
+void USART_Init(void){
 	
 	
 	#if(USART_SPEED == USART_DOUBLE_SPEED)
@@ -71,16 +72,22 @@ void UART_sendByte(const u8 data)
 * Description :
 * Functional responsible for receive byte from another UART device.
 */
-u8 UART_recieveByte(void)
+u8 MUART_voidRecieveByteSynch(void)
 {
-	/* RXC flag is set when the UART receive data so wait until this flag is set to one */
+	u16 Timeout = 50000;
+	/* RXC flag is set when the UART receive data so wait until this flag is set to one with timeout*/
 	while(BIT_IS_CLEAR(UCSRA,RXC)){}
-
+	do 
+	{
+		if(BIT_IS_SET(UCSRA,RXC)){
+			return UDR;
+		}
+	} while (--Timeout);
 	/*
 	* Read the received data from the Rx buffer (UDR)
 	* The RXC flag will be cleared after read the data
 	*/
-	return UDR;
+	return 0;
 }
 
 /*
@@ -108,15 +115,32 @@ void UART_receiveString(u8 *Str)
 	u8 i = 0;
 
 	/* Receive the first byte */
-	Str[i] = UART_recieveByte();
+	Str[i] = MUART_voidRecieveByteSynch();
 
 	/* Receive the whole string until the '#' */
 	while(Str[i] != '#')
 	{
 		i++;
-		Str[i] = UART_recieveByte();
+		Str[i] = MUART_voidRecieveByteSynch();
 	}
 
 	/* After receiving the whole string plus the '#', replace the '#' with '\0' */
 	Str[i] = '\0';
+}
+
+void UART_receiveByteAsynchCallBack() {
+	// Enable UART receiver interrupt
+	UCSRB |= (1 << RXCIE);
+}
+
+void UART_setReceiveCallback(void (*ptrfn)(u8)){
+	Action_Uart[0] = ptrfn;
+}
+
+// UART receive interrupt service routine
+ISR(USART_RXC_vect) {
+	 u8 receivedData = UDR; // Read the received data
+	if(Action_Uart[0] != NULL){
+		Action_Uart[0](receivedData);
+	}
 }

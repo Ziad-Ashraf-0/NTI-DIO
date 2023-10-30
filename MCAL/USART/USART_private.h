@@ -59,6 +59,13 @@
 #define DISABLE 0
 
 
+// Define the UART vector
+#define USART_RXC_vect			__vector_13 // UART RX complete Interrupt Vector
 
+
+
+#  define ISR(vector, ...)            \
+void vector (void) __attribute__ ((signal)); \
+void vector (void)
 
 #endif /* USART_PRIVATE_H_ */

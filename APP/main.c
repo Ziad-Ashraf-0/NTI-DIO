@@ -21,6 +21,7 @@
 u8 g_edgeCount = 0;
 u16 g_timeHigh = 0;
 u16 g_timePeriod = 0;
+u8 g_recievedData =0;
 
 static u32 ovFCounter = 0;
 void TimerOVFCallBack()
@@ -54,6 +55,11 @@ void ICUtimerCallback(){
 	}
 }
 
+void UartCallback(u8 data){
+	g_recievedData = data;
+	UART_sendByte(g_recievedData);
+}
+
 int main(void) {
 	//ICU input pin
 	//DIO_Config icu_bit = {DIO_PORTD,DIO_PIN6,DIO_PIN_INPUT};
@@ -63,7 +69,7 @@ int main(void) {
 	//DIO_Config oc0_bit = {DIO_PORTB,DIO_PIN3,DIO_PIN_OUTPUT};
 	//DIO_U8SetPinDirection(&oc0_bit);
 	
-	//GIE_enable();
+	GIE_enable();
 	H_LCD_void_Init();
 	
 
@@ -86,14 +92,12 @@ int main(void) {
 	//H_LCD_void_sendData('%');
 	
 	
-	M_USART_void_Init();
+	USART_Init();
+	UART_setReceiveCallback(UartCallback);
+	UART_receiveByteAsynchCallBack();
 
-
-	while (1) {
-		
-			u8 key = KEYPAD_getPressedKey();
-			UART_sendByte(key);
-			H_LCD_void_sendData(key);
+	while (1) {		
+			
 		
 	}
 
