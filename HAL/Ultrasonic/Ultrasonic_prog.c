@@ -14,9 +14,15 @@
 #include <util/delay.h>
 
 static u16 g_distance;
-static u16 g_time;
+static u16 g_secondRead;
 static u8 g_edges_counter;
+static u16 g_OVRflow = 0;
 
+
+
+void TimerOVFCallBack(){
+	g_OVRflow++;
+}
 
 /*
  *  Description :1- Initialize the ICU driver as required.
@@ -32,10 +38,10 @@ void Ultrasonic_init(void){
 	 * */
 	Timer1_Config timerConfig1 = {Timer1_NORMAL,Timer1_PRESCALER_64};
 	M_TIMER1_void_setCallBack(Ultrasonic_edgeProcessing,TIMER1_ICU);
-	//M_TIMER1_void_setCallBack(TimerOVFCallBack,TIMER1_OVERFLOW);
+	M_TIMER1_void_setCallBack(TimerOVFCallBack,TIMER1_OVERFLOW);
 	M_TIMER1_void_Init(&timerConfig1);
 	M_TIMER1_void_IntEnable(TIMER1_ICU);
-	//M_TIMER1_void_IntEnable(TIMER1_OVERFLOW);
+	M_TIMER1_void_IntEnable(TIMER1_OVERFLOW);
 	M_TIMER1_void_setEdgeDetectionType(RISING);
 	M_TIMER1_void_start();
 	
@@ -44,9 +50,9 @@ void Ultrasonic_init(void){
 	DIO_Config trig_bin = {ULTRASONIC_TRIGGER_PORTID,ULTRASONIC_TRIGGER_PINID,DIO_PIN_OUTPUT};
 	DIO_U8SetPinDirection(&trig_bin);
 	
-		/* setup the direction of the trigger to be output pin */
-		DIO_Config trig_bin1 = {DIO_PORTD,DIO_PIN3,DIO_PIN_INPUT};
-		DIO_U8SetPinDirection(&trig_bin1);
+	/* setup the direction of the trigger to be output pin */
+	DIO_Config trig_bin1 = {DIO_PORTD,DIO_PIN3,DIO_PIN_INPUT};
+	DIO_U8SetPinDirection(&trig_bin1);
 }
 
 
@@ -71,7 +77,7 @@ void Ultrasonic_Trigger(void){
 • Description : 1-Send the trigger pulse by using Ultrasonic_Trigger function.
                 2-Start the measurements by the ICU from this moment.
 • Inputs      : None
-• Return      : The measured distance in Centimeterr
+• Return      : The measured distance in Centimeter
  */
 u16 Ultrasonic_readDistance(void){
 	/* sending pulses by the trigger*/
@@ -79,7 +85,13 @@ u16 Ultrasonic_readDistance(void){
 	if(g_edges_counter==2){ //raising & falling -> 1 cycle
 		g_edges_counter=0; //reset the counter of the edges
 		/* equation to convert from time to distance*/
-		g_distance = (g_time*0.01715);
+		if(g_OVRflow == 0){
+			g_distance = (g_secondRead*0.01715);
+		}else{
+			//to be handled
+			g_distance = 11111;
+		}
+
 	}
 	return (g_distance+1);
 }
@@ -104,7 +116,7 @@ void Ultrasonic_edgeProcessing(void){
 	/*this condition will be true when the falling edge is detected*/
 	else if(g_edges_counter==2){
 		/*we will read the input capture register and save it inside the g_timeHigh*/
-		g_time = M_TIMER1_void_getInputCaptureValue();
+		g_secondRead = M_TIMER1_void_getInputCaptureValue();
 
 		/*clear the input capture register to start detect again*/
 		M_TIMER1_void_clearTimerValue();
