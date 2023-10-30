@@ -17,6 +17,7 @@
 #include "../MCAL/USART/USART_interface.h"
 #include "../HAL/Ultrasonic/Ultrasonic_interface.h"
 #include "../MCAL/SPI/SPI_interface.h"
+#include "../MCAL/TWI/TWI_interface.h"
 #include <util/delay.h>
 
 
@@ -26,18 +27,11 @@ int main(void) {
 	
 	
 	GIE_enable();
-	H_LCD_void_Init();
-	
-	Ultrasonic_init();
-	
-	
+	H_LCD_void_Init();	
 
 
 	while (1) {
-		H_LCD_void_clearScreen();
-		u16 reading = Ultrasonic_readDistance();
-		H_LCD_void_sendIntNum(reading);
-		_delay_ms(250);
+
 	}
 
 	return 0;

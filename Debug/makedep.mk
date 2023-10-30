@@ -26,5 +26,7 @@ MCAL\TIMER0\TIMER0_prog.c
 
 MCAL\TIMER1\TIMER1_prog.c
 
+MCAL\TWI\TWI_prog.c
+
 MCAL\USART\USART_prog.c
 

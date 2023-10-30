@@ -249,6 +249,18 @@
     <Compile Include="MCAL\TIMER1\TIMER1_prog.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MCAL\TWI\TWI_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\TWI\TWI_interface.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\TWI\TWI_private.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\TWI\TWI_prog.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="MCAL\USART\USART_config.h">
       <SubType>compile</SubType>
     </Compile>
@@ -275,6 +287,7 @@
     <Folder Include="MCAL\DIO\" />
     <Folder Include="MCAL\EXTI\" />
     <Folder Include="MCAL\GIE\" />
+    <Folder Include="MCAL\TWI" />
     <Folder Include="MCAL\SPI" />
     <Folder Include="MCAL\USART" />
     <Folder Include="MCAL\TIMER1" />
