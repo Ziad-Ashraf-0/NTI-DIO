@@ -285,6 +285,12 @@
     <Compile Include="MCAL\USART\USART_prog.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="OS\OS.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="OS\OS.h">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APP" />
@@ -305,6 +311,7 @@
     <Folder Include="MCAL\USART" />
     <Folder Include="MCAL\TIMER1" />
     <Folder Include="MCAL\TIMER0" />
+    <Folder Include="OS" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

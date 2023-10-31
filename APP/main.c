@@ -19,19 +19,20 @@
 #include "../MCAL/SPI/SPI_interface.h"
 #include "../MCAL/TWI/TWI_interface.h"
 #include "../HAL/EEPROM/EEPROM_interface.h"
+#include "../OS/OS.h"
 #include <util/delay.h>
 
 
 
-int main(void) {
-
-	
-	//aa
+int main() {
+	GIE_enable();
+	startOS();
 
 	while (1) {
-
+		// Main loop
 	}
 
 	return 0;
 }
+
 

@@ -83,7 +83,7 @@ void M_TIMER0_void_setDelayTimeMilliSec(u32 copy_u32TimeMS){
 		1024,	//TIMER0_PRESCALER_1024
 	};
 
-	u32 tickTime = prescalerMap[prescaler] / FCPU;
+	u32 tickTime = prescalerMap[prescaler] / 8;
 	u32 totalCounts = (copy_u32TimeMS * 1000) / tickTime;
 	
 	// Calculate the number of overflows required
