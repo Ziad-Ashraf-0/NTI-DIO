@@ -9,24 +9,18 @@
 #ifndef TWI_INTERFACE_H_
 #define TWI_INTERFACE_H_
 
-typedef enum
-{
-	F_CPU_1_,F_CPU_4_,F_CPU_16_,F_CPU_64_
-}Twi_Prescaler;
-
 typedef struct
 {
 	u8 twbr;
-	Twi_Prescaler prescaler;
 	u8 myAddress;
-
-
 }TWI_Config;
 
 /*******************************************************************************
  *                      Preprocessor Macros                                    *
  *******************************************************************************/
 
+#define BIT_RATE_400 12
+#define BIT_RATE_100 72
 /* I2C Status Bits in the TWSR Register */
 #define TWI_START         0x08 /* start has been sent */
 #define TWI_REP_START     0x10 /* repeated start */
@@ -41,13 +35,13 @@ typedef struct
 /*******************************************************************************
  *                      Functions Prototypes                                   *
  *******************************************************************************/
-void TWI_init(const TWI_Config *Config_Ptr);
-void TWI_start(void);
-void TWI_stop(void);
-void TWI_writeByte(u8 data);
-u8 TWI_readByteWithACK(void);
-u8 TWI_readByteWithNACK(void);
-u8 TWI_getStatus(void);
+void M_TWI_void_init(const TWI_Config *Config_Ptr);
+void M_TWI_void_start(void);
+void M_TWI_void_stop(void);
+void M_TWI_void_writeByte(u8 data);
+void M_TWI_void_readByteWithACK(u8 * ptr);
+void M_TWI_void_readByteWithNACK(u8 * ptr);
+void M_TWI_void_getStatus(u8 * status);
 
 
 

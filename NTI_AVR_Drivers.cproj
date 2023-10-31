@@ -123,6 +123,18 @@
     <Compile Include="APP\main.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="HAL\EEPROM\EEPROM_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\EEPROM\EEPROM_interface.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\EEPROM\EEPROM_private.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\EEPROM\EEPROM_prog.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="HAL\Keypad\Keypad_config.h">
       <SubType>compile</SubType>
     </Compile>
@@ -279,6 +291,7 @@
     <Folder Include="HAL\" />
     <Folder Include="HAL\Keypad\" />
     <Folder Include="HAL\LCD\" />
+    <Folder Include="HAL\EEPROM" />
     <Folder Include="HAL\Ultrasonic" />
     <Folder Include="HAL\Segment\" />
     <Folder Include="LIB\" />

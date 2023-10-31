@@ -37,6 +37,7 @@ SUBDIRS :=  \
 ../HAL/ \
 ../HAL/Keypad/ \
 ../HAL/LCD/ \
+../HAL/EEPROM \
 ../HAL/Ultrasonic \
 ../HAL/Segment/ \
 ../LIB/ \
@@ -55,6 +56,7 @@ SUBDIRS :=  \
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../APP/main.c \
+../HAL/EEPROM/EEPROM_prog.c \
 ../HAL/Keypad/Keypad_prog.c \
 ../HAL/LCD/LCD_prog.c \
 ../HAL/Segment/segment.c \
@@ -78,6 +80,7 @@ ASM_SRCS +=
 
 OBJS +=  \
 APP/main.o \
+HAL/EEPROM/EEPROM_prog.o \
 HAL/Keypad/Keypad_prog.o \
 HAL/LCD/LCD_prog.o \
 HAL/Segment/segment.o \
@@ -94,6 +97,7 @@ MCAL/USART/USART_prog.o
 
 OBJS_AS_ARGS +=  \
 APP/main.o \
+HAL/EEPROM/EEPROM_prog.o \
 HAL/Keypad/Keypad_prog.o \
 HAL/LCD/LCD_prog.o \
 HAL/Segment/segment.o \
@@ -110,6 +114,7 @@ MCAL/USART/USART_prog.o
 
 C_DEPS +=  \
 APP/main.d \
+HAL/EEPROM/EEPROM_prog.d \
 HAL/Keypad/Keypad_prog.d \
 HAL/LCD/LCD_prog.d \
 HAL/Segment/segment.d \
@@ -126,6 +131,7 @@ MCAL/USART/USART_prog.d
 
 C_DEPS_AS_ARGS +=  \
 APP/main.d \
+HAL/EEPROM/EEPROM_prog.d \
 HAL/Keypad/Keypad_prog.d \
 HAL/LCD/LCD_prog.d \
 HAL/Segment/segment.d \
@@ -155,6 +161,13 @@ LINKER_SCRIPT_DEP+=
 
 # AVR32/GNU C Compiler
 APP/main.o: ../APP/main.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+HAL/EEPROM/EEPROM_prog.o: ../HAL/EEPROM/EEPROM_prog.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

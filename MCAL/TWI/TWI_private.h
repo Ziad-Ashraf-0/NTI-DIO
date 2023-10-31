@@ -19,7 +19,7 @@ typedef struct {
 	u8 TWSR;
 	u8 TWAR;
 	u8 TWDR;
-	u8 padding[51];
+	u8 padding[50];
 	u8 TWCR;
 }Twi_Type;
 
