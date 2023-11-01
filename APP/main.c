@@ -17,7 +17,6 @@
 #include "../MCAL/USART/USART_interface.h"
 #include "../HAL/Ultrasonic/Ultrasonic_interface.h"
 #include "../MCAL/SPI/SPI_interface.h"
-#include "../MCAL/TWI/TWI_interface.h"
 #include "../HAL/EEPROM/EEPROM_interface.h"
 #include <util/delay.h>
 
