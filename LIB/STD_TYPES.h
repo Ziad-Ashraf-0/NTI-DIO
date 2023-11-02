@@ -15,7 +15,7 @@
 /* PORTABLE DATA TYPES	*/
 
 typedef unsigned char u8;
-typedef signed char s8;
+typedef char s8;
 
 typedef unsigned short int u16;
 typedef signed short int s16;

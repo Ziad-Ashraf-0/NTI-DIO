@@ -4,6 +4,7 @@
 *  Created on: Oct 23, 2023
 *      Author: Ziad
 */
+#define F_CPU 8000000UL
 #include <stdlib.h>
 #include <util/delay.h> /* For the delay functions */
 #include "../../MCAL/DIO/DIO_Interface.h"
