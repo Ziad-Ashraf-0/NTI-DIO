@@ -26,14 +26,17 @@
 
 int main(void) {
 	H_LCD_void_Init();
-	H_void_RTC_Init();
+	H_RTC_void_Init();
 	Time_Config config = {10,18,59,HOUR_12,PM};
-	H_void_RTC_setTime(&config);
+	H_RTC_void_setTime(&config);
+	Date_config date_config = {Monday,25,10,23};
+	H_RTC_void_setDate(&date_config);
 	Time_Config time;
-		
+	
 	while (1) {
 		H_LCD_void_clearScreen();
-		H_void_RTC_getTime(&time);
+		H_RTC_void_getDate(&date_config);
+		H_RTC_void_getTime(&time);
 		H_LCD_void_sendString("TIME : ");
 		H_LCD_void_sendIntNum(time.hour);
 		H_LCD_void_sendData(':');
@@ -45,10 +48,15 @@ int main(void) {
 				H_LCD_void_sendString(" AM");
 				}else{
 				H_LCD_void_sendString(" PM");
-			}
-			
+			}			
 		}
-		
+		H_LCD_void_gotoXY(1,0);
+		H_LCD_void_sendString("DATE : ");
+		H_LCD_void_sendIntNum(date_config.date);
+		H_LCD_void_sendData(':');
+		H_LCD_void_sendIntNum(date_config.month);
+		H_LCD_void_sendData(':');
+		H_LCD_void_sendIntNum(date_config.year);
 		_delay_ms(500);
 	}
 

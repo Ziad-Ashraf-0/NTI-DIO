@@ -24,19 +24,38 @@ typedef enum{
 	PM = 1,
 }Hour_value;
 
+typedef enum{
+	Saturday	= 1,
+	Sunday		= 2,
+	Monday		= 3,
+	Tuesday		= 4,
+	Wednesday	= 5,
+	Thursday	= 6,
+	Friday		= 7
+}Days;
+
 
 typedef struct{
- u8 hour;
- u8 minute;
- u8 sec;
- Hour_type hour_type;
- Hour_value hour_value;
+	u8 hour;
+	u8 minute;
+	u8 sec;
+	Hour_type hour_type;
+	Hour_value hour_value;
 }Time_Config;
 
+typedef struct{
+	Days day;
+	u8 date;
+	u8 month;
+	u8 year;
+}Date_config;
 
-void H_void_RTC_Init();
-u8 H_void_RTC_setTime(Time_Config * config);
-u8 H_void_RTC_getTime(Time_Config * config);
+
+void H_RTC_void_Init();
+u8 H_RTC_void_setTime(Time_Config * config);
+u8 H_RTC_void_getTime(Time_Config * config);
+u8 H_RTC_void_setDate(Date_config * config);
+u8 H_RTC_void_getDate(Date_config * config);
 
 
 #endif /* RTC_INTERFACE_H_ */
