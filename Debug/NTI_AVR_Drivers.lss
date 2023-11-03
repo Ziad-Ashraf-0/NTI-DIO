@@ -19,15 +19,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   7 .debug_abbrev 000013a9  00000000  00000000  00005072  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00001d57  00000000  00000000  0000641b  2**0
+  8 .debug_line   00001d5a  00000000  00000000  0000641b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000aac  00000000  00000000  00008174  2**2
+  9 .debug_frame  00000aac  00000000  00000000  00008178  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00001663  00000000  00000000  00008c20  2**0
+ 10 .debug_str    00001663  00000000  00000000  00008c24  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000022f3  00000000  00000000  0000a283  2**0
+ 11 .debug_loc    000022f3  00000000  00000000  0000a287  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000002d8  00000000  00000000  0000c576  2**0
+ 12 .debug_ranges 000002d8  00000000  00000000  0000c57a  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -202,8 +202,7 @@ int main(void) {
      142:	81 e8       	ldi	r24, 0x81	; 129
      144:	90 e0       	ldi	r25, 0x00	; 0
      146:	0e 94 74 02 	call	0x4e8	; 0x4e8 <H_LCD_void_sendString>
-			}
-			
+			}			
 		}
 		H_LCD_void_gotoXY(1,0);
      14a:	60 e0       	ldi	r22, 0x00	; 0
@@ -744,10 +743,10 @@ int main(void) {
      578:	08 95       	ret
 
 0000057a <H_RTC_void_Init>:
+#include "RTC_interface.h"
 #include "RTC_private.h"
 
-
-
+// Function to initialize the RTC
 void H_RTC_void_Init()
 {
      57a:	cf 93       	push	r28
@@ -755,6 +754,7 @@ void H_RTC_void_Init()
      57e:	00 d0       	rcall	.+0      	; 0x580 <H_RTC_void_Init+0x6>
      580:	cd b7       	in	r28, 0x3d	; 61
      582:	de b7       	in	r29, 0x3e	; 62
+	// Configure TWI (I2C) communication with a bit rate of 100
 	TWI_Config twi_config = {BIT_RATE_100};
      584:	1a 82       	std	Y+2, r1	; 0x02
      586:	19 82       	std	Y+1, r1	; 0x01
@@ -773,7 +773,9 @@ void H_RTC_void_Init()
 
 0000059e <H_RTC_void_setTime>:
 
-u8 H_RTC_void_setTime(Time_Config * config){
+// Function to set the time on the RTC
+u8 H_RTC_void_setTime(Time_Config * config)
+{
      59e:	0f 93       	push	r16
      5a0:	1f 93       	push	r17
      5a2:	cf 93       	push	r28
@@ -783,18 +785,24 @@ u8 H_RTC_void_setTime(Time_Config * config){
      5aa:	de b7       	in	r29, 0x3e	; 62
      5ac:	8c 01       	movw	r16, r24
 	u8 status;
+
+	// Start the TWI communication
 	M_TWI_void_start();
      5ae:	0e 94 1a 08 	call	0x1034	; 0x1034 <M_TWI_void_start>
 	M_TWI_void_getStatus(&status);
      5b2:	ce 01       	movw	r24, r28
      5b4:	01 96       	adiw	r24, 0x01	; 1
      5b6:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_START)
+
+	// Check if the start condition was successful
+	if (status != TWI_START)
      5ba:	89 81       	ldd	r24, Y+1	; 0x01
      5bc:	88 30       	cpi	r24, 0x08	; 8
      5be:	09 f0       	breq	.+2      	; 0x5c2 <H_RTC_void_setTime+0x24>
      5c0:	7c c0       	rjmp	.+248    	; 0x6ba <H_RTC_void_setTime+0x11c>
 	return ERROR;
+
+	// Send the device write address
 	M_TWI_void_writeByte(Device_Write_address);
      5c2:	80 ed       	ldi	r24, 0xD0	; 208
      5c4:	0e 94 23 08 	call	0x1046	; 0x1046 <M_TWI_void_writeByte>
@@ -802,25 +810,33 @@ u8 H_RTC_void_setTime(Time_Config * config){
      5c8:	ce 01       	movw	r24, r28
      5ca:	01 96       	adiw	r24, 0x01	; 1
      5cc:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MT_SLA_W_ACK)
+
+	// Check if the device address was acknowledged
+	if (status != TWI_MT_SLA_W_ACK)
      5d0:	89 81       	ldd	r24, Y+1	; 0x01
      5d2:	88 31       	cpi	r24, 0x18	; 24
      5d4:	09 f0       	breq	.+2      	; 0x5d8 <H_RTC_void_setTime+0x3a>
      5d6:	73 c0       	rjmp	.+230    	; 0x6be <H_RTC_void_setTime+0x120>
 	return ERROR;
-	M_TWI_void_writeByte(0x00);
+
+	// Send the address of the register where we want to write time data (0x00)
+	M_TWI_void_writeByte(Seconds_address);
      5d8:	80 e0       	ldi	r24, 0x00	; 0
      5da:	0e 94 23 08 	call	0x1046	; 0x1046 <M_TWI_void_writeByte>
 	M_TWI_void_getStatus(&status);
      5de:	ce 01       	movw	r24, r28
      5e0:	01 96       	adiw	r24, 0x01	; 1
      5e2:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data address was acknowledged
+	if (status != TWI_MT_DATA_ACK)
      5e6:	89 81       	ldd	r24, Y+1	; 0x01
      5e8:	88 32       	cpi	r24, 0x28	; 40
      5ea:	09 f0       	breq	.+2      	; 0x5ee <H_RTC_void_setTime+0x50>
      5ec:	6a c0       	rjmp	.+212    	; 0x6c2 <H_RTC_void_setTime+0x124>
 	return ERROR;
+
+	// Send the time data in BCD format
 	M_TWI_void_writeByte((config->sec / 10) << 4 | (config->sec % 10));
      5ee:	d8 01       	movw	r26, r16
      5f0:	12 96       	adiw	r26, 0x02	; 2
@@ -849,12 +865,16 @@ u8 H_RTC_void_setTime(Time_Config * config){
      61e:	ce 01       	movw	r24, r28
      620:	01 96       	adiw	r24, 0x01	; 1
      622:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MT_DATA_ACK)
      626:	89 81       	ldd	r24, Y+1	; 0x01
      628:	88 32       	cpi	r24, 0x28	; 40
      62a:	09 f0       	breq	.+2      	; 0x62e <H_RTC_void_setTime+0x90>
      62c:	4c c0       	rjmp	.+152    	; 0x6c6 <H_RTC_void_setTime+0x128>
 	return ERROR;
+
+	// Send the minute data in BCD format
 	M_TWI_void_writeByte((config->minute / 10) << 4 | (config->minute % 10));
      62e:	f8 01       	movw	r30, r16
      630:	21 81       	ldd	r18, Z+1	; 0x01
@@ -882,11 +902,15 @@ u8 H_RTC_void_setTime(Time_Config * config){
      65c:	ce 01       	movw	r24, r28
      65e:	01 96       	adiw	r24, 0x01	; 1
      660:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MT_DATA_ACK)
      664:	89 81       	ldd	r24, Y+1	; 0x01
      666:	88 32       	cpi	r24, 0x28	; 40
      668:	81 f5       	brne	.+96     	; 0x6ca <H_RTC_void_setTime+0x12c>
 	return ERROR;
+
+	// Send the hour data in BCD format
 	M_TWI_void_writeByte(config->hour_type << 6 | config->hour_value << 5 | (config->hour / 10) << 4 | (config->hour % 10));
      66a:	d8 01       	movw	r26, r16
      66c:	13 96       	adiw	r26, 0x03	; 3
@@ -919,54 +943,72 @@ u8 H_RTC_void_setTime(Time_Config * config){
      6a4:	ce 01       	movw	r24, r28
      6a6:	01 96       	adiw	r24, 0x01	; 1
      6a8:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MT_DATA_ACK)
      6ac:	89 81       	ldd	r24, Y+1	; 0x01
      6ae:	88 32       	cpi	r24, 0x28	; 40
      6b0:	71 f4       	brne	.+28     	; 0x6ce <H_RTC_void_setTime+0x130>
 	return ERROR;
+
+	// Stop the TWI communication
 	M_TWI_void_stop();
      6b2:	0e 94 20 08 	call	0x1040	; 0x1040 <M_TWI_void_stop>
+
 	return SUCCESS;
      6b6:	81 e0       	ldi	r24, 0x01	; 1
      6b8:	0b c0       	rjmp	.+22     	; 0x6d0 <H_RTC_void_setTime+0x132>
-u8 H_RTC_void_setTime(Time_Config * config){
-	u8 status;
 	M_TWI_void_start();
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_START)
+
+	// Check if the start condition was successful
+	if (status != TWI_START)
 	return ERROR;
      6ba:	80 e0       	ldi	r24, 0x00	; 0
      6bc:	09 c0       	rjmp	.+18     	; 0x6d0 <H_RTC_void_setTime+0x132>
 	M_TWI_void_writeByte(Device_Write_address);
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MT_SLA_W_ACK)
+
+	// Check if the device address was acknowledged
+	if (status != TWI_MT_SLA_W_ACK)
 	return ERROR;
      6be:	80 e0       	ldi	r24, 0x00	; 0
      6c0:	07 c0       	rjmp	.+14     	; 0x6d0 <H_RTC_void_setTime+0x132>
-	M_TWI_void_writeByte(0x00);
+	M_TWI_void_writeByte(Seconds_address);
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data address was acknowledged
+	if (status != TWI_MT_DATA_ACK)
 	return ERROR;
      6c2:	80 e0       	ldi	r24, 0x00	; 0
      6c4:	05 c0       	rjmp	.+10     	; 0x6d0 <H_RTC_void_setTime+0x132>
 	M_TWI_void_writeByte((config->sec / 10) << 4 | (config->sec % 10));
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MT_DATA_ACK)
 	return ERROR;
      6c6:	80 e0       	ldi	r24, 0x00	; 0
      6c8:	03 c0       	rjmp	.+6      	; 0x6d0 <H_RTC_void_setTime+0x132>
 	M_TWI_void_writeByte((config->minute / 10) << 4 | (config->minute % 10));
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MT_DATA_ACK)
 	return ERROR;
      6ca:	80 e0       	ldi	r24, 0x00	; 0
      6cc:	01 c0       	rjmp	.+2      	; 0x6d0 <H_RTC_void_setTime+0x132>
 	M_TWI_void_writeByte(config->hour_type << 6 | config->hour_value << 5 | (config->hour / 10) << 4 | (config->hour % 10));
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MT_DATA_ACK)
 	return ERROR;
      6ce:	80 e0       	ldi	r24, 0x00	; 0
+
+	// Stop the TWI communication
 	M_TWI_void_stop();
+
 	return SUCCESS;
 }
      6d0:	0f 90       	pop	r0
@@ -978,8 +1020,9 @@ u8 H_RTC_void_setTime(Time_Config * config){
 
 000006dc <H_RTC_void_getTime>:
 
-
-u8 H_RTC_void_getTime(Time_Config * config){
+// Function to get the current time from the RTC
+u8 H_RTC_void_getTime(Time_Config * config)
+{
      6dc:	0f 93       	push	r16
      6de:	1f 93       	push	r17
      6e0:	cf 93       	push	r28
@@ -988,20 +1031,25 @@ u8 H_RTC_void_getTime(Time_Config * config){
      6e6:	cd b7       	in	r28, 0x3d	; 61
      6e8:	de b7       	in	r29, 0x3e	; 62
      6ea:	8c 01       	movw	r16, r24
-	u8 status,data;
+	u8 status, data;
+
+	// Start the TWI communication
 	M_TWI_void_start();
      6ec:	0e 94 1a 08 	call	0x1034	; 0x1034 <M_TWI_void_start>
 	M_TWI_void_getStatus(&status);
      6f0:	ce 01       	movw	r24, r28
      6f2:	01 96       	adiw	r24, 0x01	; 1
      6f4:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_START)
+
+	// Check if the start condition was successful
+	if (status != TWI_START)
      6f8:	89 81       	ldd	r24, Y+1	; 0x01
      6fa:	88 30       	cpi	r24, 0x08	; 8
      6fc:	09 f0       	breq	.+2      	; 0x700 <H_RTC_void_getTime+0x24>
      6fe:	a8 c0       	rjmp	.+336    	; 0x850 <__DATA_REGION_LENGTH__+0x50>
 	return ERROR;
-	
+
+	// Send the device write address
 	M_TWI_void_writeByte(Device_Write_address);
      700:	80 ed       	ldi	r24, 0xD0	; 208
      702:	0e 94 23 08 	call	0x1046	; 0x1046 <M_TWI_void_writeByte>
@@ -1009,13 +1057,16 @@ u8 H_RTC_void_getTime(Time_Config * config){
      706:	ce 01       	movw	r24, r28
      708:	01 96       	adiw	r24, 0x01	; 1
      70a:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MT_SLA_W_ACK)
+
+	// Check if the device address was acknowledged
+	if (status != TWI_MT_SLA_W_ACK)
      70e:	89 81       	ldd	r24, Y+1	; 0x01
      710:	88 31       	cpi	r24, 0x18	; 24
      712:	09 f0       	breq	.+2      	; 0x716 <H_RTC_void_getTime+0x3a>
      714:	9f c0       	rjmp	.+318    	; 0x854 <__DATA_REGION_LENGTH__+0x54>
 	return ERROR;
-	
+
+	// Send the address of the register from which we want to read time data (0x00)
 	M_TWI_void_writeByte(0x00);
      716:	80 e0       	ldi	r24, 0x00	; 0
      718:	0e 94 23 08 	call	0x1046	; 0x1046 <M_TWI_void_writeByte>
@@ -1023,26 +1074,32 @@ u8 H_RTC_void_getTime(Time_Config * config){
      71c:	ce 01       	movw	r24, r28
      71e:	01 96       	adiw	r24, 0x01	; 1
      720:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data address was acknowledged
+	if (status != TWI_MT_DATA_ACK)
      724:	89 81       	ldd	r24, Y+1	; 0x01
      726:	88 32       	cpi	r24, 0x28	; 40
      728:	09 f0       	breq	.+2      	; 0x72c <H_RTC_void_getTime+0x50>
      72a:	96 c0       	rjmp	.+300    	; 0x858 <__DATA_REGION_LENGTH__+0x58>
 	return ERROR;
-	
+
+	// Start a repeated start condition for reading
 	M_TWI_void_start();
      72c:	0e 94 1a 08 	call	0x1034	; 0x1034 <M_TWI_void_start>
 	M_TWI_void_getStatus(&status);
      730:	ce 01       	movw	r24, r28
      732:	01 96       	adiw	r24, 0x01	; 1
      734:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_REP_START)
+
+	// Check if the repeated start condition was successful
+	if (status != TWI_REP_START)
      738:	89 81       	ldd	r24, Y+1	; 0x01
      73a:	80 31       	cpi	r24, 0x10	; 16
      73c:	09 f0       	breq	.+2      	; 0x740 <H_RTC_void_getTime+0x64>
      73e:	8e c0       	rjmp	.+284    	; 0x85c <__DATA_REGION_LENGTH__+0x5c>
 	return ERROR;
-	
+
+	// Send the device read address
 	M_TWI_void_writeByte(Device_Read_address);
      740:	81 ed       	ldi	r24, 0xD1	; 209
      742:	0e 94 23 08 	call	0x1046	; 0x1046 <M_TWI_void_writeByte>
@@ -1050,13 +1107,16 @@ u8 H_RTC_void_getTime(Time_Config * config){
      746:	ce 01       	movw	r24, r28
      748:	01 96       	adiw	r24, 0x01	; 1
      74a:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MT_SLA_R_ACK)
+
+	// Check if the device address was acknowledged
+	if (status != TWI_MT_SLA_R_ACK)
      74e:	89 81       	ldd	r24, Y+1	; 0x01
      750:	80 34       	cpi	r24, 0x40	; 64
      752:	09 f0       	breq	.+2      	; 0x756 <H_RTC_void_getTime+0x7a>
      754:	85 c0       	rjmp	.+266    	; 0x860 <__stack+0x1>
 	return ERROR;
-	
+
+	// Read seconds data and acknowledge
 	M_TWI_void_readByteWithACK(&data);
      756:	ce 01       	movw	r24, r28
      758:	02 96       	adiw	r24, 0x02	; 2
@@ -1065,12 +1125,16 @@ u8 H_RTC_void_getTime(Time_Config * config){
      75e:	ce 01       	movw	r24, r28
      760:	01 96       	adiw	r24, 0x01	; 1
      762:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MR_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MR_DATA_ACK)
      766:	89 81       	ldd	r24, Y+1	; 0x01
      768:	80 35       	cpi	r24, 0x50	; 80
      76a:	09 f0       	breq	.+2      	; 0x76e <H_RTC_void_getTime+0x92>
      76c:	7b c0       	rjmp	.+246    	; 0x864 <__stack+0x5>
 	return ERROR;
+
+	// Extract and store the seconds from the received data
 	config->sec = (data & 0x0F) + (((data & 0x70) * 10) >> 4);
      76e:	2a 81       	ldd	r18, Y+2	; 0x02
      770:	82 2f       	mov	r24, r18
@@ -1091,7 +1155,8 @@ u8 H_RTC_void_getTime(Time_Config * config){
      78e:	82 0f       	add	r24, r18
      790:	f8 01       	movw	r30, r16
      792:	82 83       	std	Z+2, r24	; 0x02
-	
+
+	// Read minutes data and acknowledge
 	M_TWI_void_readByteWithACK(&data);
      794:	ce 01       	movw	r24, r28
      796:	02 96       	adiw	r24, 0x02	; 2
@@ -1100,12 +1165,16 @@ u8 H_RTC_void_getTime(Time_Config * config){
      79c:	ce 01       	movw	r24, r28
      79e:	01 96       	adiw	r24, 0x01	; 1
      7a0:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MR_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MR_DATA_ACK)
      7a4:	89 81       	ldd	r24, Y+1	; 0x01
      7a6:	80 35       	cpi	r24, 0x50	; 80
      7a8:	09 f0       	breq	.+2      	; 0x7ac <H_RTC_void_getTime+0xd0>
      7aa:	5e c0       	rjmp	.+188    	; 0x868 <__stack+0x9>
 	return ERROR;
+
+	// Extract and store the minutes from the received data
 	config->minute = (data & 0x0F) + (((data & 0x70) * 10) >> 4);
      7ac:	2a 81       	ldd	r18, Y+2	; 0x02
      7ae:	82 2f       	mov	r24, r18
@@ -1126,7 +1195,8 @@ u8 H_RTC_void_getTime(Time_Config * config){
      7cc:	82 0f       	add	r24, r18
      7ce:	f8 01       	movw	r30, r16
      7d0:	81 83       	std	Z+1, r24	; 0x01
-	
+
+	// Read hour data without acknowledging
 	M_TWI_void_readByteWithNACK(&data);
      7d2:	ce 01       	movw	r24, r28
      7d4:	02 96       	adiw	r24, 0x02	; 2
@@ -1135,16 +1205,22 @@ u8 H_RTC_void_getTime(Time_Config * config){
      7da:	ce 01       	movw	r24, r28
      7dc:	01 96       	adiw	r24, 0x01	; 1
      7de:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MR_DATA_NACK)
+
+	// Check if the data was not acknowledged
+	if (status != TWI_MR_DATA_NACK)
      7e2:	89 81       	ldd	r24, Y+1	; 0x01
      7e4:	88 35       	cpi	r24, 0x58	; 88
      7e6:	09 f0       	breq	.+2      	; 0x7ea <H_RTC_void_getTime+0x10e>
      7e8:	41 c0       	rjmp	.+130    	; 0x86c <__stack+0xd>
 	return ERROR;
-	if(BIT_IS_SET(data,6)){
+
+	// Check if the RTC is using 12-hour format
+	if (BIT_IS_SET(data, 6))
      7ea:	8a 81       	ldd	r24, Y+2	; 0x02
      7ec:	86 ff       	sbrs	r24, 6
      7ee:	1a c0       	rjmp	.+52     	; 0x824 <__DATA_REGION_LENGTH__+0x24>
+	{
+		// Extract and store the hour from the received data (12-hour format)
 		config->hour = (data & 0x0F) + (((data & 0x10) * 10) >> 4);
      7f0:	28 2f       	mov	r18, r24
      7f2:	20 71       	andi	r18, 0x10	; 16
@@ -1167,14 +1243,17 @@ u8 H_RTC_void_getTime(Time_Config * config){
 		config->hour_type = HOUR_12;
      814:	81 e0       	ldi	r24, 0x01	; 1
      816:	83 83       	std	Z+3, r24	; 0x03
-		config->hour_value = (data >> 5 ) & 1;
+		config->hour_value = (data >> 5) & 1;
      818:	8a 81       	ldd	r24, Y+2	; 0x02
      81a:	85 fb       	bst	r24, 5
      81c:	88 27       	eor	r24, r24
      81e:	80 f9       	bld	r24, 0
      820:	84 83       	std	Z+4, r24	; 0x04
      822:	12 c0       	rjmp	.+36     	; 0x848 <__DATA_REGION_LENGTH__+0x48>
-		}else{
+	}
+	else
+	{
+		// Extract and store the hour from the received data (24-hour format)
 		config->hour = (data & 0x0F) + (((data & 0x30) * 10) >> 4);
      824:	28 2f       	mov	r18, r24
      826:	20 73       	andi	r18, 0x30	; 48
@@ -1195,74 +1274,81 @@ u8 H_RTC_void_getTime(Time_Config * config){
      844:	f8 01       	movw	r30, r16
      846:	80 83       	st	Z, r24
 	}
-	
+
+	// Stop the TWI communication
 	M_TWI_void_stop();
      848:	0e 94 20 08 	call	0x1040	; 0x1040 <M_TWI_void_stop>
+
 	return SUCCESS;
      84c:	81 e0       	ldi	r24, 0x01	; 1
      84e:	0f c0       	rjmp	.+30     	; 0x86e <__stack+0xf>
-u8 H_RTC_void_getTime(Time_Config * config){
-	u8 status,data;
 	M_TWI_void_start();
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_START)
+
+	// Check if the start condition was successful
+	if (status != TWI_START)
 	return ERROR;
      850:	80 e0       	ldi	r24, 0x00	; 0
      852:	0d c0       	rjmp	.+26     	; 0x86e <__stack+0xf>
-	
 	M_TWI_void_writeByte(Device_Write_address);
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MT_SLA_W_ACK)
+
+	// Check if the device address was acknowledged
+	if (status != TWI_MT_SLA_W_ACK)
 	return ERROR;
      854:	80 e0       	ldi	r24, 0x00	; 0
      856:	0b c0       	rjmp	.+22     	; 0x86e <__stack+0xf>
-	
 	M_TWI_void_writeByte(0x00);
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data address was acknowledged
+	if (status != TWI_MT_DATA_ACK)
 	return ERROR;
      858:	80 e0       	ldi	r24, 0x00	; 0
      85a:	09 c0       	rjmp	.+18     	; 0x86e <__stack+0xf>
-	
 	M_TWI_void_start();
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_REP_START)
+
+	// Check if the repeated start condition was successful
+	if (status != TWI_REP_START)
 	return ERROR;
      85c:	80 e0       	ldi	r24, 0x00	; 0
      85e:	07 c0       	rjmp	.+14     	; 0x86e <__stack+0xf>
-	
 	M_TWI_void_writeByte(Device_Read_address);
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MT_SLA_R_ACK)
+
+	// Check if the device address was acknowledged
+	if (status != TWI_MT_SLA_R_ACK)
 	return ERROR;
      860:	80 e0       	ldi	r24, 0x00	; 0
      862:	05 c0       	rjmp	.+10     	; 0x86e <__stack+0xf>
-	
 	M_TWI_void_readByteWithACK(&data);
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MR_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MR_DATA_ACK)
 	return ERROR;
      864:	80 e0       	ldi	r24, 0x00	; 0
      866:	03 c0       	rjmp	.+6      	; 0x86e <__stack+0xf>
-	config->sec = (data & 0x0F) + (((data & 0x70) * 10) >> 4);
-	
 	M_TWI_void_readByteWithACK(&data);
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MR_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MR_DATA_ACK)
 	return ERROR;
      868:	80 e0       	ldi	r24, 0x00	; 0
      86a:	01 c0       	rjmp	.+2      	; 0x86e <__stack+0xf>
-	config->minute = (data & 0x0F) + (((data & 0x70) * 10) >> 4);
-	
 	M_TWI_void_readByteWithNACK(&data);
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MR_DATA_NACK)
+
+	// Check if the data was not acknowledged
+	if (status != TWI_MR_DATA_NACK)
 	return ERROR;
      86c:	80 e0       	ldi	r24, 0x00	; 0
-		config->hour = (data & 0x0F) + (((data & 0x30) * 10) >> 4);
-	}
-	
+
+	// Stop the TWI communication
 	M_TWI_void_stop();
+
 	return SUCCESS;
 }
      86e:	0f 90       	pop	r0
@@ -1275,8 +1361,9 @@ u8 H_RTC_void_getTime(Time_Config * config){
 
 0000087c <H_RTC_void_setDate>:
 
-
-u8 H_RTC_void_setDate(Date_config * config){
+// Function to set the date on the RTC
+u8 H_RTC_void_setDate(Date_config * config)
+{
      87c:	0f 93       	push	r16
      87e:	1f 93       	push	r17
      880:	cf 93       	push	r28
@@ -1286,19 +1373,24 @@ u8 H_RTC_void_setDate(Date_config * config){
      888:	de b7       	in	r29, 0x3e	; 62
      88a:	8c 01       	movw	r16, r24
 	u8 status;
+
+	// Start the TWI communication
 	M_TWI_void_start();
      88c:	0e 94 1a 08 	call	0x1034	; 0x1034 <M_TWI_void_start>
 	M_TWI_void_getStatus(&status);
      890:	ce 01       	movw	r24, r28
      892:	01 96       	adiw	r24, 0x01	; 1
      894:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_START)
+
+	// Check if the start condition was successful
+	if (status != TWI_START)
      898:	89 81       	ldd	r24, Y+1	; 0x01
      89a:	88 30       	cpi	r24, 0x08	; 8
      89c:	09 f0       	breq	.+2      	; 0x8a0 <H_RTC_void_setDate+0x24>
      89e:	6c c0       	rjmp	.+216    	; 0x978 <H_RTC_void_setDate+0xfc>
 	return ERROR;
-	
+
+	// Send the device write address
 	M_TWI_void_writeByte(Device_Write_address);
      8a0:	80 ed       	ldi	r24, 0xD0	; 208
      8a2:	0e 94 23 08 	call	0x1046	; 0x1046 <M_TWI_void_writeByte>
@@ -1306,27 +1398,33 @@ u8 H_RTC_void_setDate(Date_config * config){
      8a6:	ce 01       	movw	r24, r28
      8a8:	01 96       	adiw	r24, 0x01	; 1
      8aa:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MT_SLA_W_ACK)
+
+	// Check if the device address was acknowledged
+	if (status != TWI_MT_SLA_W_ACK)
      8ae:	89 81       	ldd	r24, Y+1	; 0x01
      8b0:	88 31       	cpi	r24, 0x18	; 24
      8b2:	09 f0       	breq	.+2      	; 0x8b6 <H_RTC_void_setDate+0x3a>
      8b4:	63 c0       	rjmp	.+198    	; 0x97c <H_RTC_void_setDate+0x100>
 	return ERROR;
-	
-	M_TWI_void_writeByte(0x03);
+
+	// Send the address of the register where we want to write date data (0x03)
+	M_TWI_void_writeByte(Days_address);
      8b6:	83 e0       	ldi	r24, 0x03	; 3
      8b8:	0e 94 23 08 	call	0x1046	; 0x1046 <M_TWI_void_writeByte>
 	M_TWI_void_getStatus(&status);
      8bc:	ce 01       	movw	r24, r28
      8be:	01 96       	adiw	r24, 0x01	; 1
      8c0:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data address was acknowledged
+	if (status != TWI_MT_DATA_ACK)
      8c4:	89 81       	ldd	r24, Y+1	; 0x01
      8c6:	88 32       	cpi	r24, 0x28	; 40
      8c8:	09 f0       	breq	.+2      	; 0x8cc <H_RTC_void_setDate+0x50>
      8ca:	5a c0       	rjmp	.+180    	; 0x980 <H_RTC_void_setDate+0x104>
 	return ERROR;
-	
+
+	// Send the day data
 	M_TWI_void_writeByte(config->day);
      8cc:	f8 01       	movw	r30, r16
      8ce:	80 81       	ld	r24, Z
@@ -1335,13 +1433,16 @@ u8 H_RTC_void_setDate(Date_config * config){
      8d4:	ce 01       	movw	r24, r28
      8d6:	01 96       	adiw	r24, 0x01	; 1
      8d8:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MT_DATA_ACK)
      8dc:	89 81       	ldd	r24, Y+1	; 0x01
      8de:	88 32       	cpi	r24, 0x28	; 40
      8e0:	09 f0       	breq	.+2      	; 0x8e4 <H_RTC_void_setDate+0x68>
      8e2:	50 c0       	rjmp	.+160    	; 0x984 <H_RTC_void_setDate+0x108>
 	return ERROR;
-	
+
+	// Send the date data in BCD format
 	M_TWI_void_writeByte((config->date / 10) << 4 | (config->date % 10));
      8e4:	f8 01       	movw	r30, r16
      8e6:	21 81       	ldd	r18, Z+1	; 0x01
@@ -1369,12 +1470,15 @@ u8 H_RTC_void_setDate(Date_config * config){
      912:	ce 01       	movw	r24, r28
      914:	01 96       	adiw	r24, 0x01	; 1
      916:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MT_DATA_ACK)
      91a:	89 81       	ldd	r24, Y+1	; 0x01
      91c:	88 32       	cpi	r24, 0x28	; 40
      91e:	a1 f5       	brne	.+104    	; 0x988 <H_RTC_void_setDate+0x10c>
 	return ERROR;
-	
+
+	// Send the month data in BCD format
 	M_TWI_void_writeByte((config->month / 10) << 4 | (config->month % 10));
      920:	f8 01       	movw	r30, r16
      922:	82 81       	ldd	r24, Z+2	; 0x02
@@ -1391,12 +1495,15 @@ u8 H_RTC_void_setDate(Date_config * config){
      93a:	ce 01       	movw	r24, r28
      93c:	01 96       	adiw	r24, 0x01	; 1
      93e:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MT_DATA_ACK)
      942:	89 81       	ldd	r24, Y+1	; 0x01
      944:	88 32       	cpi	r24, 0x28	; 40
      946:	11 f5       	brne	.+68     	; 0x98c <H_RTC_void_setDate+0x110>
 	return ERROR;
-	
+
+	// Send the year data in BCD format
 	M_TWI_void_writeByte((config->year / 10) << 4 | (config->year % 10));
      948:	f8 01       	movw	r30, r16
      94a:	83 81       	ldd	r24, Z+3	; 0x03
@@ -1413,70 +1520,80 @@ u8 H_RTC_void_setDate(Date_config * config){
      962:	ce 01       	movw	r24, r28
      964:	01 96       	adiw	r24, 0x01	; 1
      966:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MT_DATA_ACK)
      96a:	89 81       	ldd	r24, Y+1	; 0x01
      96c:	88 32       	cpi	r24, 0x28	; 40
      96e:	81 f4       	brne	.+32     	; 0x990 <H_RTC_void_setDate+0x114>
 	return ERROR;
-	
-	
+
+	// Stop the TWI communication
 	M_TWI_void_stop();
      970:	0e 94 20 08 	call	0x1040	; 0x1040 <M_TWI_void_stop>
+
 	return SUCCESS;
      974:	81 e0       	ldi	r24, 0x01	; 1
      976:	0d c0       	rjmp	.+26     	; 0x992 <H_RTC_void_setDate+0x116>
-u8 H_RTC_void_setDate(Date_config * config){
-	u8 status;
 	M_TWI_void_start();
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_START)
+
+	// Check if the start condition was successful
+	if (status != TWI_START)
 	return ERROR;
      978:	80 e0       	ldi	r24, 0x00	; 0
      97a:	0b c0       	rjmp	.+22     	; 0x992 <H_RTC_void_setDate+0x116>
-	
 	M_TWI_void_writeByte(Device_Write_address);
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MT_SLA_W_ACK)
+
+	// Check if the device address was acknowledged
+	if (status != TWI_MT_SLA_W_ACK)
 	return ERROR;
      97c:	80 e0       	ldi	r24, 0x00	; 0
      97e:	09 c0       	rjmp	.+18     	; 0x992 <H_RTC_void_setDate+0x116>
-	
-	M_TWI_void_writeByte(0x03);
+	M_TWI_void_writeByte(Days_address);
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data address was acknowledged
+	if (status != TWI_MT_DATA_ACK)
 	return ERROR;
      980:	80 e0       	ldi	r24, 0x00	; 0
      982:	07 c0       	rjmp	.+14     	; 0x992 <H_RTC_void_setDate+0x116>
-	
 	M_TWI_void_writeByte(config->day);
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MT_DATA_ACK)
 	return ERROR;
      984:	80 e0       	ldi	r24, 0x00	; 0
      986:	05 c0       	rjmp	.+10     	; 0x992 <H_RTC_void_setDate+0x116>
-	
 	M_TWI_void_writeByte((config->date / 10) << 4 | (config->date % 10));
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MT_DATA_ACK)
 	return ERROR;
      988:	80 e0       	ldi	r24, 0x00	; 0
      98a:	03 c0       	rjmp	.+6      	; 0x992 <H_RTC_void_setDate+0x116>
-	
 	M_TWI_void_writeByte((config->month / 10) << 4 | (config->month % 10));
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MT_DATA_ACK)
 	return ERROR;
      98c:	80 e0       	ldi	r24, 0x00	; 0
      98e:	01 c0       	rjmp	.+2      	; 0x992 <H_RTC_void_setDate+0x116>
-	
 	M_TWI_void_writeByte((config->year / 10) << 4 | (config->year % 10));
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MT_DATA_ACK)
 	return ERROR;
      990:	80 e0       	ldi	r24, 0x00	; 0
-	
-	
+
+	// Stop the TWI communication
 	M_TWI_void_stop();
+
 	return SUCCESS;
 }
      992:	0f 90       	pop	r0
@@ -1488,8 +1605,9 @@ u8 H_RTC_void_setDate(Date_config * config){
 
 0000099e <H_RTC_void_getDate>:
 
-
-u8 H_RTC_void_getDate(Date_config * config){
+// Function to get the current date from the RTC
+u8 H_RTC_void_getDate(Date_config * config)
+{
      99e:	0f 93       	push	r16
      9a0:	1f 93       	push	r17
      9a2:	cf 93       	push	r28
@@ -1498,20 +1616,25 @@ u8 H_RTC_void_getDate(Date_config * config){
      9a8:	cd b7       	in	r28, 0x3d	; 61
      9aa:	de b7       	in	r29, 0x3e	; 62
      9ac:	8c 01       	movw	r16, r24
-	u8 status,data;
+	u8 status, data;
+
+	// Start the TWI communication
 	M_TWI_void_start();
      9ae:	0e 94 1a 08 	call	0x1034	; 0x1034 <M_TWI_void_start>
 	M_TWI_void_getStatus(&status);
      9b2:	ce 01       	movw	r24, r28
      9b4:	01 96       	adiw	r24, 0x01	; 1
      9b6:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_START)
+
+	// Check if the start condition was successful
+	if (status != TWI_START)
      9ba:	89 81       	ldd	r24, Y+1	; 0x01
      9bc:	88 30       	cpi	r24, 0x08	; 8
      9be:	09 f0       	breq	.+2      	; 0x9c2 <H_RTC_void_getDate+0x24>
      9c0:	9a c0       	rjmp	.+308    	; 0xaf6 <H_RTC_void_getDate+0x158>
 	return ERROR;
-	
+
+	// Send the device write address
 	M_TWI_void_writeByte(Device_Write_address);
      9c2:	80 ed       	ldi	r24, 0xD0	; 208
      9c4:	0e 94 23 08 	call	0x1046	; 0x1046 <M_TWI_void_writeByte>
@@ -1519,13 +1642,16 @@ u8 H_RTC_void_getDate(Date_config * config){
      9c8:	ce 01       	movw	r24, r28
      9ca:	01 96       	adiw	r24, 0x01	; 1
      9cc:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MT_SLA_W_ACK)
+
+	// Check if the device address was acknowledged
+	if (status != TWI_MT_SLA_W_ACK)
      9d0:	89 81       	ldd	r24, Y+1	; 0x01
      9d2:	88 31       	cpi	r24, 0x18	; 24
      9d4:	09 f0       	breq	.+2      	; 0x9d8 <H_RTC_void_getDate+0x3a>
      9d6:	91 c0       	rjmp	.+290    	; 0xafa <H_RTC_void_getDate+0x15c>
 	return ERROR;
-	
+
+	// Send the address of the register from which we want to read date data (0x03)
 	M_TWI_void_writeByte(0x03);
      9d8:	83 e0       	ldi	r24, 0x03	; 3
      9da:	0e 94 23 08 	call	0x1046	; 0x1046 <M_TWI_void_writeByte>
@@ -1533,26 +1659,32 @@ u8 H_RTC_void_getDate(Date_config * config){
      9de:	ce 01       	movw	r24, r28
      9e0:	01 96       	adiw	r24, 0x01	; 1
      9e2:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data address was acknowledged
+	if (status != TWI_MT_DATA_ACK)
      9e6:	89 81       	ldd	r24, Y+1	; 0x01
      9e8:	88 32       	cpi	r24, 0x28	; 40
      9ea:	09 f0       	breq	.+2      	; 0x9ee <H_RTC_void_getDate+0x50>
      9ec:	88 c0       	rjmp	.+272    	; 0xafe <H_RTC_void_getDate+0x160>
 	return ERROR;
-	
+
+	// Start a repeated start condition for reading
 	M_TWI_void_start();
      9ee:	0e 94 1a 08 	call	0x1034	; 0x1034 <M_TWI_void_start>
 	M_TWI_void_getStatus(&status);
      9f2:	ce 01       	movw	r24, r28
      9f4:	01 96       	adiw	r24, 0x01	; 1
      9f6:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_REP_START)
+
+	// Check if the repeated start condition was successful
+	if (status != TWI_REP_START)
      9fa:	89 81       	ldd	r24, Y+1	; 0x01
      9fc:	80 31       	cpi	r24, 0x10	; 16
      9fe:	09 f0       	breq	.+2      	; 0xa02 <H_RTC_void_getDate+0x64>
      a00:	80 c0       	rjmp	.+256    	; 0xb02 <H_RTC_void_getDate+0x164>
 	return ERROR;
-	
+
+	// Send the device read address
 	M_TWI_void_writeByte(Device_Read_address);
      a02:	81 ed       	ldi	r24, 0xD1	; 209
      a04:	0e 94 23 08 	call	0x1046	; 0x1046 <M_TWI_void_writeByte>
@@ -1560,13 +1692,16 @@ u8 H_RTC_void_getDate(Date_config * config){
      a08:	ce 01       	movw	r24, r28
      a0a:	01 96       	adiw	r24, 0x01	; 1
      a0c:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MT_SLA_R_ACK)
+
+	// Check if the device address was acknowledged
+	if (status != TWI_MT_SLA_R_ACK)
      a10:	89 81       	ldd	r24, Y+1	; 0x01
      a12:	80 34       	cpi	r24, 0x40	; 64
      a14:	09 f0       	breq	.+2      	; 0xa18 <H_RTC_void_getDate+0x7a>
      a16:	77 c0       	rjmp	.+238    	; 0xb06 <H_RTC_void_getDate+0x168>
 	return ERROR;
-	
+
+	// Read day data and acknowledge
 	M_TWI_void_readByteWithACK(&data);
      a18:	ce 01       	movw	r24, r28
      a1a:	02 96       	adiw	r24, 0x02	; 2
@@ -1575,17 +1710,22 @@ u8 H_RTC_void_getDate(Date_config * config){
      a20:	ce 01       	movw	r24, r28
      a22:	01 96       	adiw	r24, 0x01	; 1
      a24:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MR_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MR_DATA_ACK)
      a28:	89 81       	ldd	r24, Y+1	; 0x01
      a2a:	80 35       	cpi	r24, 0x50	; 80
      a2c:	09 f0       	breq	.+2      	; 0xa30 <H_RTC_void_getDate+0x92>
      a2e:	6d c0       	rjmp	.+218    	; 0xb0a <H_RTC_void_getDate+0x16c>
 	return ERROR;
+
+	// Store the day
 	config->day = data;
      a30:	8a 81       	ldd	r24, Y+2	; 0x02
      a32:	f8 01       	movw	r30, r16
      a34:	80 83       	st	Z, r24
-	
+
+	// Read date data and acknowledge
 	M_TWI_void_readByteWithACK(&data);
      a36:	ce 01       	movw	r24, r28
      a38:	02 96       	adiw	r24, 0x02	; 2
@@ -1594,12 +1734,16 @@ u8 H_RTC_void_getDate(Date_config * config){
      a3e:	ce 01       	movw	r24, r28
      a40:	01 96       	adiw	r24, 0x01	; 1
      a42:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MR_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MR_DATA_ACK)
      a46:	89 81       	ldd	r24, Y+1	; 0x01
      a48:	80 35       	cpi	r24, 0x50	; 80
      a4a:	09 f0       	breq	.+2      	; 0xa4e <H_RTC_void_getDate+0xb0>
      a4c:	60 c0       	rjmp	.+192    	; 0xb0e <H_RTC_void_getDate+0x170>
 	return ERROR;
+
+	// Extract and store the date from the received data
 	config->date = (data & 0x0F) + (((data & 0x30) * 10) >> 4);
      a4e:	2a 81       	ldd	r18, Y+2	; 0x02
      a50:	82 2f       	mov	r24, r18
@@ -1620,7 +1764,8 @@ u8 H_RTC_void_getDate(Date_config * config){
      a6e:	82 0f       	add	r24, r18
      a70:	f8 01       	movw	r30, r16
      a72:	81 83       	std	Z+1, r24	; 0x01
-	
+
+	// Read month data and acknowledge
 	M_TWI_void_readByteWithACK(&data);
      a74:	ce 01       	movw	r24, r28
      a76:	02 96       	adiw	r24, 0x02	; 2
@@ -1629,12 +1774,16 @@ u8 H_RTC_void_getDate(Date_config * config){
      a7c:	ce 01       	movw	r24, r28
      a7e:	01 96       	adiw	r24, 0x01	; 1
      a80:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MR_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MR_DATA_ACK)
      a84:	89 81       	ldd	r24, Y+1	; 0x01
      a86:	80 35       	cpi	r24, 0x50	; 80
      a88:	09 f0       	breq	.+2      	; 0xa8c <H_RTC_void_getDate+0xee>
      a8a:	43 c0       	rjmp	.+134    	; 0xb12 <H_RTC_void_getDate+0x174>
 	return ERROR;
+
+	// Extract and store the month from the received data
 	config->month = (data & 0x0F) + (((data & 0x10) * 10) >> 4);
      a8c:	2a 81       	ldd	r18, Y+2	; 0x02
      a8e:	82 2f       	mov	r24, r18
@@ -1655,7 +1804,8 @@ u8 H_RTC_void_getDate(Date_config * config){
      aac:	82 0f       	add	r24, r18
      aae:	f8 01       	movw	r30, r16
      ab0:	82 83       	std	Z+2, r24	; 0x02
-	
+
+	// Read year data without acknowledging
 	M_TWI_void_readByteWithNACK(&data);
      ab2:	ce 01       	movw	r24, r28
      ab4:	02 96       	adiw	r24, 0x02	; 2
@@ -1664,11 +1814,15 @@ u8 H_RTC_void_getDate(Date_config * config){
      aba:	ce 01       	movw	r24, r28
      abc:	01 96       	adiw	r24, 0x01	; 1
      abe:	0e 94 3c 08 	call	0x1078	; 0x1078 <M_TWI_void_getStatus>
-	if(status != TWI_MR_DATA_NACK)
+
+	// Check if the data was not acknowledged
+	if (status != TWI_MR_DATA_NACK)
      ac2:	89 81       	ldd	r24, Y+1	; 0x01
      ac4:	88 35       	cpi	r24, 0x58	; 88
      ac6:	39 f5       	brne	.+78     	; 0xb16 <H_RTC_void_getDate+0x178>
 	return ERROR;
+
+	// Extract and store the year from the received data
 	config->year = (data & 0x0F) + (((data & 0xF0) * 10) >> 4);
      ac8:	2a 81       	ldd	r18, Y+2	; 0x02
      aca:	82 2f       	mov	r24, r18
@@ -1690,83 +1844,90 @@ u8 H_RTC_void_getDate(Date_config * config){
      aea:	f8 01       	movw	r30, r16
      aec:	83 83       	std	Z+3, r24	; 0x03
 
-	
+	// Stop the TWI communication
 	M_TWI_void_stop();
      aee:	0e 94 20 08 	call	0x1040	; 0x1040 <M_TWI_void_stop>
+
 	return SUCCESS;
      af2:	81 e0       	ldi	r24, 0x01	; 1
      af4:	11 c0       	rjmp	.+34     	; 0xb18 <H_RTC_void_getDate+0x17a>
-u8 H_RTC_void_getDate(Date_config * config){
-	u8 status,data;
 	M_TWI_void_start();
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_START)
+
+	// Check if the start condition was successful
+	if (status != TWI_START)
 	return ERROR;
      af6:	80 e0       	ldi	r24, 0x00	; 0
      af8:	0f c0       	rjmp	.+30     	; 0xb18 <H_RTC_void_getDate+0x17a>
-	
 	M_TWI_void_writeByte(Device_Write_address);
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MT_SLA_W_ACK)
+
+	// Check if the device address was acknowledged
+	if (status != TWI_MT_SLA_W_ACK)
 	return ERROR;
      afa:	80 e0       	ldi	r24, 0x00	; 0
      afc:	0d c0       	rjmp	.+26     	; 0xb18 <H_RTC_void_getDate+0x17a>
-	
 	M_TWI_void_writeByte(0x03);
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MT_DATA_ACK)
+
+	// Check if the data address was acknowledged
+	if (status != TWI_MT_DATA_ACK)
 	return ERROR;
      afe:	80 e0       	ldi	r24, 0x00	; 0
      b00:	0b c0       	rjmp	.+22     	; 0xb18 <H_RTC_void_getDate+0x17a>
-	
 	M_TWI_void_start();
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_REP_START)
+
+	// Check if the repeated start condition was successful
+	if (status != TWI_REP_START)
 	return ERROR;
      b02:	80 e0       	ldi	r24, 0x00	; 0
      b04:	09 c0       	rjmp	.+18     	; 0xb18 <H_RTC_void_getDate+0x17a>
-	
 	M_TWI_void_writeByte(Device_Read_address);
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MT_SLA_R_ACK)
+
+	// Check if the device address was acknowledged
+	if (status != TWI_MT_SLA_R_ACK)
 	return ERROR;
      b06:	80 e0       	ldi	r24, 0x00	; 0
      b08:	07 c0       	rjmp	.+14     	; 0xb18 <H_RTC_void_getDate+0x17a>
-	
 	M_TWI_void_readByteWithACK(&data);
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MR_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MR_DATA_ACK)
 	return ERROR;
      b0a:	80 e0       	ldi	r24, 0x00	; 0
      b0c:	05 c0       	rjmp	.+10     	; 0xb18 <H_RTC_void_getDate+0x17a>
-	config->day = data;
-	
 	M_TWI_void_readByteWithACK(&data);
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MR_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MR_DATA_ACK)
 	return ERROR;
      b0e:	80 e0       	ldi	r24, 0x00	; 0
      b10:	03 c0       	rjmp	.+6      	; 0xb18 <H_RTC_void_getDate+0x17a>
-	config->date = (data & 0x0F) + (((data & 0x30) * 10) >> 4);
-	
 	M_TWI_void_readByteWithACK(&data);
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MR_DATA_ACK)
+
+	// Check if the data was acknowledged
+	if (status != TWI_MR_DATA_ACK)
 	return ERROR;
      b12:	80 e0       	ldi	r24, 0x00	; 0
      b14:	01 c0       	rjmp	.+2      	; 0xb18 <H_RTC_void_getDate+0x17a>
-	config->month = (data & 0x0F) + (((data & 0x10) * 10) >> 4);
-	
 	M_TWI_void_readByteWithNACK(&data);
 	M_TWI_void_getStatus(&status);
-	if(status != TWI_MR_DATA_NACK)
+
+	// Check if the data was not acknowledged
+	if (status != TWI_MR_DATA_NACK)
 	return ERROR;
      b16:	80 e0       	ldi	r24, 0x00	; 0
-	config->year = (data & 0x0F) + (((data & 0xF0) * 10) >> 4);
 
-	
+	// Stop the TWI communication
 	M_TWI_void_stop();
+
 	return SUCCESS;
+}
      b18:	0f 90       	pop	r0
      b1a:	0f 90       	pop	r0
      b1c:	df 91       	pop	r29

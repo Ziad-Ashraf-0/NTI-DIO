@@ -1132,20 +1132,20 @@ END GROUP
  .debug_abbrev  0x00001188       0xf0 MCAL/TWI/TWI_prog.o
  .debug_abbrev  0x00001278      0x131 MCAL/USART/USART_prog.o
 
-.debug_line     0x00000000     0x1d57
+.debug_line     0x00000000     0x1d5a
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x116 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_line    0x00000116      0x244 APP/main.o
  .debug_line    0x0000035a      0x5cd HAL/LCD/LCD_prog.o
- .debug_line    0x00000927      0x464 HAL/RTC/RTC_prog.o
- .debug_line    0x00000d8b      0x23b MCAL/ADC/ADC_prog.o
- .debug_line    0x00000fc6      0x2b7 MCAL/DIO/DIO_Program.o
- .debug_line    0x0000127d      0x173 MCAL/EXTI/EXTI_prog.o
- .debug_line    0x000013f0      0x10a MCAL/SPI/SPI_prog.o
- .debug_line    0x000014fa      0x26f MCAL/TIMER0/TIMER0_prog.o
- .debug_line    0x00001769      0x2da MCAL/TIMER1/TIMER1_prog.o
- .debug_line    0x00001a43      0x172 MCAL/TWI/TWI_prog.o
- .debug_line    0x00001bb5      0x1a2 MCAL/USART/USART_prog.o
+ .debug_line    0x00000927      0x467 HAL/RTC/RTC_prog.o
+ .debug_line    0x00000d8e      0x23b MCAL/ADC/ADC_prog.o
+ .debug_line    0x00000fc9      0x2b7 MCAL/DIO/DIO_Program.o
+ .debug_line    0x00001280      0x173 MCAL/EXTI/EXTI_prog.o
+ .debug_line    0x000013f3      0x10a MCAL/SPI/SPI_prog.o
+ .debug_line    0x000014fd      0x26f MCAL/TIMER0/TIMER0_prog.o
+ .debug_line    0x0000176c      0x2da MCAL/TIMER1/TIMER1_prog.o
+ .debug_line    0x00001a46      0x172 MCAL/TWI/TWI_prog.o
+ .debug_line    0x00001bb8      0x1a2 MCAL/USART/USART_prog.o
 
 .debug_frame    0x00000000      0xaac
  *(.debug_frame)
