@@ -38,6 +38,7 @@ SUBDIRS :=  \
 ../HAL/Keypad/ \
 ../HAL/LCD/ \
 ../HAL/EEPROM \
+../HAL/RTC \
 ../HAL/Ultrasonic \
 ../HAL/Segment/ \
 ../LIB/ \
@@ -59,6 +60,7 @@ C_SRCS +=  \
 ../HAL/EEPROM/EEPROM_prog.c \
 ../HAL/Keypad/Keypad_prog.c \
 ../HAL/LCD/LCD_prog.c \
+../HAL/RTC/RTC_prog.c \
 ../HAL/Segment/segment.c \
 ../HAL/Ultrasonic/Ultrasonic_prog.c \
 ../MCAL/ADC/ADC_prog.c \
@@ -83,6 +85,7 @@ APP/main.o \
 HAL/EEPROM/EEPROM_prog.o \
 HAL/Keypad/Keypad_prog.o \
 HAL/LCD/LCD_prog.o \
+HAL/RTC/RTC_prog.o \
 HAL/Segment/segment.o \
 HAL/Ultrasonic/Ultrasonic_prog.o \
 MCAL/ADC/ADC_prog.o \
@@ -100,6 +103,7 @@ APP/main.o \
 HAL/EEPROM/EEPROM_prog.o \
 HAL/Keypad/Keypad_prog.o \
 HAL/LCD/LCD_prog.o \
+HAL/RTC/RTC_prog.o \
 HAL/Segment/segment.o \
 HAL/Ultrasonic/Ultrasonic_prog.o \
 MCAL/ADC/ADC_prog.o \
@@ -117,6 +121,7 @@ APP/main.d \
 HAL/EEPROM/EEPROM_prog.d \
 HAL/Keypad/Keypad_prog.d \
 HAL/LCD/LCD_prog.d \
+HAL/RTC/RTC_prog.d \
 HAL/Segment/segment.d \
 HAL/Ultrasonic/Ultrasonic_prog.d \
 MCAL/ADC/ADC_prog.d \
@@ -134,6 +139,7 @@ APP/main.d \
 HAL/EEPROM/EEPROM_prog.d \
 HAL/Keypad/Keypad_prog.d \
 HAL/LCD/LCD_prog.d \
+HAL/RTC/RTC_prog.d \
 HAL/Segment/segment.d \
 HAL/Ultrasonic/Ultrasonic_prog.d \
 MCAL/ADC/ADC_prog.d \
@@ -182,6 +188,13 @@ HAL/Keypad/Keypad_prog.o: ../HAL/Keypad/Keypad_prog.c
 	
 
 HAL/LCD/LCD_prog.o: ../HAL/LCD/LCD_prog.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+HAL/RTC/RTC_prog.o: ../HAL/RTC/RTC_prog.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

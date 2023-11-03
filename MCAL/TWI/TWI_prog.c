@@ -14,7 +14,10 @@
 
 void M_TWI_void_init(const TWI_Config *Config_Ptr)
 {
+	//put 2 in case of 8 mhz 400 bit
+	//put 32 in case of 8mhz 100 bit
     TWI->TWBR = Config_Ptr->twbr;
+   //TWI->TWBR = 32;
 	TWI->TWSR = 0;
 	
     /* Two Wire Bus address my address if any master device want to call me: 0x1 (used in case this MC is a slave device)

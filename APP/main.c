@@ -19,17 +19,37 @@
 #include "../MCAL/SPI/SPI_interface.h"
 #include "../MCAL/TWI/TWI_interface.h"
 #include "../HAL/EEPROM/EEPROM_interface.h"
+#include "../HAL/RTC/RTC_interface.h"
 #include <util/delay.h>
 
 
 
 int main(void) {
-
-	
-	
-
+	H_LCD_void_Init();
+	H_void_RTC_Init();
+	Time_Config config = {10,18,59,HOUR_12,PM};
+	H_void_RTC_setTime(&config);
+	Time_Config time;
+		
 	while (1) {
-
+		H_LCD_void_clearScreen();
+		H_void_RTC_getTime(&time);
+		H_LCD_void_sendString("TIME : ");
+		H_LCD_void_sendIntNum(time.hour);
+		H_LCD_void_sendData(':');
+		H_LCD_void_sendIntNum(time.minute);
+		H_LCD_void_sendData(':');
+		H_LCD_void_sendIntNum(time.sec);
+		if(time.hour_type == HOUR_12){
+			if(time.hour_value == AM){
+				H_LCD_void_sendString(" AM");
+				}else{
+				H_LCD_void_sendString(" PM");
+			}
+			
+		}
+		
+		_delay_ms(500);
 	}
 
 	return 0;

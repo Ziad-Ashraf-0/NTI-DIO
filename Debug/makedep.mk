@@ -10,6 +10,8 @@ HAL\Keypad\Keypad_prog.c
 
 HAL\LCD\LCD_prog.c
 
+HAL\RTC\RTC_prog.c
+
 HAL\Segment\segment.c
 
 HAL\Ultrasonic\Ultrasonic_prog.c

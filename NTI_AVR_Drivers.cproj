@@ -159,6 +159,18 @@
     <Compile Include="HAL\LCD\LCD_prog.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="HAL\RTC\RTC_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\RTC\RTC_interface.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\RTC\RTC_private.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\RTC\RTC_prog.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="HAL\Segment\segment.c">
       <SubType>compile</SubType>
     </Compile>
@@ -292,6 +304,7 @@
     <Folder Include="HAL\Keypad\" />
     <Folder Include="HAL\LCD\" />
     <Folder Include="HAL\EEPROM" />
+    <Folder Include="HAL\RTC" />
     <Folder Include="HAL\Ultrasonic" />
     <Folder Include="HAL\Segment\" />
     <Folder Include="LIB\" />
