@@ -45,9 +45,10 @@ Choose one of the following :
 19200
 28800
 38400
+57600
 */
 
-#define BAUD_RATE	9600
+#define BAUD_RATE	57600
 
 
 
