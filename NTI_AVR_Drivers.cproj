@@ -135,6 +135,18 @@
     <Compile Include="HAL\EEPROM\EEPROM_prog.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="HAL\Fingerprint\Fingerprint_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\Fingerprint\Fingerprint_interface.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\Fingerprint\Fingerprint_private.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\Fingerprint\Fingerprint_prog.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="HAL\Keypad\Keypad_config.h">
       <SubType>compile</SubType>
     </Compile>
@@ -304,6 +316,7 @@
     <Folder Include="HAL\Keypad\" />
     <Folder Include="HAL\LCD\" />
     <Folder Include="HAL\EEPROM" />
+    <Folder Include="HAL\Fingerprint" />
     <Folder Include="HAL\RTC" />
     <Folder Include="HAL\Ultrasonic" />
     <Folder Include="HAL\Segment\" />
