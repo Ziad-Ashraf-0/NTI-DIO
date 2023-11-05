@@ -36,3 +36,5 @@ MCAL\TWI\TWI_prog.c
 
 MCAL\USART\USART_prog.c
 
+MCAL\WDT\WDT_prog.c
+

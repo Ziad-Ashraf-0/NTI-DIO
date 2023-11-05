@@ -309,6 +309,18 @@
     <Compile Include="MCAL\USART\USART_prog.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MCAL\WDT\WDT_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\WDT\WDT_interface.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\WDT\WDT_private.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\WDT\WDT_prog.c">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APP" />
@@ -326,6 +338,7 @@
     <Folder Include="MCAL\DIO\" />
     <Folder Include="MCAL\EXTI\" />
     <Folder Include="MCAL\GIE\" />
+    <Folder Include="MCAL\WDT" />
     <Folder Include="MCAL\TWI" />
     <Folder Include="MCAL\SPI" />
     <Folder Include="MCAL\USART" />

@@ -89,7 +89,7 @@ Discarded input sections
                 0x00000000       0x30 HAL/EEPROM/EEPROM_prog.o
  .debug_ranges  0x00000000       0x20 HAL/EEPROM/EEPROM_prog.o
  .debug_line    0x00000000      0x1f5 HAL/EEPROM/EEPROM_prog.o
- .debug_str     0x00000000      0x26b HAL/EEPROM/EEPROM_prog.o
+ .debug_str     0x00000000      0x271 HAL/EEPROM/EEPROM_prog.o
  .comment       0x00000000       0x31 HAL/EEPROM/EEPROM_prog.o
  .debug_frame   0x00000000       0xa4 HAL/EEPROM/EEPROM_prog.o
  .text          0x00000000        0x0 HAL/Fingerprint/Fingerprint_prog.o
@@ -181,7 +181,7 @@ Discarded input sections
                 0x00000000       0x40 HAL/RTC/RTC_prog.o
  .debug_ranges  0x00000000       0x30 HAL/RTC/RTC_prog.o
  .debug_line    0x00000000      0x467 HAL/RTC/RTC_prog.o
- .debug_str     0x00000000      0x35d HAL/RTC/RTC_prog.o
+ .debug_str     0x00000000      0x363 HAL/RTC/RTC_prog.o
  .comment       0x00000000       0x31 HAL/RTC/RTC_prog.o
  .debug_frame   0x00000000       0xe4 HAL/RTC/RTC_prog.o
  .text          0x00000000        0x0 HAL/Segment/segment.o
@@ -230,7 +230,7 @@ Discarded input sections
                 0x00000000       0x40 HAL/Ultrasonic/Ultrasonic_prog.o
  .debug_ranges  0x00000000       0x30 HAL/Ultrasonic/Ultrasonic_prog.o
  .debug_line    0x00000000      0x2e1 HAL/Ultrasonic/Ultrasonic_prog.o
- .debug_str     0x00000000      0x733 HAL/Ultrasonic/Ultrasonic_prog.o
+ .debug_str     0x00000000      0x739 HAL/Ultrasonic/Ultrasonic_prog.o
  .comment       0x00000000       0x31 HAL/Ultrasonic/Ultrasonic_prog.o
  .debug_frame   0x00000000       0x94 HAL/Ultrasonic/Ultrasonic_prog.o
  .text          0x00000000        0x0 MCAL/ADC/ADC_prog.o
@@ -380,7 +380,7 @@ Discarded input sections
                 0x00000000       0x50 MCAL/TWI/TWI_prog.o
  .debug_ranges  0x00000000       0x40 MCAL/TWI/TWI_prog.o
  .debug_line    0x00000000      0x172 MCAL/TWI/TWI_prog.o
- .debug_str     0x00000000      0x282 MCAL/TWI/TWI_prog.o
+ .debug_str     0x00000000      0x288 MCAL/TWI/TWI_prog.o
  .comment       0x00000000       0x31 MCAL/TWI/TWI_prog.o
  .debug_frame   0x00000000       0x84 MCAL/TWI/TWI_prog.o
  .text          0x00000000        0x0 MCAL/USART/USART_prog.o
@@ -392,6 +392,27 @@ Discarded input sections
                 0x00000000       0x26 MCAL/USART/USART_prog.o
  .text.UART_receiveString
                 0x00000000       0x42 MCAL/USART/USART_prog.o
+ .text          0x00000000        0x0 MCAL/WDT/WDT_prog.o
+ .data          0x00000000        0x0 MCAL/WDT/WDT_prog.o
+ .bss           0x00000000        0x0 MCAL/WDT/WDT_prog.o
+ .text.M_WDT_void_Enable
+                0x00000000        0x8 MCAL/WDT/WDT_prog.o
+ .text.M_WDT_void_Disable
+                0x00000000        0xa MCAL/WDT/WDT_prog.o
+ .text.M_WDT_void_Sleep
+                0x00000000        0xe MCAL/WDT/WDT_prog.o
+ .text.M_WDT_void_refresh
+                0x00000000        0x4 MCAL/WDT/WDT_prog.o
+ .debug_info    0x00000000      0x135 MCAL/WDT/WDT_prog.o
+ .debug_abbrev  0x00000000       0x94 MCAL/WDT/WDT_prog.o
+ .debug_loc     0x00000000       0x21 MCAL/WDT/WDT_prog.o
+ .debug_aranges
+                0x00000000       0x38 MCAL/WDT/WDT_prog.o
+ .debug_ranges  0x00000000       0x28 MCAL/WDT/WDT_prog.o
+ .debug_line    0x00000000       0xd0 MCAL/WDT/WDT_prog.o
+ .debug_str     0x00000000      0x24b MCAL/WDT/WDT_prog.o
+ .comment       0x00000000       0x31 MCAL/WDT/WDT_prog.o
+ .debug_frame   0x00000000       0x54 MCAL/WDT/WDT_prog.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(addsf3.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(addsf3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(addsf3.o)
@@ -702,6 +723,7 @@ LOAD MCAL/TIMER0/TIMER0_prog.o
 LOAD MCAL/TIMER1/TIMER1_prog.o
 LOAD MCAL/TWI/TWI_prog.o
 LOAD MCAL/USART/USART_prog.o
+LOAD MCAL/WDT/WDT_prog.o
 START GROUP
 LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a
 END GROUP
@@ -1170,27 +1192,27 @@ END GROUP
  .debug_frame   0x00000490      0x200 MCAL/TIMER1/TIMER1_prog.o
  .debug_frame   0x00000690       0xf8 MCAL/USART/USART_prog.o
 
-.debug_str      0x00000000     0x10be
+.debug_str      0x00000000     0x1084
  *(.debug_str)
  .debug_str     0x00000000      0x196 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_str     0x00000196      0x1c1 APP/main.o
-                                0x1fc (size before relaxing)
- .debug_str     0x00000357       0xaf HAL/Fingerprint/Fingerprint_prog.o
-                                0x239 (size before relaxing)
- .debug_str     0x00000406      0x324 MCAL/ADC/ADC_prog.o
+ .debug_str     0x00000196      0x1c7 APP/main.o
+                                0x202 (size before relaxing)
+ .debug_str     0x0000035d       0xaf HAL/Fingerprint/Fingerprint_prog.o
+                                0x23f (size before relaxing)
+ .debug_str     0x0000040c      0x2e4 MCAL/ADC/ADC_prog.o
                                 0x4be (size before relaxing)
- .debug_str     0x0000072a       0x96 MCAL/EXTI/EXTI_prog.o
+ .debug_str     0x000006f0       0x96 MCAL/EXTI/EXTI_prog.o
                                 0x22b (size before relaxing)
- .debug_str     0x000007c0       0x23 MCAL/GIE/GIE_prog.o
+ .debug_str     0x00000786       0x23 MCAL/GIE/GIE_prog.o
                                 0x119 (size before relaxing)
- .debug_str     0x000007e3       0xd0 MCAL/SPI/SPI_prog.o
-                                0x251 (size before relaxing)
- .debug_str     0x000008b3      0x237 MCAL/TIMER0/TIMER0_prog.o
+ .debug_str     0x000007a9       0xd0 MCAL/SPI/SPI_prog.o
+                                0x257 (size before relaxing)
+ .debug_str     0x00000879      0x237 MCAL/TIMER0/TIMER0_prog.o
                                 0x482 (size before relaxing)
- .debug_str     0x00000aea      0x543 MCAL/TIMER1/TIMER1_prog.o
-                                0x764 (size before relaxing)
- .debug_str     0x0000102d       0x91 MCAL/USART/USART_prog.o
-                                0x252 (size before relaxing)
+ .debug_str     0x00000ab0      0x543 MCAL/TIMER1/TIMER1_prog.o
+                                0x76a (size before relaxing)
+ .debug_str     0x00000ff3       0x91 MCAL/USART/USART_prog.o
+                                0x258 (size before relaxing)
 
 .debug_loc      0x00000000     0x1114
  *(.debug_loc)
