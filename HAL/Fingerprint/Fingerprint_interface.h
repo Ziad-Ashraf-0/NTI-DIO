@@ -10,8 +10,8 @@
 #define FINGERPRINT_INTERFACE_H_
 
 
-u8 FingerPS_strTemplate();
-u8 FingerPS_searchFinger();
+u8 FingerPS_strTemplate(u8 bufferId, u16 pageId);
+u8 FingerPS_searchFinger(u8 bufferId, u16 startPage, u16 pageNum);
 
 
 #endif /* FINGERPRINT_INTERFACE_H_ */
