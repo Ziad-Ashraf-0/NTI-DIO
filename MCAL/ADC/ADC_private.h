@@ -11,7 +11,6 @@
 
 #define LOW_VAL 0
 #define HIGH_VAL 1
-#define NULL (void *)0x00
 
 
 

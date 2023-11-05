@@ -59,7 +59,7 @@ void ADC_getDigitalValueAsynchCallBack(u8 channel_num, void (*localPtr)(u16 valu
 u16 ADC_getDigitalValueSynchNonBlocking(u8 channel_num) {
     static u8 flag = 0;
     u8 time_out = 50;
-    u16 value;
+    u16 value = 2;
 
     channel_num &= 0x07; // Input channel number must be from 0 to 7
 
@@ -77,7 +77,6 @@ u16 ADC_getDigitalValueSynchNonBlocking(u8 channel_num) {
 
     // Poll the ADC until the value is ready
     while (GET_BIT(ADC_BASE->ADCSRA, ADIF) == LOW_VAL) {
-        _delay_ms(1);
         if (time_out == 0) {
             break;
         }

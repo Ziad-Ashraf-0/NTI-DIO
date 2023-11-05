@@ -9,6 +9,12 @@
 #define MCAL_ADC_ADC_INTERFACE_H_
 #include "../../LIB/STD_TYPES.h"
 
+/*******************************************************************************
+ *                                Definitions                                  *
+ *******************************************************************************/
+#define ADC_MAXIMUM_VALUE    1023
+#define ADC_REF_VOLT_VALUE   5
+
 
 /************ ADMUX *************/
 
