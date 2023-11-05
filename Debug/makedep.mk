@@ -12,6 +12,8 @@ HAL\Keypad\Keypad_prog.c
 
 HAL\LCD\LCD_prog.c
 
+HAL\LM35\LM35_prog.c
+
 HAL\RTC\RTC_prog.c
 
 HAL\Segment\segment.c

@@ -39,6 +39,7 @@ SUBDIRS :=  \
 ../HAL/LCD/ \
 ../HAL/EEPROM \
 ../HAL/Fingerprint \
+../HAL/LM35 \
 ../HAL/RTC \
 ../HAL/Ultrasonic \
 ../HAL/Segment/ \
@@ -63,6 +64,7 @@ C_SRCS +=  \
 ../HAL/Fingerprint/Fingerprint_prog.c \
 ../HAL/Keypad/Keypad_prog.c \
 ../HAL/LCD/LCD_prog.c \
+../HAL/LM35/LM35_prog.c \
 ../HAL/RTC/RTC_prog.c \
 ../HAL/Segment/segment.c \
 ../HAL/Ultrasonic/Ultrasonic_prog.c \
@@ -90,6 +92,7 @@ HAL/EEPROM/EEPROM_prog.o \
 HAL/Fingerprint/Fingerprint_prog.o \
 HAL/Keypad/Keypad_prog.o \
 HAL/LCD/LCD_prog.o \
+HAL/LM35/LM35_prog.o \
 HAL/RTC/RTC_prog.o \
 HAL/Segment/segment.o \
 HAL/Ultrasonic/Ultrasonic_prog.o \
@@ -110,6 +113,7 @@ HAL/EEPROM/EEPROM_prog.o \
 HAL/Fingerprint/Fingerprint_prog.o \
 HAL/Keypad/Keypad_prog.o \
 HAL/LCD/LCD_prog.o \
+HAL/LM35/LM35_prog.o \
 HAL/RTC/RTC_prog.o \
 HAL/Segment/segment.o \
 HAL/Ultrasonic/Ultrasonic_prog.o \
@@ -130,6 +134,7 @@ HAL/EEPROM/EEPROM_prog.d \
 HAL/Fingerprint/Fingerprint_prog.d \
 HAL/Keypad/Keypad_prog.d \
 HAL/LCD/LCD_prog.d \
+HAL/LM35/LM35_prog.d \
 HAL/RTC/RTC_prog.d \
 HAL/Segment/segment.d \
 HAL/Ultrasonic/Ultrasonic_prog.d \
@@ -150,6 +155,7 @@ HAL/EEPROM/EEPROM_prog.d \
 HAL/Fingerprint/Fingerprint_prog.d \
 HAL/Keypad/Keypad_prog.d \
 HAL/LCD/LCD_prog.d \
+HAL/LM35/LM35_prog.d \
 HAL/RTC/RTC_prog.d \
 HAL/Segment/segment.d \
 HAL/Ultrasonic/Ultrasonic_prog.d \
@@ -207,6 +213,13 @@ HAL/Keypad/Keypad_prog.o: ../HAL/Keypad/Keypad_prog.c
 	
 
 HAL/LCD/LCD_prog.o: ../HAL/LCD/LCD_prog.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+HAL/LM35/LM35_prog.o: ../HAL/LM35/LM35_prog.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

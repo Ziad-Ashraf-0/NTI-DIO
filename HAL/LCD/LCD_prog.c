@@ -157,7 +157,7 @@ void H_LCD_void_creatCustomChar(const u8 * ArrPattern,u8 copy_u8charCode){
 
 void H_LCD_void_displayCustomChar(u8 copy_u8charCode){
 
-	H_LCD_void_sendCommand(0xc0);
+	//H_LCD_void_sendCommand(0xc0);
 	H_LCD_void_sendData(copy_u8charCode);
 
 }
