@@ -4,7 +4,7 @@
 *  Created on: Oct 21, 2023
 *      Author: Ziad Ashraf
 */
-#define  F_CPU 8000000UL
+#define  F_CPU 16000000UL
 #include "../MCAL/DIO/DIO_Interface.h"
 #include "../HAL/Segment/segment.h"
 #include "../HAL/Keypad/Keypad_interface.h"
@@ -18,6 +18,7 @@
 #include "../HAL/Ultrasonic/Ultrasonic_interface.h"
 #include "../MCAL/SPI/SPI_interface.h"
 #include "../MCAL/TWI/TWI_interface.h"
+#include "../MCAL/WDT/WDT_interface.h"
 #include "../HAL/EEPROM/EEPROM_interface.h"
 #include "../HAL/RTC/RTC_interface.h"
 #include "../HAL/Fingerprint/Fingerprint_interface.h"
@@ -29,10 +30,13 @@
 int main(void) {
 	GIE_enable();
 	USART_Init();
-	FingerPS_strTemplate();
+	H_LCD_void_Init();
+	
+	u8 key = FingerPS_strTemplate();
+	H_LCD_void_sendIntNum(key);
+
 	
 	while (1) {
-		
 	}
 
 	return 0;

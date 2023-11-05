@@ -43,7 +43,7 @@ u8 FingerPS_strTemplate(){
 	//buffer[9] == 0 return SUCESS else return error code
 	//clearBuffer()
 	
-	return 0;
+	return buffer[9];
 
 }
 
@@ -61,7 +61,7 @@ u8 FingerPS_searchFinger(){
 	
 	//calc checksum
 	//buffer[9] == 0 return SUCESS else return error code
-	//clearBuffer()
+	//clearBuffer();
 	
-	return 0;
+	return buffer[9];
 }

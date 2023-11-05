@@ -27,7 +27,7 @@ void M_WDT_void_Disable(void)
 }
 
 // WDT Pre-scaler Select: Each pre-scaler maps to a specific timeout value (sleep time).
-// Input argument from 1 : 7 (each value maps to a specific timeout value (sleep time).
+// Input argument from 0 : 7 (each value maps to a specific timeout value (sleep time).
 void M_WDT_void_Sleep(WDT_timeout copy_u8SleepTime)
 {
 	// Bit masking Sequence:

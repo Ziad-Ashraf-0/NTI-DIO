@@ -10,6 +10,7 @@ APP/main.d APP/main.o: ../APP/main.c ../APP/../MCAL/DIO/DIO_Interface.h \
  ../APP/../MCAL/USART/USART_interface.h \
  ../APP/../HAL/Ultrasonic/Ultrasonic_interface.h \
  ../APP/../MCAL/SPI/SPI_interface.h ../APP/../MCAL/TWI/TWI_interface.h \
+ ../APP/../MCAL/WDT/WDT_interface.h \
  ../APP/../HAL/EEPROM/EEPROM_interface.h \
  ../APP/../HAL/RTC/RTC_interface.h \
  ../APP/../HAL/Fingerprint/Fingerprint_interface.h \
@@ -49,6 +50,8 @@ APP/main.d APP/main.o: ../APP/main.c ../APP/../MCAL/DIO/DIO_Interface.h \
 ../APP/../MCAL/SPI/SPI_interface.h:
 
 ../APP/../MCAL/TWI/TWI_interface.h:
+
+../APP/../MCAL/WDT/WDT_interface.h:
 
 ../APP/../HAL/EEPROM/EEPROM_interface.h:
 
