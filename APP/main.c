@@ -4,7 +4,7 @@
 *  Created on: Oct 21, 2023
 *      Author: Ziad Ashraf
 */
-#define  F_CPU 1000000UL
+#define  F_CPU 16000000UL
 #include "../MCAL/DIO/DIO_Interface.h"
 #include "../HAL/Segment/segment.h"
 #include "../HAL/Keypad/Keypad_interface.h"
@@ -31,10 +31,15 @@
 int main(void) {
 	GIE_enable();
 	USART_Init();
+	H_LCD_void_Init();
 	//FingerPS_strTemplate(0x01, 0xF769);
-	FingerPS_searchFinger(0x01,0x0002,0x0005);
+	
 	while (1) {
-
+		H_LCD_void_clearScreen();
+		
+		u8 key = FingerPS_genImg();
+		H_LCD_void_sendHexNum(key);
+		_delay_ms(1000);
 	}
 
 	return 0;

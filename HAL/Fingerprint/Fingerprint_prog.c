@@ -4,20 +4,23 @@
 * Created: 11/4/2023 9:31:57 AM
 *  Author: Ziad
 */
+#define  F_CPU 16000000UL
 #include "../../LIB/STD_TYPES.h"
 #include "../../LIB/BIT_MATH.h"
 #include "../../MCAL/USART/USART_interface.h"
 #include "Fingerprint_config.h"
 #include "Fingerprint_interface.h"
 #include "Fingerprint_private.h"
+#include <util/delay.h>
 
 u8 buffer[25];
 u8 byte_no = 0;
 
 void clearBuffer()
 {
-	for(int i=0; i<25;i++)
-	buffer[i]=0xFF;
+	for(int i=0; i<25;i++){
+		buffer[i]=0xFF;
+	}	
 	byte_no = 0;
 }
 
@@ -65,3 +68,52 @@ u8 FingerPS_searchFinger(u8 bufferId, u16 startPage, u16 pageNum){
 	
 	return buffer[9];
 }
+
+
+static volatile u8 ReceiveHandFrame [100]={0};
+static volatile u8 ReceiveGetImgFrame [100]={0};
+
+u8 FingerPS_handShake()
+{
+	byte_no = 0;
+	//clearBuffer();
+	u8 HandFrame[12]={0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x03, 0x40, 0x00, 0x44};
+	//u8 size=sizeof(HandFrame)/sizeof(HandFrame[0]);
+	
+	for (u8 i = 0; i < 12; i++)
+	{
+		UART_sendByte(HandFrame[i]);
+	}
+	
+	UART_receiveByteAsynchCallBack(receiveCallback);
+	_delay_ms(5);
+	//while(byte_no != 2);
+	
+	//Call Check Sum Func()
+	//Call Clear Buffer()
+	
+	return buffer[9];
+}
+
+
+u8 FingerPS_genImg()
+{
+	byte_no = 0;
+	u8 GetImgFrame[]={0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x03, 0x01, 0x00, 0x05};
+	u8 size=sizeof(GetImgFrame)/sizeof(GetImgFrame[0]);
+	
+	for (u8 i = 0; i < size; i++)
+	{
+		UART_sendByte(GetImgFrame[i]);
+	}
+	
+	UART_receiveByteAsynchCallBack(receiveCallback);
+	_delay_ms(5);
+	
+	return buffer[9];
+	
+	//Call Check Sum Func()
+	//Call Clear Buffer()
+}
+
+

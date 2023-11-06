@@ -8,10 +8,17 @@
 
 #ifndef USART_CONFIG_H_
 #define USART_CONFIG_H_
+#define SIM   0
+#define FARES 1
+
+#define KIT  FARES
 
 
+#if (KIT == SIM)
 #define  F_CPU 8000000UL
-
+#elif(KIT == FARES)
+#define  F_CPU 16000000UL
+#endif
 /*
 Choose one of the following :
 
