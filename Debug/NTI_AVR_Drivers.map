@@ -102,15 +102,15 @@ Discarded input sections
  .text.clearBuffer
                 0x00000000       0x1e HAL/Fingerprint/Fingerprint_prog.o
  .text.FingerPS_strTemplate
-                0x00000000       0x82 HAL/Fingerprint/Fingerprint_prog.o
+                0x00000000       0x8a HAL/Fingerprint/Fingerprint_prog.o
  .text.FingerPS_searchFinger
-                0x00000000       0x88 HAL/Fingerprint/Fingerprint_prog.o
+                0x00000000       0x90 HAL/Fingerprint/Fingerprint_prog.o
  .text.FingerPS_handShake
                 0x00000000       0x74 HAL/Fingerprint/Fingerprint_prog.o
- .bss.ReceiveGetImgFrame
-                0x00000000       0x64 HAL/Fingerprint/Fingerprint_prog.o
- .bss.ReceiveHandFrame
-                0x00000000       0x64 HAL/Fingerprint/Fingerprint_prog.o
+ .text.FingerPS_genTemplate
+                0x00000000       0x9a HAL/Fingerprint/Fingerprint_prog.o
+ .text.FingerPS_convertImg2CharFile
+                0x00000000       0x92 HAL/Fingerprint/Fingerprint_prog.o
  .text          0x00000000        0x0 HAL/Keypad/Keypad_prog.o
  .data          0x00000000        0x0 HAL/Keypad/Keypad_prog.o
  .bss           0x00000000        0x0 HAL/Keypad/Keypad_prog.o
@@ -1151,131 +1151,131 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x368
+.debug_aranges  0x00000000      0x378
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x20 APP/main.o
  .debug_aranges
-                0x00000020       0x48 HAL/Fingerprint/Fingerprint_prog.o
+                0x00000020       0x58 HAL/Fingerprint/Fingerprint_prog.o
  .debug_aranges
-                0x00000068       0x80 HAL/LCD/LCD_prog.o
+                0x00000078       0x80 HAL/LCD/LCD_prog.o
  .debug_aranges
-                0x000000e8       0x38 MCAL/ADC/ADC_prog.o
+                0x000000f8       0x38 MCAL/ADC/ADC_prog.o
  .debug_aranges
-                0x00000120       0x58 MCAL/DIO/DIO_Program.o
+                0x00000130       0x58 MCAL/DIO/DIO_Program.o
  .debug_aranges
-                0x00000178       0x48 MCAL/EXTI/EXTI_prog.o
+                0x00000188       0x48 MCAL/EXTI/EXTI_prog.o
  .debug_aranges
-                0x000001c0       0x28 MCAL/GIE/GIE_prog.o
+                0x000001d0       0x28 MCAL/GIE/GIE_prog.o
  .debug_aranges
-                0x000001e8       0x38 MCAL/SPI/SPI_prog.o
+                0x000001f8       0x38 MCAL/SPI/SPI_prog.o
  .debug_aranges
-                0x00000220       0x70 MCAL/TIMER0/TIMER0_prog.o
+                0x00000230       0x70 MCAL/TIMER0/TIMER0_prog.o
  .debug_aranges
-                0x00000290       0x88 MCAL/TIMER1/TIMER1_prog.o
+                0x000002a0       0x88 MCAL/TIMER1/TIMER1_prog.o
  .debug_aranges
-                0x00000318       0x50 MCAL/USART/USART_prog.o
+                0x00000328       0x50 MCAL/USART/USART_prog.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x3122
+.debug_info     0x00000000     0x32d9
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x4e6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_info    0x000004e6      0x1fe APP/main.o
- .debug_info    0x000006e4      0x4ac HAL/Fingerprint/Fingerprint_prog.o
- .debug_info    0x00000b90      0xc70 HAL/LCD/LCD_prog.o
- .debug_info    0x00001800      0x3f6 MCAL/ADC/ADC_prog.o
- .debug_info    0x00001bf6      0x3cc MCAL/DIO/DIO_Program.o
- .debug_info    0x00001fc2      0x1ed MCAL/EXTI/EXTI_prog.o
- .debug_info    0x000021af       0x54 MCAL/GIE/GIE_prog.o
- .debug_info    0x00002203      0x221 MCAL/SPI/SPI_prog.o
- .debug_info    0x00002424      0x489 MCAL/TIMER0/TIMER0_prog.o
- .debug_info    0x000028ad      0x640 MCAL/TIMER1/TIMER1_prog.o
- .debug_info    0x00002eed      0x235 MCAL/USART/USART_prog.o
+ .debug_info    0x000006e4      0x663 HAL/Fingerprint/Fingerprint_prog.o
+ .debug_info    0x00000d47      0xc70 HAL/LCD/LCD_prog.o
+ .debug_info    0x000019b7      0x3f6 MCAL/ADC/ADC_prog.o
+ .debug_info    0x00001dad      0x3cc MCAL/DIO/DIO_Program.o
+ .debug_info    0x00002179      0x1ed MCAL/EXTI/EXTI_prog.o
+ .debug_info    0x00002366       0x54 MCAL/GIE/GIE_prog.o
+ .debug_info    0x000023ba      0x221 MCAL/SPI/SPI_prog.o
+ .debug_info    0x000025db      0x489 MCAL/TIMER0/TIMER0_prog.o
+ .debug_info    0x00002a64      0x640 MCAL/TIMER1/TIMER1_prog.o
+ .debug_info    0x000030a4      0x235 MCAL/USART/USART_prog.o
 
-.debug_abbrev   0x00000000     0x12ca
+.debug_abbrev   0x00000000     0x12d2
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x4a3 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_abbrev  0x000004a3      0x138 APP/main.o
- .debug_abbrev  0x000005db      0x1bf HAL/Fingerprint/Fingerprint_prog.o
- .debug_abbrev  0x0000079a      0x27b HAL/LCD/LCD_prog.o
- .debug_abbrev  0x00000a15      0x15a MCAL/ADC/ADC_prog.o
- .debug_abbrev  0x00000b6f       0xf2 MCAL/DIO/DIO_Program.o
- .debug_abbrev  0x00000c61       0xda MCAL/EXTI/EXTI_prog.o
- .debug_abbrev  0x00000d3b       0x2c MCAL/GIE/GIE_prog.o
- .debug_abbrev  0x00000d67      0x101 MCAL/SPI/SPI_prog.o
- .debug_abbrev  0x00000e68      0x17b MCAL/TIMER0/TIMER0_prog.o
- .debug_abbrev  0x00000fe3      0x1b6 MCAL/TIMER1/TIMER1_prog.o
- .debug_abbrev  0x00001199      0x131 MCAL/USART/USART_prog.o
+ .debug_abbrev  0x000005db      0x1c7 HAL/Fingerprint/Fingerprint_prog.o
+ .debug_abbrev  0x000007a2      0x27b HAL/LCD/LCD_prog.o
+ .debug_abbrev  0x00000a1d      0x15a MCAL/ADC/ADC_prog.o
+ .debug_abbrev  0x00000b77       0xf2 MCAL/DIO/DIO_Program.o
+ .debug_abbrev  0x00000c69       0xda MCAL/EXTI/EXTI_prog.o
+ .debug_abbrev  0x00000d43       0x2c MCAL/GIE/GIE_prog.o
+ .debug_abbrev  0x00000d6f      0x101 MCAL/SPI/SPI_prog.o
+ .debug_abbrev  0x00000e70      0x17b MCAL/TIMER0/TIMER0_prog.o
+ .debug_abbrev  0x00000feb      0x1b6 MCAL/TIMER1/TIMER1_prog.o
+ .debug_abbrev  0x000011a1      0x131 MCAL/USART/USART_prog.o
 
-.debug_line     0x00000000     0x1a1b
+.debug_line     0x00000000     0x1add
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x116 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_line    0x00000116      0x23c APP/main.o
- .debug_line    0x00000352      0x322 HAL/Fingerprint/Fingerprint_prog.o
- .debug_line    0x00000674      0x5c1 HAL/LCD/LCD_prog.o
- .debug_line    0x00000c35      0x167 MCAL/ADC/ADC_prog.o
- .debug_line    0x00000d9c      0x2b7 MCAL/DIO/DIO_Program.o
- .debug_line    0x00001053      0x173 MCAL/EXTI/EXTI_prog.o
- .debug_line    0x000011c6       0x60 MCAL/GIE/GIE_prog.o
- .debug_line    0x00001226      0x10a MCAL/SPI/SPI_prog.o
- .debug_line    0x00001330      0x26f MCAL/TIMER0/TIMER0_prog.o
- .debug_line    0x0000159f      0x2da MCAL/TIMER1/TIMER1_prog.o
- .debug_line    0x00001879      0x1a2 MCAL/USART/USART_prog.o
+ .debug_line    0x00000352      0x3e4 HAL/Fingerprint/Fingerprint_prog.o
+ .debug_line    0x00000736      0x5c1 HAL/LCD/LCD_prog.o
+ .debug_line    0x00000cf7      0x167 MCAL/ADC/ADC_prog.o
+ .debug_line    0x00000e5e      0x2b7 MCAL/DIO/DIO_Program.o
+ .debug_line    0x00001115      0x173 MCAL/EXTI/EXTI_prog.o
+ .debug_line    0x00001288       0x60 MCAL/GIE/GIE_prog.o
+ .debug_line    0x000012e8      0x10a MCAL/SPI/SPI_prog.o
+ .debug_line    0x000013f2      0x26f MCAL/TIMER0/TIMER0_prog.o
+ .debug_line    0x00001661      0x2da MCAL/TIMER1/TIMER1_prog.o
+ .debug_line    0x0000193b      0x1a2 MCAL/USART/USART_prog.o
 
-.debug_frame    0x00000000      0xa34
+.debug_frame    0x00000000      0xa8c
  *(.debug_frame)
  .debug_frame   0x00000000       0x24 APP/main.o
- .debug_frame   0x00000024       0xd4 HAL/Fingerprint/Fingerprint_prog.o
- .debug_frame   0x000000f8      0x1c8 HAL/LCD/LCD_prog.o
- .debug_frame   0x000002c0       0x54 MCAL/ADC/ADC_prog.o
- .debug_frame   0x00000314       0x94 MCAL/DIO/DIO_Program.o
- .debug_frame   0x000003a8      0x14c MCAL/EXTI/EXTI_prog.o
- .debug_frame   0x000004f4       0x34 MCAL/GIE/GIE_prog.o
- .debug_frame   0x00000528       0x9c MCAL/SPI/SPI_prog.o
- .debug_frame   0x000005c4      0x178 MCAL/TIMER0/TIMER0_prog.o
- .debug_frame   0x0000073c      0x200 MCAL/TIMER1/TIMER1_prog.o
- .debug_frame   0x0000093c       0xf8 MCAL/USART/USART_prog.o
+ .debug_frame   0x00000024      0x12c HAL/Fingerprint/Fingerprint_prog.o
+ .debug_frame   0x00000150      0x1c8 HAL/LCD/LCD_prog.o
+ .debug_frame   0x00000318       0x54 MCAL/ADC/ADC_prog.o
+ .debug_frame   0x0000036c       0x94 MCAL/DIO/DIO_Program.o
+ .debug_frame   0x00000400      0x14c MCAL/EXTI/EXTI_prog.o
+ .debug_frame   0x0000054c       0x34 MCAL/GIE/GIE_prog.o
+ .debug_frame   0x00000580       0x9c MCAL/SPI/SPI_prog.o
+ .debug_frame   0x0000061c      0x178 MCAL/TIMER0/TIMER0_prog.o
+ .debug_frame   0x00000794      0x200 MCAL/TIMER1/TIMER1_prog.o
+ .debug_frame   0x00000994       0xf8 MCAL/USART/USART_prog.o
 
-.debug_str      0x00000000     0x1557
+.debug_str      0x00000000     0x1584
  *(.debug_str)
  .debug_str     0x00000000      0x196 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_str     0x00000196      0x243 APP/main.o
                                 0x27e (size before relaxing)
- .debug_str     0x000003d9      0x11d HAL/Fingerprint/Fingerprint_prog.o
-                                0x314 (size before relaxing)
- .debug_str     0x000004f6      0x354 HAL/LCD/LCD_prog.o
+ .debug_str     0x000003d9      0x14a HAL/Fingerprint/Fingerprint_prog.o
+                                0x330 (size before relaxing)
+ .debug_str     0x00000523      0x354 HAL/LCD/LCD_prog.o
                                 0x542 (size before relaxing)
- .debug_str     0x0000084a      0x2a0 MCAL/ADC/ADC_prog.o
+ .debug_str     0x00000877      0x2a0 MCAL/ADC/ADC_prog.o
                                 0x474 (size before relaxing)
- .debug_str     0x00000aea       0xd9 MCAL/DIO/DIO_Program.o
+ .debug_str     0x00000b17       0xd9 MCAL/DIO/DIO_Program.o
                                 0x37f (size before relaxing)
- .debug_str     0x00000bc3       0x96 MCAL/EXTI/EXTI_prog.o
+ .debug_str     0x00000bf0       0x96 MCAL/EXTI/EXTI_prog.o
                                 0x225 (size before relaxing)
- .debug_str     0x00000c59       0x23 MCAL/GIE/GIE_prog.o
+ .debug_str     0x00000c86       0x23 MCAL/GIE/GIE_prog.o
                                 0x113 (size before relaxing)
- .debug_str     0x00000c7c       0xd0 MCAL/SPI/SPI_prog.o
+ .debug_str     0x00000ca9       0xd0 MCAL/SPI/SPI_prog.o
                                 0x257 (size before relaxing)
- .debug_str     0x00000d4c      0x237 MCAL/TIMER0/TIMER0_prog.o
+ .debug_str     0x00000d79      0x237 MCAL/TIMER0/TIMER0_prog.o
                                 0x47c (size before relaxing)
- .debug_str     0x00000f83      0x543 MCAL/TIMER1/TIMER1_prog.o
+ .debug_str     0x00000fb0      0x543 MCAL/TIMER1/TIMER1_prog.o
                                 0x76a (size before relaxing)
- .debug_str     0x000014c6       0x91 MCAL/USART/USART_prog.o
+ .debug_str     0x000014f3       0x91 MCAL/USART/USART_prog.o
                                 0x258 (size before relaxing)
 
-.debug_loc      0x00000000     0x2296
+.debug_loc      0x00000000     0x24df
  *(.debug_loc)
  .debug_loc     0x00000000       0x1e APP/main.o
- .debug_loc     0x0000001e      0x330 HAL/Fingerprint/Fingerprint_prog.o
- .debug_loc     0x0000034e      0xc25 HAL/LCD/LCD_prog.o
- .debug_loc     0x00000f73      0x120 MCAL/ADC/ADC_prog.o
- .debug_loc     0x00001093      0x353 MCAL/DIO/DIO_Program.o
- .debug_loc     0x000013e6      0x328 MCAL/EXTI/EXTI_prog.o
- .debug_loc     0x0000170e      0x133 MCAL/SPI/SPI_prog.o
- .debug_loc     0x00001841      0x3a7 MCAL/TIMER0/TIMER0_prog.o
- .debug_loc     0x00001be8      0x46c MCAL/TIMER1/TIMER1_prog.o
- .debug_loc     0x00002054      0x242 MCAL/USART/USART_prog.o
+ .debug_loc     0x0000001e      0x579 HAL/Fingerprint/Fingerprint_prog.o
+ .debug_loc     0x00000597      0xc25 HAL/LCD/LCD_prog.o
+ .debug_loc     0x000011bc      0x120 MCAL/ADC/ADC_prog.o
+ .debug_loc     0x000012dc      0x353 MCAL/DIO/DIO_Program.o
+ .debug_loc     0x0000162f      0x328 MCAL/EXTI/EXTI_prog.o
+ .debug_loc     0x00001957      0x133 MCAL/SPI/SPI_prog.o
+ .debug_loc     0x00001a8a      0x3a7 MCAL/TIMER0/TIMER0_prog.o
+ .debug_loc     0x00001e31      0x46c MCAL/TIMER1/TIMER1_prog.o
+ .debug_loc     0x0000229d      0x242 MCAL/USART/USART_prog.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1295,19 +1295,19 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x2b8
+.debug_ranges   0x00000000      0x2c8
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x10 APP/main.o
- .debug_ranges  0x00000010       0x38 HAL/Fingerprint/Fingerprint_prog.o
- .debug_ranges  0x00000048       0x70 HAL/LCD/LCD_prog.o
- .debug_ranges  0x000000b8       0x28 MCAL/ADC/ADC_prog.o
- .debug_ranges  0x000000e0       0x48 MCAL/DIO/DIO_Program.o
- .debug_ranges  0x00000128       0x38 MCAL/EXTI/EXTI_prog.o
- .debug_ranges  0x00000160       0x18 MCAL/GIE/GIE_prog.o
- .debug_ranges  0x00000178       0x28 MCAL/SPI/SPI_prog.o
- .debug_ranges  0x000001a0       0x60 MCAL/TIMER0/TIMER0_prog.o
- .debug_ranges  0x00000200       0x78 MCAL/TIMER1/TIMER1_prog.o
- .debug_ranges  0x00000278       0x40 MCAL/USART/USART_prog.o
+ .debug_ranges  0x00000010       0x48 HAL/Fingerprint/Fingerprint_prog.o
+ .debug_ranges  0x00000058       0x70 HAL/LCD/LCD_prog.o
+ .debug_ranges  0x000000c8       0x28 MCAL/ADC/ADC_prog.o
+ .debug_ranges  0x000000f0       0x48 MCAL/DIO/DIO_Program.o
+ .debug_ranges  0x00000138       0x38 MCAL/EXTI/EXTI_prog.o
+ .debug_ranges  0x00000170       0x18 MCAL/GIE/GIE_prog.o
+ .debug_ranges  0x00000188       0x28 MCAL/SPI/SPI_prog.o
+ .debug_ranges  0x000001b0       0x60 MCAL/TIMER0/TIMER0_prog.o
+ .debug_ranges  0x00000210       0x78 MCAL/TIMER1/TIMER1_prog.o
+ .debug_ranges  0x00000288       0x40 MCAL/USART/USART_prog.o
 
 .debug_macro
  *(.debug_macro)

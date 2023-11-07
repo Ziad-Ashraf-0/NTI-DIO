@@ -31,6 +31,7 @@ void receiveCallback(u8 data){
 
 
 u8 FingerPS_strTemplate(u8 bufferId, u16 pageId){
+	byte_no = 0;
 	
 	u8 store[15]={0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x06, 0x06, bufferId, (pageId & 0xFF00) >> 8 , pageId, 0x00, 0x0E};
 	
@@ -39,8 +40,8 @@ u8 FingerPS_strTemplate(u8 bufferId, u16 pageId){
 		UART_sendByte(store[i]);
 	}
 	UART_receiveByteAsynchCallBack(receiveCallback);
-	//_delay_ms(5);
-	while(byte_no != 12);
+	_delay_ms(5);
+	//while(byte_no != 12);
 	
 	//calc checksum
 	//buffer[9] == 0 return SUCESS else return error code
@@ -52,6 +53,7 @@ u8 FingerPS_strTemplate(u8 bufferId, u16 pageId){
 
 
 u8 FingerPS_searchFinger(u8 bufferId, u16 startPage, u16 pageNum){
+	byte_no = 0;
 	u8 search[17]={0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x08, 0x04, bufferId, (startPage & 0xFF00) >> 8, startPage, (pageNum & 0xFF00) >> 8, pageNum, 0x01, 0x0D};
 	for (u8 i = 0; i < 17; i++)
 	{
@@ -59,8 +61,8 @@ u8 FingerPS_searchFinger(u8 bufferId, u16 startPage, u16 pageNum){
 	}
 	UART_receiveByteAsynchCallBack(receiveCallback);
 	
-	//_delay_ms(5);
-	while(byte_no != 16);
+	_delay_ms(5);
+	//while(byte_no != 16);
 	
 	//calc checksum
 	//buffer[9] == 0 return SUCESS else return error code
@@ -68,10 +70,6 @@ u8 FingerPS_searchFinger(u8 bufferId, u16 startPage, u16 pageNum){
 	
 	return buffer[9];
 }
-
-
-static volatile u8 ReceiveHandFrame [100]={0};
-static volatile u8 ReceiveGetImgFrame [100]={0};
 
 u8 FingerPS_handShake()
 {
@@ -114,6 +112,40 @@ u8 FingerPS_genImg()
 	
 	//Call Check Sum Func()
 	//Call Clear Buffer()
+}
+
+
+u8 FingerPS_genTemplate(void)
+{
+	byte_no = 0;
+	char arr [13]={0xEF,0x01,0xFF,0xFF,0xFF,0xFF,0x01,0x00,0x03,0x05,0x00,0x09};
+
+		for (int i = 0; i<12 ;i++)
+		{
+			UART_sendByte(arr[i]);
+			
+		}
+	
+	UART_receiveByteAsynchCallBack(receiveCallback);
+	_delay_ms(5);
+	
+	return buffer[9];
+}
+
+u8 FingerPS_convertImg2CharFile(u8 bufferID)
+{
+	byte_no = 0;
+	char arr [13]={0xEF,0x01,0xFF,0xFF,0xFF,0xFF,0x01,0x00,0x04,0x02,bufferID,0x00,0x08};
+
+		for (int i = 0; i<13 ;i++)
+		{
+			UART_sendByte(arr[i]);			
+		}			
+	UART_receiveByteAsynchCallBack(receiveCallback);
+	_delay_ms(5);
+	
+	return buffer[9];
+	
 }
 
 
