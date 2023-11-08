@@ -76,8 +76,8 @@ int main(void) {
             // Display a message on the LCD
             H_LCD_void_clearScreen();
             H_LCD_void_sendString("Motor Running ");
-            H_LCD_void_gotoXY(1, 0);
-            H_LCD_void_sendString("Go BACK?!");
+            H_LCD_void_gotoXY(3, 4);
+            H_LCD_void_sendString("Go BACK ?");
             
             // Wait for the user to press a key (Enter key) to exit the loop
             u8 key = KEYPAD_getPressedKey();
