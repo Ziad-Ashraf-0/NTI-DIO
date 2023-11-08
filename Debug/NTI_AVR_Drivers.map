@@ -60,7 +60,7 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 Allocating common symbols
 Common symbol       size              file
 
-taskQueue           0xa               OS/OS.o
+taskQueue           0x6               OS/OS.o
 ADC_enuState        0x1               APP/main.o
 
 Discarded input sections
@@ -219,8 +219,6 @@ Discarded input sections
                 0x00000000       0x46 MCAL/DIO/DIO_Program.o
  .text.DIO_U8SetPortValue
                 0x00000000       0x2e MCAL/DIO/DIO_Program.o
- .text.DIO_U8SetPinValue
-                0x00000000       0x84 MCAL/DIO/DIO_Program.o
  .text.DIO_U8TogglePort
                 0x00000000       0x24 MCAL/DIO/DIO_Program.o
  .text.DIO_U8GetPortValue
@@ -407,6 +405,8 @@ Discarded input sections
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o)
  .text.libgcc.mul
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o)
+ .text.libgcc.div
+                0x00000000       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o)
  .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o)
  .text.libgcc.prologue
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o)
@@ -545,6 +545,8 @@ Discarded input sections
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
  .text.libgcc.mul
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
+ .text.libgcc.div
+                0x00000000       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
  .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
  .text.libgcc.prologue
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
@@ -724,7 +726,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0xa5c
+.text           0x00000000      0xaf6
  *(.vectors)
  .vectors       0x00000000       0x54 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
                 0x00000000                __vector_default
@@ -803,97 +805,93 @@ END GROUP
  .text.DIO_U8SetPinDirection
                 0x000000ce       0x7c MCAL/DIO/DIO_Program.o
                 0x000000ce                DIO_U8SetPinDirection
+ .text.DIO_U8SetPinValue
+                0x0000014a       0x84 MCAL/DIO/DIO_Program.o
+                0x0000014a                DIO_U8SetPinValue
  .text.DIO_U8TogglePin
-                0x0000014a       0x48 MCAL/DIO/DIO_Program.o
-                0x0000014a                DIO_U8TogglePin
+                0x000001ce       0x48 MCAL/DIO/DIO_Program.o
+                0x000001ce                DIO_U8TogglePin
  .text.DIO_U8GetPinValue
-                0x00000192       0x52 MCAL/DIO/DIO_Program.o
-                0x00000192                DIO_U8GetPinValue
+                0x00000216       0x52 MCAL/DIO/DIO_Program.o
+                0x00000216                DIO_U8GetPinValue
  .text.__vector_1
-                0x000001e4       0x52 MCAL/EXTI/EXTI_prog.o
-                0x000001e4                __vector_1
+                0x00000268       0x52 MCAL/EXTI/EXTI_prog.o
+                0x00000268                __vector_1
  .text.__vector_2
-                0x00000236       0x52 MCAL/EXTI/EXTI_prog.o
-                0x00000236                __vector_2
+                0x000002ba       0x52 MCAL/EXTI/EXTI_prog.o
+                0x000002ba                __vector_2
  .text.__vector_3
-                0x00000288       0x52 MCAL/EXTI/EXTI_prog.o
-                0x00000288                __vector_3
+                0x0000030c       0x52 MCAL/EXTI/EXTI_prog.o
+                0x0000030c                __vector_3
  .text.GIE_enable
-                0x000002da        0x4 MCAL/GIE/GIE_prog.o
-                0x000002da                GIE_enable
+                0x0000035e        0x4 MCAL/GIE/GIE_prog.o
+                0x0000035e                GIE_enable
  .text.__vector_12
-                0x000002de       0x54 MCAL/SPI/SPI_prog.o
-                0x000002de                __vector_12
+                0x00000362       0x54 MCAL/SPI/SPI_prog.o
+                0x00000362                __vector_12
  .text.M_TIMER0_void_Init
-                0x00000332       0x58 MCAL/TIMER0/TIMER0_prog.o
-                0x00000332                M_TIMER0_void_Init
+                0x000003b6       0x58 MCAL/TIMER0/TIMER0_prog.o
+                0x000003b6                M_TIMER0_void_Init
  .text.M_TIMER0_void_start
-                0x0000038a        0xe MCAL/TIMER0/TIMER0_prog.o
-                0x0000038a                M_TIMER0_void_start
+                0x0000040e        0xe MCAL/TIMER0/TIMER0_prog.o
+                0x0000040e                M_TIMER0_void_start
  .text.M_TIMER0_void_setDelayTimeMilliSec
-                0x00000398       0xb8 MCAL/TIMER0/TIMER0_prog.o
-                0x00000398                M_TIMER0_void_setDelayTimeMilliSec
+                0x0000041c       0xb8 MCAL/TIMER0/TIMER0_prog.o
+                0x0000041c                M_TIMER0_void_setDelayTimeMilliSec
  .text.M_TIMER0_void_IntEnable
-                0x00000450       0x18 MCAL/TIMER0/TIMER0_prog.o
-                0x00000450                M_TIMER0_void_IntEnable
+                0x000004d4       0x18 MCAL/TIMER0/TIMER0_prog.o
+                0x000004d4                M_TIMER0_void_IntEnable
  .text.M_TIMER0_void_setCallBack
-                0x00000468       0x1c MCAL/TIMER0/TIMER0_prog.o
-                0x00000468                M_TIMER0_void_setCallBack
+                0x000004ec       0x1c MCAL/TIMER0/TIMER0_prog.o
+                0x000004ec                M_TIMER0_void_setCallBack
  .text.__vector_11
-                0x00000484       0xb2 MCAL/TIMER0/TIMER0_prog.o
-                0x00000484                __vector_11
+                0x00000508       0xb2 MCAL/TIMER0/TIMER0_prog.o
+                0x00000508                __vector_11
  .text.__vector_10
-                0x00000536       0x52 MCAL/TIMER0/TIMER0_prog.o
-                0x00000536                __vector_10
+                0x000005ba       0x52 MCAL/TIMER0/TIMER0_prog.o
+                0x000005ba                __vector_10
  .text.__vector_9
-                0x00000588       0xd6 MCAL/TIMER1/TIMER1_prog.o
-                0x00000588                __vector_9
+                0x0000060c       0xd6 MCAL/TIMER1/TIMER1_prog.o
+                0x0000060c                __vector_9
  .text.__vector_7
-                0x0000065e       0x52 MCAL/TIMER1/TIMER1_prog.o
-                0x0000065e                __vector_7
+                0x000006e2       0x52 MCAL/TIMER1/TIMER1_prog.o
+                0x000006e2                __vector_7
  .text.__vector_6
-                0x000006b0       0x52 MCAL/TIMER1/TIMER1_prog.o
-                0x000006b0                __vector_6
+                0x00000734       0x52 MCAL/TIMER1/TIMER1_prog.o
+                0x00000734                __vector_6
  .text.__vector_13
-                0x00000702       0x54 MCAL/USART/USART_prog.o
-                0x00000702                __vector_13
+                0x00000786       0x54 MCAL/USART/USART_prog.o
+                0x00000786                __vector_13
  .text.Task1Callback
-                0x00000756       0x30 OS/OS.o
-                0x00000756                Task1Callback
+                0x000007da       0x30 OS/OS.o
+                0x000007da                Task1Callback
  .text.Task3Callback
-                0x00000786       0x34 OS/OS.o
-                0x00000786                Task3Callback
+                0x0000080a       0x34 OS/OS.o
+                0x0000080a                Task3Callback
  .text.Task2Callback
-                0x000007ba       0x4c OS/OS.o
-                0x000007ba                Task2Callback
- .text.startOS  0x00000806       0xac OS/OS.o
-                0x00000806                startOS
+                0x0000083e       0x4c OS/OS.o
+                0x0000083e                Task2Callback
+ .text.startOS  0x0000088a       0xa8 OS/OS.o
+                0x0000088a                startOS
  .text.runHighestPriorityTask
-                0x000008b2       0x3c OS/OS.o
-                0x000008b2                runHighestPriorityTask
- .text.pendSV   0x000008ee       0xa2 OS/OS.o
-                0x000008ee                pendSV
+                0x00000932       0x5a OS/OS.o
+                0x00000932                runHighestPriorityTask
+ .text.pendSV   0x0000098c       0xee OS/OS.o
+                0x0000098c                pendSV
  .text.libgcc.div
-                0x00000990       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o)
-                0x00000990                _div
-                0x00000990                __divmodhi4
- .text.libgcc.div
-                0x000009b8       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
-                0x000009b8                __udivmodsi4
+                0x00000a7a       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
+                0x00000a7a                __udivmodsi4
  .text.libgcc.mul
-                0x000009fc       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muluhisi3.o)
-                0x000009fc                __muluhisi3
- .text.libgcc.div
-                0x00000a12       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
-                0x00000a12                __udivmodhi4
+                0x00000abe       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muluhisi3.o)
+                0x00000abe                __muluhisi3
  .text.libgcc.mul
-                0x00000a3a       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_umulhisi3.o)
-                0x00000a3a                __umulhisi3
-                0x00000a58                . = ALIGN (0x2)
+                0x00000ad4       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_umulhisi3.o)
+                0x00000ad4                __umulhisi3
+                0x00000af2                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000a58        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x00000a58                _exit
-                0x00000a58                exit
+ .fini9         0x00000af2        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x00000af2                _exit
+                0x00000af2                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -912,11 +910,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000a58        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x00000af2        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000a5c                _etext = .
+                0x00000af6                _etext = .
 
-.data           0x00800060       0x3a load address 0x00000a5c
+.data           0x00800060       0x4a load address 0x00000af6
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -925,83 +923,78 @@ END GROUP
  *(.gnu.linkonce.d*)
  *(.rodata)
  .rodata        0x00800075        0xc MCAL/TIMER0/TIMER0_prog.o
+ .rodata        0x00800081       0x10 OS/OS.o
  *(.rodata*)
  .rodata.readRegisters
-                0x00800081        0x8 MCAL/DIO/DIO_Program.o
-                0x00800081                readRegisters
- .rodata.writeRegisters
-                0x00800089        0x8 MCAL/DIO/DIO_Program.o
-                0x00800089                writeRegisters
- .rodata.directionRegisters
                 0x00800091        0x8 MCAL/DIO/DIO_Program.o
-                0x00800091                directionRegisters
+                0x00800091                readRegisters
+ .rodata.writeRegisters
+                0x00800099        0x8 MCAL/DIO/DIO_Program.o
+                0x00800099                writeRegisters
+ .rodata.directionRegisters
+                0x008000a1        0x8 MCAL/DIO/DIO_Program.o
+                0x008000a1                directionRegisters
  *(.gnu.linkonce.r*)
-                0x0080009a                . = ALIGN (0x2)
- *fill*         0x00800099        0x1 
-                0x0080009a                _edata = .
-                0x0080009a                PROVIDE (__data_end, .)
+                0x008000aa                . = ALIGN (0x2)
+ *fill*         0x008000a9        0x1 
+                0x008000aa                _edata = .
+                0x008000aa                PROVIDE (__data_end, .)
 
-.bss            0x0080009a       0x43
-                0x0080009a                PROVIDE (__bss_start, .)
+.bss            0x008000aa       0x3d
+                0x008000aa                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  .bss.ADC_callBack
-                0x0080009a        0x2 MCAL/ADC/ADC_prog.o
-                0x0080009a                ADC_callBack
- .bss.Action    0x0080009c        0x6 MCAL/EXTI/EXTI_prog.o
-                0x0080009c                Action
+                0x008000aa        0x2 MCAL/ADC/ADC_prog.o
+                0x008000aa                ADC_callBack
+ .bss.Action    0x008000ac        0x6 MCAL/EXTI/EXTI_prog.o
+                0x008000ac                Action
  .bss.Action_Spi
-                0x008000a2        0x2 MCAL/SPI/SPI_prog.o
-                0x008000a2                Action_Spi
+                0x008000b2        0x2 MCAL/SPI/SPI_prog.o
+                0x008000b2                Action_Spi
  .bss.counter.1685
-                0x008000a4        0x4 MCAL/TIMER0/TIMER0_prog.o
+                0x008000b4        0x4 MCAL/TIMER0/TIMER0_prog.o
  .bss.Action_Timer
-                0x008000a8        0x4 MCAL/TIMER0/TIMER0_prog.o
-                0x008000a8                Action_Timer
+                0x008000b8        0x4 MCAL/TIMER0/TIMER0_prog.o
+                0x008000b8                Action_Timer
  .bss.fast_oc0_mode
-                0x008000ac        0x1 MCAL/TIMER0/TIMER0_prog.o
-                0x008000ac                fast_oc0_mode
+                0x008000bc        0x1 MCAL/TIMER0/TIMER0_prog.o
+                0x008000bc                fast_oc0_mode
  .bss.prescaler
-                0x008000ad        0x1 MCAL/TIMER0/TIMER0_prog.o
-                0x008000ad                prescaler
+                0x008000bd        0x1 MCAL/TIMER0/TIMER0_prog.o
+                0x008000bd                prescaler
  .bss.remainingCounts
-                0x008000ae        0x4 MCAL/TIMER0/TIMER0_prog.o
-                0x008000ae                remainingCounts
+                0x008000be        0x4 MCAL/TIMER0/TIMER0_prog.o
+                0x008000be                remainingCounts
  .bss.numOverflows
-                0x008000b2        0x4 MCAL/TIMER0/TIMER0_prog.o
-                0x008000b2                numOverflows
+                0x008000c2        0x4 MCAL/TIMER0/TIMER0_prog.o
+                0x008000c2                numOverflows
  .bss.counter.1744
-                0x008000b6        0x4 MCAL/TIMER1/TIMER1_prog.o
- .bss.Action_Timer
-                0x008000ba        0x8 MCAL/TIMER1/TIMER1_prog.o
- .bss.numOverflows
-                0x008000c2        0x4 MCAL/TIMER1/TIMER1_prog.o
- .bss.req_numOverflows
                 0x008000c6        0x4 MCAL/TIMER1/TIMER1_prog.o
+ .bss.Action_Timer
+                0x008000ca        0x8 MCAL/TIMER1/TIMER1_prog.o
+ .bss.numOverflows
+                0x008000d2        0x4 MCAL/TIMER1/TIMER1_prog.o
+ .bss.req_numOverflows
+                0x008000d6        0x4 MCAL/TIMER1/TIMER1_prog.o
  .bss.Action_Uart
-                0x008000ca        0x6 MCAL/USART/USART_prog.o
-                0x008000ca                Action_Uart
- .bss.queueRear
-                0x008000d0        0x1 OS/OS.o
-                0x008000d0                queueRear
- .bss.queueFront
-                0x008000d1        0x1 OS/OS.o
-                0x008000d1                queueFront
+                0x008000da        0x6 MCAL/USART/USART_prog.o
+                0x008000da                Action_Uart
  .bss.queueSize
-                0x008000d2        0x1 OS/OS.o
-                0x008000d2                queueSize
+                0x008000e0        0x1 OS/OS.o
+                0x008000e0                queueSize
  *(COMMON)
- COMMON         0x008000d3        0xa OS/OS.o
-                0x008000d3                taskQueue
-                0x008000dd                PROVIDE (__bss_end, .)
-                0x00000a5c                __data_load_start = LOADADDR (.data)
-                0x00000a96                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x008000e1        0x6 OS/OS.o
+                0x008000e1                taskQueue
+                0x008000e7                PROVIDE (__bss_end, .)
+                0x00000af6                __data_load_start = LOADADDR (.data)
+                0x00000b40                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x008000dd        0x0
+.noinit         0x008000e7        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x008000dd                _end = .
+                0x008000e7                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
@@ -1101,7 +1094,7 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x25b2
+.debug_info     0x00000000     0x25fd
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x4e6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_info    0x000004e6       0xff APP/main.o
@@ -1113,9 +1106,9 @@ END GROUP
  .debug_info    0x00001282      0x489 MCAL/TIMER0/TIMER0_prog.o
  .debug_info    0x0000170b      0x640 MCAL/TIMER1/TIMER1_prog.o
  .debug_info    0x00001d4b      0x235 MCAL/USART/USART_prog.o
- .debug_info    0x00001f80      0x632 OS/OS.o
+ .debug_info    0x00001f80      0x67d OS/OS.o
 
-.debug_abbrev   0x00000000      0xfe6
+.debug_abbrev   0x00000000      0xff6
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x4a3 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_abbrev  0x000004a3       0x91 APP/main.o
@@ -1127,9 +1120,9 @@ END GROUP
  .debug_abbrev  0x000009ed      0x17b MCAL/TIMER0/TIMER0_prog.o
  .debug_abbrev  0x00000b68      0x1b6 MCAL/TIMER1/TIMER1_prog.o
  .debug_abbrev  0x00000d1e      0x131 MCAL/USART/USART_prog.o
- .debug_abbrev  0x00000e4f      0x197 OS/OS.o
+ .debug_abbrev  0x00000e4f      0x1a7 OS/OS.o
 
-.debug_line     0x00000000     0x127e
+.debug_line     0x00000000     0x12de
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x116 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_line    0x00000116       0xa8 APP/main.o
@@ -1141,9 +1134,9 @@ END GROUP
  .debug_line    0x0000098d      0x26f MCAL/TIMER0/TIMER0_prog.o
  .debug_line    0x00000bfc      0x2da MCAL/TIMER1/TIMER1_prog.o
  .debug_line    0x00000ed6      0x1a2 MCAL/USART/USART_prog.o
- .debug_line    0x00001078      0x206 OS/OS.o
+ .debug_line    0x00001078      0x266 OS/OS.o
 
-.debug_frame    0x00000000      0x854
+.debug_frame    0x00000000      0x864
  *(.debug_frame)
  .debug_frame   0x00000000       0x24 APP/main.o
  .debug_frame   0x00000024       0x54 MCAL/ADC/ADC_prog.o
@@ -1154,9 +1147,9 @@ END GROUP
  .debug_frame   0x00000328      0x178 MCAL/TIMER0/TIMER0_prog.o
  .debug_frame   0x000004a0      0x200 MCAL/TIMER1/TIMER1_prog.o
  .debug_frame   0x000006a0       0xf8 MCAL/USART/USART_prog.o
- .debug_frame   0x00000798       0xbc OS/OS.o
+ .debug_frame   0x00000798       0xcc OS/OS.o
 
-.debug_str      0x00000000     0x12fe
+.debug_str      0x00000000     0x12ec
  *(.debug_str)
  .debug_str     0x00000000      0x196 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_str     0x00000196      0x1a9 APP/main.o
@@ -1177,10 +1170,10 @@ END GROUP
                                 0x764 (size before relaxing)
  .debug_str     0x00001163       0xce MCAL/USART/USART_prog.o
                                 0x252 (size before relaxing)
- .debug_str     0x00001231       0xcd OS/OS.o
+ .debug_str     0x00001231       0xbb OS/OS.o
                                 0x505 (size before relaxing)
 
-.debug_loc      0x00000000     0x14f5
+.debug_loc      0x00000000     0x15b3
  *(.debug_loc)
  .debug_loc     0x00000000      0x15a MCAL/ADC/ADC_prog.o
  .debug_loc     0x0000015a      0x353 MCAL/DIO/DIO_Program.o
@@ -1189,7 +1182,7 @@ END GROUP
  .debug_loc     0x00000908      0x3a7 MCAL/TIMER0/TIMER0_prog.o
  .debug_loc     0x00000caf      0x46c MCAL/TIMER1/TIMER1_prog.o
  .debug_loc     0x0000111b      0x242 MCAL/USART/USART_prog.o
- .debug_loc     0x0000135d      0x198 OS/OS.o
+ .debug_loc     0x0000135d      0x256 OS/OS.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1209,7 +1202,7 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x248
+.debug_ranges   0x00000000      0x298
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x10 APP/main.o
  .debug_ranges  0x00000010       0x28 MCAL/ADC/ADC_prog.o
@@ -1220,7 +1213,7 @@ END GROUP
  .debug_ranges  0x000000f8       0x60 MCAL/TIMER0/TIMER0_prog.o
  .debug_ranges  0x00000158       0x78 MCAL/TIMER1/TIMER1_prog.o
  .debug_ranges  0x000001d0       0x40 MCAL/USART/USART_prog.o
- .debug_ranges  0x00000210       0x38 OS/OS.o
+ .debug_ranges  0x00000210       0x88 OS/OS.o
 
 .debug_macro
  *(.debug_macro)
