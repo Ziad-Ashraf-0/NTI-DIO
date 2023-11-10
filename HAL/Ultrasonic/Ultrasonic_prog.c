@@ -33,10 +33,10 @@ void TimerOVFCallBack(){
  * */
 void Ultrasonic_init(void){
 	/*
-	 * setup the icu : 1- frequency -> fcpu/64
+	 * setup the icu : 1- frequency -> fcpu/1024
 	 *                 2- start with first rising edge
 	 * */
-	Timer1_Config timerConfig1 = {Timer1_NORMAL,Timer1_PRESCALER_64};
+	Timer1_Config timerConfig1 = {Timer1_NORMAL,Timer1_PRESCALER_1024};
 	M_TIMER1_void_setCallBack(Ultrasonic_edgeProcessing,TIMER1_ICU);
 	M_TIMER1_void_setCallBack(TimerOVFCallBack,TIMER1_OVERFLOW);
 	M_TIMER1_void_Init(&timerConfig1);
@@ -50,8 +50,8 @@ void Ultrasonic_init(void){
 	DIO_Config trig_bin = {ULTRASONIC_TRIGGER_PORTID,ULTRASONIC_TRIGGER_PINID,DIO_PIN_OUTPUT};
 	DIO_U8SetPinDirection(&trig_bin);
 	
-	/* setup the direction of the trigger to be output pin */
-	DIO_Config trig_bin1 = {DIO_PORTD,DIO_PIN3,DIO_PIN_INPUT};
+	/* setup the direction of the echo to be input pin */
+	DIO_Config trig_bin1 = {DIO_PORTD,DIO_PIN6,DIO_PIN_INPUT};
 	DIO_U8SetPinDirection(&trig_bin1);
 }
 
@@ -82,18 +82,15 @@ void Ultrasonic_Trigger(void){
 u16 Ultrasonic_readDistance(void){
 	/* sending pulses by the trigger*/
 	Ultrasonic_Trigger();
-	if(g_edges_counter==2){ //raising & falling -> 1 cycle
+	_delay_ms(100);
+	if(g_edges_counter == 2){ //raising & falling -> 1 cycle
 		g_edges_counter=0; //reset the counter of the edges
 		/* equation to convert from time to distance*/
-		if(g_OVRflow == 0){
-			g_distance = (g_secondRead*0.01715);
-		}else{
-			//to be handled
-			g_distance = 11111;
-		}
-
+		/* 16MHz Timer freq, sound speed =34300 cm/s */
+		g_distance = (double)g_secondRead * (34300.0 / (2.0 * 16.0 * 1024.0)); // distance in centimeters
+		return g_distance;
 	}
-	return (g_distance+1);
+	return -1;
 }
 
 
@@ -116,11 +113,9 @@ void Ultrasonic_edgeProcessing(void){
 	/*this condition will be true when the falling edge is detected*/
 	else if(g_edges_counter==2){
 		/*we will read the input capture register and save it inside the g_timeHigh*/
-		g_secondRead = M_TIMER1_void_getInputCaptureValue();
-
+		g_secondRead = M_TIMER1_void_getInputCaptureValue() + (65535 * g_OVRflow);
 		/*clear the input capture register to start detect again*/
 		M_TIMER1_void_clearTimerValue();
-
 		/*To start detecting from the rising edge*/
 		M_TIMER1_void_setEdgeDetectionType(RISING);
 	}
