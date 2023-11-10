@@ -3,31 +3,31 @@ NTI_AVR_Drivers.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000af6  00000000  00000000  00000094  2**1
+  0 .text         00000b0a  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         0000004a  00800060  00000af6  00000b8a  2**0
+  1 .data         0000004a  00800060  00000b0a  00000b9e  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          0000003d  008000aa  008000aa  00000bd4  2**0
+  2 .bss          0000003d  008000aa  008000aa  00000be8  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00000bd4  2**0
+  3 .comment      00000030  00000000  00000000  00000be8  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000c04  2**2
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000c18  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 000002e8  00000000  00000000  00000c40  2**0
+  5 .debug_aranges 000002e8  00000000  00000000  00000c54  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   000025fd  00000000  00000000  00000f28  2**0
+  6 .debug_info   00002612  00000000  00000000  00000f3c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000ff6  00000000  00000000  00003525  2**0
+  7 .debug_abbrev 00000ff6  00000000  00000000  0000354e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000012de  00000000  00000000  0000451b  2**0
+  8 .debug_line   00001304  00000000  00000000  00004544  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000864  00000000  00000000  000057fc  2**2
+  9 .debug_frame  0000085c  00000000  00000000  00005848  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000012ec  00000000  00000000  00006060  2**0
+ 10 .debug_str    000012f8  00000000  00000000  000060a4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000015b3  00000000  00000000  0000734c  2**0
+ 11 .debug_loc    00001587  00000000  00000000  0000739c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000298  00000000  00000000  000088ff  2**0
+ 12 .debug_ranges 000002b0  00000000  00000000  00008923  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -67,8 +67,8 @@ Disassembly of section .text:
   60:	10 e0       	ldi	r17, 0x00	; 0
   62:	a0 e6       	ldi	r26, 0x60	; 96
   64:	b0 e0       	ldi	r27, 0x00	; 0
-  66:	e6 ef       	ldi	r30, 0xF6	; 246
-  68:	fa e0       	ldi	r31, 0x0A	; 10
+  66:	ea e0       	ldi	r30, 0x0A	; 10
+  68:	fb e0       	ldi	r31, 0x0B	; 11
   6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
   6c:	05 90       	lpm	r0, Z+
   6e:	0d 92       	st	X+, r0
@@ -90,7 +90,7 @@ Disassembly of section .text:
   82:	b2 07       	cpc	r27, r18
   84:	e1 f7       	brne	.-8      	; 0x7e <.do_clear_bss_loop>
   86:	0e 94 49 00 	call	0x92	; 0x92 <main>
-  8a:	0c 94 79 05 	jmp	0xaf2	; 0xaf2 <_exit>
+  8a:	0c 94 83 05 	jmp	0xb06	; 0xb06 <_exit>
 
 0000008e <__bad_interrupt>:
   8e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -630,10 +630,10 @@ void M_TIMER0_void_setPhaseCorrectPWM(Valid_Freq freq, u8 duty){
  476:	f1 2c       	mov	r15, r1
  478:	a8 ee       	ldi	r26, 0xE8	; 232
  47a:	b3 e0       	ldi	r27, 0x03	; 3
- 47c:	0e 94 5f 05 	call	0xabe	; 0xabe <__muluhisi3>
+ 47c:	0e 94 69 05 	call	0xad2	; 0xad2 <__muluhisi3>
  480:	a7 01       	movw	r20, r14
  482:	96 01       	movw	r18, r12
- 484:	0e 94 3d 05 	call	0xa7a	; 0xa7a <__udivmodsi4>
+ 484:	0e 94 47 05 	call	0xa8e	; 0xa8e <__udivmodsi4>
  488:	bb 27       	eor	r27, r27
  48a:	a5 2f       	mov	r26, r21
  48c:	94 2f       	mov	r25, r20
@@ -1100,7 +1100,7 @@ void Task1Callback(void) {
  7e0:	00 d0       	rcall	.+0      	; 0x7e2 <Task1Callback+0x8>
  7e2:	cd b7       	in	r28, 0x3d	; 61
  7e4:	de b7       	in	r29, 0x3e	; 62
-	// Toggle PB0 LED
+	// Toggle PB0 RED LED
 	DIO_Config led = {DIO_PORTB, DIO_PIN0, DIO_PIN_OUTPUT};
  7e6:	19 82       	std	Y+1, r1	; 0x01
  7e8:	1a 82       	std	Y+2, r1	; 0x02
@@ -1160,7 +1160,7 @@ void Task3Callback(void) {
  83c:	08 95       	ret
 
 0000083e <Task2Callback>:
-	// Toggle PB0 LED
+	// Toggle PB0 RED LED
 	DIO_Config led = {DIO_PORTB, DIO_PIN0, DIO_PIN_OUTPUT};
 	DIO_U8TogglePin(&led);
 }
@@ -1295,7 +1295,7 @@ void startOS() {
  8f6:	0e 94 db 01 	call	0x3b6	; 0x3b6 <M_TIMER0_void_Init>
 	M_TIMER0_void_setCallBack(pendSV, OVERFLOW);
  8fa:	60 e0       	ldi	r22, 0x00	; 0
- 8fc:	86 ec       	ldi	r24, 0xC6	; 198
+ 8fc:	80 ed       	ldi	r24, 0xD0	; 208
  8fe:	94 e0       	ldi	r25, 0x04	; 4
  900:	0e 94 76 02 	call	0x4ec	; 0x4ec <M_TIMER0_void_setCallBack>
 	M_TIMER0_void_IntEnable(OVERFLOW);
@@ -1324,315 +1324,345 @@ void startOS() {
  930:	08 95       	ret
 
 00000932 <runHighestPriorityTask>:
+	  }
+	  runHighestPriorityTask(); // Execute the highest-priority task
+}
+
+void runHighestPriorityTask() {
+	while (queueSize > 0) {
+ 932:	31 c0       	rjmp	.+98     	; 0x996 <runHighestPriorityTask+0x64>
+		// Execute the task at the front of the queue
+		TaskControlBlock* currentTask = taskQueue[0];
+ 934:	e0 91 e1 00 	lds	r30, 0x00E1	; 0x8000e1 <taskQueue>
+ 938:	f0 91 e2 00 	lds	r31, 0x00E2	; 0x8000e2 <taskQueue+0x1>
+
+		// Execute the task
+		if (currentTask->counter >= currentTask->period) {
+ 93c:	24 81       	ldd	r18, Z+4	; 0x04
+ 93e:	35 81       	ldd	r19, Z+5	; 0x05
+ 940:	82 81       	ldd	r24, Z+2	; 0x02
+ 942:	93 81       	ldd	r25, Z+3	; 0x03
+ 944:	28 17       	cp	r18, r24
+ 946:	39 07       	cpc	r19, r25
+ 948:	30 f0       	brcs	.+12     	; 0x956 <runHighestPriorityTask+0x24>
+			currentTask->counter = 0;
+ 94a:	15 82       	std	Z+5, r1	; 0x05
+ 94c:	14 82       	std	Z+4, r1	; 0x04
+			currentTask->taskFunc();
+ 94e:	01 90       	ld	r0, Z+
+ 950:	f0 81       	ld	r31, Z
+ 952:	e0 2d       	mov	r30, r0
+ 954:	09 95       	icall
 		  }
 	  }
 	  runHighestPriorityTask(); // Execute the highest-priority task
 }
 
 void runHighestPriorityTask() {
- 932:	cf 93       	push	r28
-	for (u8 i = 0; i < NUM_TASKS; i++) {
- 934:	c0 e0       	ldi	r28, 0x00	; 0
- 936:	26 c0       	rjmp	.+76     	; 0x984 <runHighestPriorityTask+0x52>
-		if (tasks[i].counter >= tasks[i].period) {
- 938:	8c 2f       	mov	r24, r28
- 93a:	90 e0       	ldi	r25, 0x00	; 0
- 93c:	fc 01       	movw	r30, r24
- 93e:	ee 0f       	add	r30, r30
- 940:	ff 1f       	adc	r31, r31
- 942:	ee 0f       	add	r30, r30
- 944:	ff 1f       	adc	r31, r31
- 946:	ee 0f       	add	r30, r30
- 948:	ff 1f       	adc	r31, r31
- 94a:	e8 1b       	sub	r30, r24
- 94c:	f9 0b       	sbc	r31, r25
- 94e:	e0 5a       	subi	r30, 0xA0	; 160
- 950:	ff 4f       	sbci	r31, 0xFF	; 255
- 952:	44 81       	ldd	r20, Z+4	; 0x04
- 954:	55 81       	ldd	r21, Z+5	; 0x05
- 956:	22 81       	ldd	r18, Z+2	; 0x02
- 958:	33 81       	ldd	r19, Z+3	; 0x03
- 95a:	42 17       	cp	r20, r18
- 95c:	53 07       	cpc	r21, r19
- 95e:	88 f0       	brcs	.+34     	; 0x982 <runHighestPriorityTask+0x50>
-			tasks[i].counter = 0;
- 960:	fc 01       	movw	r30, r24
- 962:	ee 0f       	add	r30, r30
- 964:	ff 1f       	adc	r31, r31
- 966:	ee 0f       	add	r30, r30
- 968:	ff 1f       	adc	r31, r31
- 96a:	ee 0f       	add	r30, r30
- 96c:	ff 1f       	adc	r31, r31
- 96e:	e8 1b       	sub	r30, r24
- 970:	f9 0b       	sbc	r31, r25
- 972:	e0 5a       	subi	r30, 0xA0	; 160
- 974:	ff 4f       	sbci	r31, 0xFF	; 255
- 976:	15 82       	std	Z+5, r1	; 0x05
- 978:	14 82       	std	Z+4, r1	; 0x04
-			tasks[i].taskFunc();
- 97a:	01 90       	ld	r0, Z+
- 97c:	f0 81       	ld	r31, Z
- 97e:	e0 2d       	mov	r30, r0
- 980:	09 95       	icall
+ 956:	40 e0       	ldi	r20, 0x00	; 0
+ 958:	10 c0       	rjmp	.+32     	; 0x97a <runHighestPriorityTask+0x48>
+			currentTask->taskFunc();
+		}
+
+		// Remove the executed task from the queue
+		for (u8 i = 0; i < queueSize - 1; i++) {
+			taskQueue[i] = taskQueue[i + 1];
+ 95a:	fc 01       	movw	r30, r24
+ 95c:	31 96       	adiw	r30, 0x01	; 1
+ 95e:	ee 0f       	add	r30, r30
+ 960:	ff 1f       	adc	r31, r31
+ 962:	ef 51       	subi	r30, 0x1F	; 31
+ 964:	ff 4f       	sbci	r31, 0xFF	; 255
+ 966:	20 81       	ld	r18, Z
+ 968:	31 81       	ldd	r19, Z+1	; 0x01
+ 96a:	88 0f       	add	r24, r24
+ 96c:	99 1f       	adc	r25, r25
+ 96e:	fc 01       	movw	r30, r24
+ 970:	ef 51       	subi	r30, 0x1F	; 31
+ 972:	ff 4f       	sbci	r31, 0xFF	; 255
+ 974:	31 83       	std	Z+1, r19	; 0x01
+ 976:	20 83       	st	Z, r18
+			currentTask->counter = 0;
+			currentTask->taskFunc();
+		}
+
+		// Remove the executed task from the queue
+		for (u8 i = 0; i < queueSize - 1; i++) {
+ 978:	4f 5f       	subi	r20, 0xFF	; 255
+ 97a:	84 2f       	mov	r24, r20
+ 97c:	90 e0       	ldi	r25, 0x00	; 0
+ 97e:	50 91 e0 00 	lds	r21, 0x00E0	; 0x8000e0 <queueSize>
+ 982:	25 2f       	mov	r18, r21
+ 984:	30 e0       	ldi	r19, 0x00	; 0
+ 986:	21 50       	subi	r18, 0x01	; 1
+ 988:	31 09       	sbc	r19, r1
+ 98a:	82 17       	cp	r24, r18
+ 98c:	93 07       	cpc	r25, r19
+ 98e:	2c f3       	brlt	.-54     	; 0x95a <runHighestPriorityTask+0x28>
+			taskQueue[i] = taskQueue[i + 1];
+		}
+		queueSize--;
+ 990:	51 50       	subi	r21, 0x01	; 1
+ 992:	50 93 e0 00 	sts	0x00E0, r21	; 0x8000e0 <queueSize>
 	  }
 	  runHighestPriorityTask(); // Execute the highest-priority task
 }
 
 void runHighestPriorityTask() {
-	for (u8 i = 0; i < NUM_TASKS; i++) {
- 982:	cf 5f       	subi	r28, 0xFF	; 255
- 984:	c3 30       	cpi	r28, 0x03	; 3
- 986:	c0 f2       	brcs	.-80     	; 0x938 <runHighestPriorityTask+0x6>
-		if (tasks[i].counter >= tasks[i].period) {
-			tasks[i].counter = 0;
-			tasks[i].taskFunc();
+	while (queueSize > 0) {
+ 996:	80 91 e0 00 	lds	r24, 0x00E0	; 0x8000e0 <queueSize>
+ 99a:	81 11       	cpse	r24, r1
+ 99c:	cb cf       	rjmp	.-106    	; 0x934 <runHighestPriorityTask+0x2>
+		for (u8 i = 0; i < queueSize - 1; i++) {
+			taskQueue[i] = taskQueue[i + 1];
 		}
+		queueSize--;
 	}
- 988:	cf 91       	pop	r28
- 98a:	08 95       	ret
+}
+ 99e:	08 95       	ret
 
-0000098c <pendSV>:
+000009a0 <pendSV>:
+	M_TIMER0_void_setDelayTimeMilliSec(500);
+	M_TIMER0_void_start();
 }
 
 void pendSV(void) {
-
-
 	  for (u8 i = 0; i < NUM_TASKS; i++) {
- 98c:	60 e0       	ldi	r22, 0x00	; 0
- 98e:	6f c0       	rjmp	.+222    	; 0xa6e <pendSV+0xe2>
+ 9a0:	60 e0       	ldi	r22, 0x00	; 0
+ 9a2:	6f c0       	rjmp	.+222    	; 0xa82 <pendSV+0xe2>
 		  tasks[i].counter += 500; // Increment the counter for all tasks
- 990:	26 2f       	mov	r18, r22
- 992:	30 e0       	ldi	r19, 0x00	; 0
- 994:	f9 01       	movw	r30, r18
- 996:	ee 0f       	add	r30, r30
- 998:	ff 1f       	adc	r31, r31
- 99a:	ee 0f       	add	r30, r30
- 99c:	ff 1f       	adc	r31, r31
- 99e:	ee 0f       	add	r30, r30
- 9a0:	ff 1f       	adc	r31, r31
- 9a2:	e2 1b       	sub	r30, r18
- 9a4:	f3 0b       	sbc	r31, r19
- 9a6:	e0 5a       	subi	r30, 0xA0	; 160
- 9a8:	ff 4f       	sbci	r31, 0xFF	; 255
- 9aa:	84 81       	ldd	r24, Z+4	; 0x04
- 9ac:	95 81       	ldd	r25, Z+5	; 0x05
- 9ae:	8c 50       	subi	r24, 0x0C	; 12
- 9b0:	9e 4f       	sbci	r25, 0xFE	; 254
- 9b2:	95 83       	std	Z+5, r25	; 0x05
- 9b4:	84 83       	std	Z+4, r24	; 0x04
+ 9a4:	26 2f       	mov	r18, r22
+ 9a6:	30 e0       	ldi	r19, 0x00	; 0
+ 9a8:	f9 01       	movw	r30, r18
+ 9aa:	ee 0f       	add	r30, r30
+ 9ac:	ff 1f       	adc	r31, r31
+ 9ae:	ee 0f       	add	r30, r30
+ 9b0:	ff 1f       	adc	r31, r31
+ 9b2:	ee 0f       	add	r30, r30
+ 9b4:	ff 1f       	adc	r31, r31
+ 9b6:	e2 1b       	sub	r30, r18
+ 9b8:	f3 0b       	sbc	r31, r19
+ 9ba:	e0 5a       	subi	r30, 0xA0	; 160
+ 9bc:	ff 4f       	sbci	r31, 0xFF	; 255
+ 9be:	84 81       	ldd	r24, Z+4	; 0x04
+ 9c0:	95 81       	ldd	r25, Z+5	; 0x05
+ 9c2:	8c 50       	subi	r24, 0x0C	; 12
+ 9c4:	9e 4f       	sbci	r25, 0xFE	; 254
+ 9c6:	95 83       	std	Z+5, r25	; 0x05
+ 9c8:	84 83       	std	Z+4, r24	; 0x04
 
 		  if (tasks[i].counter >= tasks[i].period) {
- 9b6:	42 81       	ldd	r20, Z+2	; 0x02
- 9b8:	53 81       	ldd	r21, Z+3	; 0x03
- 9ba:	84 17       	cp	r24, r20
- 9bc:	95 07       	cpc	r25, r21
- 9be:	08 f4       	brcc	.+2      	; 0x9c2 <pendSV+0x36>
- 9c0:	55 c0       	rjmp	.+170    	; 0xa6c <pendSV+0xe0>
+ 9ca:	42 81       	ldd	r20, Z+2	; 0x02
+ 9cc:	53 81       	ldd	r21, Z+3	; 0x03
+ 9ce:	84 17       	cp	r24, r20
+ 9d0:	95 07       	cpc	r25, r21
+ 9d2:	08 f4       	brcc	.+2      	; 0x9d6 <pendSV+0x36>
+ 9d4:	55 c0       	rjmp	.+170    	; 0xa80 <pendSV+0xe0>
 			  // Task is ready to run, add it to the queue based on priority
 			  if (queueSize < NUM_TASKS) {
- 9c2:	50 91 e0 00 	lds	r21, 0x00E0	; 0x8000e0 <queueSize>
- 9c6:	53 30       	cpi	r21, 0x03	; 3
- 9c8:	e0 f0       	brcs	.+56     	; 0xa02 <pendSV+0x76>
- 9ca:	4e c0       	rjmp	.+156    	; 0xa68 <pendSV+0xdc>
+ 9d6:	50 91 e0 00 	lds	r21, 0x00E0	; 0x8000e0 <queueSize>
+ 9da:	53 30       	cpi	r21, 0x03	; 3
+ 9dc:	e0 f0       	brcs	.+56     	; 0xa16 <pendSV+0x76>
+ 9de:	4e c0       	rjmp	.+156    	; 0xa7c <pendSV+0xdc>
 				  u8 insertIndex = 0;
 				  for (u8 j = 0; j < queueSize; j++) {
 					  if (tasks[i].priority > taskQueue[j]->priority) {
- 9cc:	f9 01       	movw	r30, r18
- 9ce:	ee 0f       	add	r30, r30
- 9d0:	ff 1f       	adc	r31, r31
- 9d2:	ee 0f       	add	r30, r30
- 9d4:	ff 1f       	adc	r31, r31
- 9d6:	ee 0f       	add	r30, r30
- 9d8:	ff 1f       	adc	r31, r31
- 9da:	e2 1b       	sub	r30, r18
- 9dc:	f3 0b       	sbc	r31, r19
- 9de:	e0 5a       	subi	r30, 0xA0	; 160
- 9e0:	ff 4f       	sbci	r31, 0xFF	; 255
- 9e2:	76 81       	ldd	r23, Z+6	; 0x06
- 9e4:	e8 2f       	mov	r30, r24
- 9e6:	f0 e0       	ldi	r31, 0x00	; 0
- 9e8:	ee 0f       	add	r30, r30
- 9ea:	ff 1f       	adc	r31, r31
- 9ec:	ef 51       	subi	r30, 0x1F	; 31
- 9ee:	ff 4f       	sbci	r31, 0xFF	; 255
- 9f0:	01 90       	ld	r0, Z+
- 9f2:	f0 81       	ld	r31, Z
- 9f4:	e0 2d       	mov	r30, r0
- 9f6:	96 81       	ldd	r25, Z+6	; 0x06
- 9f8:	97 17       	cp	r25, r23
- 9fa:	e0 f0       	brcs	.+56     	; 0xa34 <pendSV+0xa8>
+ 9e0:	f9 01       	movw	r30, r18
+ 9e2:	ee 0f       	add	r30, r30
+ 9e4:	ff 1f       	adc	r31, r31
+ 9e6:	ee 0f       	add	r30, r30
+ 9e8:	ff 1f       	adc	r31, r31
+ 9ea:	ee 0f       	add	r30, r30
+ 9ec:	ff 1f       	adc	r31, r31
+ 9ee:	e2 1b       	sub	r30, r18
+ 9f0:	f3 0b       	sbc	r31, r19
+ 9f2:	e0 5a       	subi	r30, 0xA0	; 160
+ 9f4:	ff 4f       	sbci	r31, 0xFF	; 255
+ 9f6:	76 81       	ldd	r23, Z+6	; 0x06
+ 9f8:	e8 2f       	mov	r30, r24
+ 9fa:	f0 e0       	ldi	r31, 0x00	; 0
+ 9fc:	ee 0f       	add	r30, r30
+ 9fe:	ff 1f       	adc	r31, r31
+ a00:	ef 51       	subi	r30, 0x1F	; 31
+ a02:	ff 4f       	sbci	r31, 0xFF	; 255
+ a04:	01 90       	ld	r0, Z+
+ a06:	f0 81       	ld	r31, Z
+ a08:	e0 2d       	mov	r30, r0
+ a0a:	96 81       	ldd	r25, Z+6	; 0x06
+ a0c:	97 17       	cp	r25, r23
+ a0e:	e0 f0       	brcs	.+56     	; 0xa48 <pendSV+0xa8>
 						  break;
 					  }
 					  insertIndex++;
- 9fc:	4f 5f       	subi	r20, 0xFF	; 255
+ a10:	4f 5f       	subi	r20, 0xFF	; 255
 
 		  if (tasks[i].counter >= tasks[i].period) {
 			  // Task is ready to run, add it to the queue based on priority
 			  if (queueSize < NUM_TASKS) {
 				  u8 insertIndex = 0;
 				  for (u8 j = 0; j < queueSize; j++) {
- 9fe:	8f 5f       	subi	r24, 0xFF	; 255
- a00:	02 c0       	rjmp	.+4      	; 0xa06 <pendSV+0x7a>
- a02:	80 e0       	ldi	r24, 0x00	; 0
- a04:	40 e0       	ldi	r20, 0x00	; 0
- a06:	85 17       	cp	r24, r21
- a08:	08 f3       	brcs	.-62     	; 0x9cc <pendSV+0x40>
- a0a:	75 2f       	mov	r23, r21
- a0c:	14 c0       	rjmp	.+40     	; 0xa36 <pendSV+0xaa>
+ a12:	8f 5f       	subi	r24, 0xFF	; 255
+ a14:	02 c0       	rjmp	.+4      	; 0xa1a <pendSV+0x7a>
+ a16:	80 e0       	ldi	r24, 0x00	; 0
+ a18:	40 e0       	ldi	r20, 0x00	; 0
+ a1a:	85 17       	cp	r24, r21
+ a1c:	08 f3       	brcs	.-62     	; 0x9e0 <pendSV+0x40>
+ a1e:	75 2f       	mov	r23, r21
+ a20:	14 c0       	rjmp	.+40     	; 0xa4a <pendSV+0xaa>
 					  }
 					  insertIndex++;
 				  }
 				  // Shift existing tasks to make space for the new task
 				  for (u8 j = queueSize; j > insertIndex; j--) {
 					  taskQueue[j] = taskQueue[j - 1];
- a0e:	87 2f       	mov	r24, r23
- a10:	90 e0       	ldi	r25, 0x00	; 0
- a12:	fc 01       	movw	r30, r24
- a14:	31 97       	sbiw	r30, 0x01	; 1
- a16:	ee 0f       	add	r30, r30
- a18:	ff 1f       	adc	r31, r31
- a1a:	ef 51       	subi	r30, 0x1F	; 31
- a1c:	ff 4f       	sbci	r31, 0xFF	; 255
- a1e:	a0 81       	ld	r26, Z
- a20:	b1 81       	ldd	r27, Z+1	; 0x01
- a22:	88 0f       	add	r24, r24
- a24:	99 1f       	adc	r25, r25
+ a22:	87 2f       	mov	r24, r23
+ a24:	90 e0       	ldi	r25, 0x00	; 0
  a26:	fc 01       	movw	r30, r24
- a28:	ef 51       	subi	r30, 0x1F	; 31
- a2a:	ff 4f       	sbci	r31, 0xFF	; 255
- a2c:	b1 83       	std	Z+1, r27	; 0x01
- a2e:	a0 83       	st	Z, r26
+ a28:	31 97       	sbiw	r30, 0x01	; 1
+ a2a:	ee 0f       	add	r30, r30
+ a2c:	ff 1f       	adc	r31, r31
+ a2e:	ef 51       	subi	r30, 0x1F	; 31
+ a30:	ff 4f       	sbci	r31, 0xFF	; 255
+ a32:	a0 81       	ld	r26, Z
+ a34:	b1 81       	ldd	r27, Z+1	; 0x01
+ a36:	88 0f       	add	r24, r24
+ a38:	99 1f       	adc	r25, r25
+ a3a:	fc 01       	movw	r30, r24
+ a3c:	ef 51       	subi	r30, 0x1F	; 31
+ a3e:	ff 4f       	sbci	r31, 0xFF	; 255
+ a40:	b1 83       	std	Z+1, r27	; 0x01
+ a42:	a0 83       	st	Z, r26
 						  break;
 					  }
 					  insertIndex++;
 				  }
 				  // Shift existing tasks to make space for the new task
 				  for (u8 j = queueSize; j > insertIndex; j--) {
- a30:	71 50       	subi	r23, 0x01	; 1
- a32:	01 c0       	rjmp	.+2      	; 0xa36 <pendSV+0xaa>
- a34:	75 2f       	mov	r23, r21
- a36:	47 17       	cp	r20, r23
- a38:	50 f3       	brcs	.-44     	; 0xa0e <pendSV+0x82>
+ a44:	71 50       	subi	r23, 0x01	; 1
+ a46:	01 c0       	rjmp	.+2      	; 0xa4a <pendSV+0xaa>
+ a48:	75 2f       	mov	r23, r21
+ a4a:	47 17       	cp	r20, r23
+ a4c:	50 f3       	brcs	.-44     	; 0xa22 <pendSV+0x82>
 					  taskQueue[j] = taskQueue[j - 1];
 				  }
 				  taskQueue[insertIndex] = &tasks[i];
- a3a:	e4 2f       	mov	r30, r20
- a3c:	f0 e0       	ldi	r31, 0x00	; 0
- a3e:	c9 01       	movw	r24, r18
- a40:	88 0f       	add	r24, r24
- a42:	99 1f       	adc	r25, r25
- a44:	88 0f       	add	r24, r24
- a46:	99 1f       	adc	r25, r25
- a48:	88 0f       	add	r24, r24
- a4a:	99 1f       	adc	r25, r25
- a4c:	82 1b       	sub	r24, r18
- a4e:	93 0b       	sbc	r25, r19
- a50:	80 5a       	subi	r24, 0xA0	; 160
- a52:	9f 4f       	sbci	r25, 0xFF	; 255
- a54:	ee 0f       	add	r30, r30
- a56:	ff 1f       	adc	r31, r31
- a58:	ef 51       	subi	r30, 0x1F	; 31
- a5a:	ff 4f       	sbci	r31, 0xFF	; 255
- a5c:	91 83       	std	Z+1, r25	; 0x01
- a5e:	80 83       	st	Z, r24
+ a4e:	e4 2f       	mov	r30, r20
+ a50:	f0 e0       	ldi	r31, 0x00	; 0
+ a52:	c9 01       	movw	r24, r18
+ a54:	88 0f       	add	r24, r24
+ a56:	99 1f       	adc	r25, r25
+ a58:	88 0f       	add	r24, r24
+ a5a:	99 1f       	adc	r25, r25
+ a5c:	88 0f       	add	r24, r24
+ a5e:	99 1f       	adc	r25, r25
+ a60:	82 1b       	sub	r24, r18
+ a62:	93 0b       	sbc	r25, r19
+ a64:	80 5a       	subi	r24, 0xA0	; 160
+ a66:	9f 4f       	sbci	r25, 0xFF	; 255
+ a68:	ee 0f       	add	r30, r30
+ a6a:	ff 1f       	adc	r31, r31
+ a6c:	ef 51       	subi	r30, 0x1F	; 31
+ a6e:	ff 4f       	sbci	r31, 0xFF	; 255
+ a70:	91 83       	std	Z+1, r25	; 0x01
+ a72:	80 83       	st	Z, r24
 				  queueSize++;
- a60:	5f 5f       	subi	r21, 0xFF	; 255
- a62:	50 93 e0 00 	sts	0x00E0, r21	; 0x8000e0 <queueSize>
- a66:	02 c0       	rjmp	.+4      	; 0xa6c <pendSV+0xe0>
+ a74:	5f 5f       	subi	r21, 0xFF	; 255
+ a76:	50 93 e0 00 	sts	0x00E0, r21	; 0x8000e0 <queueSize>
+ a7a:	02 c0       	rjmp	.+4      	; 0xa80 <pendSV+0xe0>
 			  }else{
 				  	  // Clear the task queue before adding tasks
 				  	  queueSize = 0;
- a68:	10 92 e0 00 	sts	0x00E0, r1	; 0x8000e0 <queueSize>
+ a7c:	10 92 e0 00 	sts	0x00E0, r1	; 0x8000e0 <queueSize>
+	M_TIMER0_void_setDelayTimeMilliSec(500);
+	M_TIMER0_void_start();
 }
 
 void pendSV(void) {
-
-
 	  for (u8 i = 0; i < NUM_TASKS; i++) {
- a6c:	6f 5f       	subi	r22, 0xFF	; 255
- a6e:	63 30       	cpi	r22, 0x03	; 3
- a70:	08 f4       	brcc	.+2      	; 0xa74 <pendSV+0xe8>
- a72:	8e cf       	rjmp	.-228    	; 0x990 <pendSV+0x4>
+ a80:	6f 5f       	subi	r22, 0xFF	; 255
+ a82:	63 30       	cpi	r22, 0x03	; 3
+ a84:	08 f4       	brcc	.+2      	; 0xa88 <pendSV+0xe8>
+ a86:	8e cf       	rjmp	.-228    	; 0x9a4 <pendSV+0x4>
 				  	  queueSize = 0;
 			  }
 			 
 		  }
 	  }
 	  runHighestPriorityTask(); // Execute the highest-priority task
- a74:	0e 94 99 04 	call	0x932	; 0x932 <runHighestPriorityTask>
- a78:	08 95       	ret
+ a88:	0e 94 99 04 	call	0x932	; 0x932 <runHighestPriorityTask>
+ a8c:	08 95       	ret
 
-00000a7a <__udivmodsi4>:
- a7a:	a1 e2       	ldi	r26, 0x21	; 33
- a7c:	1a 2e       	mov	r1, r26
- a7e:	aa 1b       	sub	r26, r26
- a80:	bb 1b       	sub	r27, r27
- a82:	fd 01       	movw	r30, r26
- a84:	0d c0       	rjmp	.+26     	; 0xaa0 <__udivmodsi4_ep>
+00000a8e <__udivmodsi4>:
+ a8e:	a1 e2       	ldi	r26, 0x21	; 33
+ a90:	1a 2e       	mov	r1, r26
+ a92:	aa 1b       	sub	r26, r26
+ a94:	bb 1b       	sub	r27, r27
+ a96:	fd 01       	movw	r30, r26
+ a98:	0d c0       	rjmp	.+26     	; 0xab4 <__udivmodsi4_ep>
 
-00000a86 <__udivmodsi4_loop>:
- a86:	aa 1f       	adc	r26, r26
- a88:	bb 1f       	adc	r27, r27
- a8a:	ee 1f       	adc	r30, r30
- a8c:	ff 1f       	adc	r31, r31
- a8e:	a2 17       	cp	r26, r18
- a90:	b3 07       	cpc	r27, r19
- a92:	e4 07       	cpc	r30, r20
- a94:	f5 07       	cpc	r31, r21
- a96:	20 f0       	brcs	.+8      	; 0xaa0 <__udivmodsi4_ep>
- a98:	a2 1b       	sub	r26, r18
- a9a:	b3 0b       	sbc	r27, r19
- a9c:	e4 0b       	sbc	r30, r20
- a9e:	f5 0b       	sbc	r31, r21
+00000a9a <__udivmodsi4_loop>:
+ a9a:	aa 1f       	adc	r26, r26
+ a9c:	bb 1f       	adc	r27, r27
+ a9e:	ee 1f       	adc	r30, r30
+ aa0:	ff 1f       	adc	r31, r31
+ aa2:	a2 17       	cp	r26, r18
+ aa4:	b3 07       	cpc	r27, r19
+ aa6:	e4 07       	cpc	r30, r20
+ aa8:	f5 07       	cpc	r31, r21
+ aaa:	20 f0       	brcs	.+8      	; 0xab4 <__udivmodsi4_ep>
+ aac:	a2 1b       	sub	r26, r18
+ aae:	b3 0b       	sbc	r27, r19
+ ab0:	e4 0b       	sbc	r30, r20
+ ab2:	f5 0b       	sbc	r31, r21
 
-00000aa0 <__udivmodsi4_ep>:
- aa0:	66 1f       	adc	r22, r22
- aa2:	77 1f       	adc	r23, r23
- aa4:	88 1f       	adc	r24, r24
- aa6:	99 1f       	adc	r25, r25
- aa8:	1a 94       	dec	r1
- aaa:	69 f7       	brne	.-38     	; 0xa86 <__udivmodsi4_loop>
- aac:	60 95       	com	r22
- aae:	70 95       	com	r23
- ab0:	80 95       	com	r24
- ab2:	90 95       	com	r25
- ab4:	9b 01       	movw	r18, r22
- ab6:	ac 01       	movw	r20, r24
- ab8:	bd 01       	movw	r22, r26
- aba:	cf 01       	movw	r24, r30
- abc:	08 95       	ret
+00000ab4 <__udivmodsi4_ep>:
+ ab4:	66 1f       	adc	r22, r22
+ ab6:	77 1f       	adc	r23, r23
+ ab8:	88 1f       	adc	r24, r24
+ aba:	99 1f       	adc	r25, r25
+ abc:	1a 94       	dec	r1
+ abe:	69 f7       	brne	.-38     	; 0xa9a <__udivmodsi4_loop>
+ ac0:	60 95       	com	r22
+ ac2:	70 95       	com	r23
+ ac4:	80 95       	com	r24
+ ac6:	90 95       	com	r25
+ ac8:	9b 01       	movw	r18, r22
+ aca:	ac 01       	movw	r20, r24
+ acc:	bd 01       	movw	r22, r26
+ ace:	cf 01       	movw	r24, r30
+ ad0:	08 95       	ret
 
-00000abe <__muluhisi3>:
- abe:	0e 94 6a 05 	call	0xad4	; 0xad4 <__umulhisi3>
- ac2:	a5 9f       	mul	r26, r21
- ac4:	90 0d       	add	r25, r0
- ac6:	b4 9f       	mul	r27, r20
- ac8:	90 0d       	add	r25, r0
- aca:	a4 9f       	mul	r26, r20
- acc:	80 0d       	add	r24, r0
- ace:	91 1d       	adc	r25, r1
- ad0:	11 24       	eor	r1, r1
- ad2:	08 95       	ret
+00000ad2 <__muluhisi3>:
+ ad2:	0e 94 74 05 	call	0xae8	; 0xae8 <__umulhisi3>
+ ad6:	a5 9f       	mul	r26, r21
+ ad8:	90 0d       	add	r25, r0
+ ada:	b4 9f       	mul	r27, r20
+ adc:	90 0d       	add	r25, r0
+ ade:	a4 9f       	mul	r26, r20
+ ae0:	80 0d       	add	r24, r0
+ ae2:	91 1d       	adc	r25, r1
+ ae4:	11 24       	eor	r1, r1
+ ae6:	08 95       	ret
 
-00000ad4 <__umulhisi3>:
- ad4:	a2 9f       	mul	r26, r18
- ad6:	b0 01       	movw	r22, r0
- ad8:	b3 9f       	mul	r27, r19
- ada:	c0 01       	movw	r24, r0
- adc:	a3 9f       	mul	r26, r19
- ade:	70 0d       	add	r23, r0
- ae0:	81 1d       	adc	r24, r1
- ae2:	11 24       	eor	r1, r1
- ae4:	91 1d       	adc	r25, r1
- ae6:	b2 9f       	mul	r27, r18
- ae8:	70 0d       	add	r23, r0
- aea:	81 1d       	adc	r24, r1
- aec:	11 24       	eor	r1, r1
- aee:	91 1d       	adc	r25, r1
- af0:	08 95       	ret
+00000ae8 <__umulhisi3>:
+ ae8:	a2 9f       	mul	r26, r18
+ aea:	b0 01       	movw	r22, r0
+ aec:	b3 9f       	mul	r27, r19
+ aee:	c0 01       	movw	r24, r0
+ af0:	a3 9f       	mul	r26, r19
+ af2:	70 0d       	add	r23, r0
+ af4:	81 1d       	adc	r24, r1
+ af6:	11 24       	eor	r1, r1
+ af8:	91 1d       	adc	r25, r1
+ afa:	b2 9f       	mul	r27, r18
+ afc:	70 0d       	add	r23, r0
+ afe:	81 1d       	adc	r24, r1
+ b00:	11 24       	eor	r1, r1
+ b02:	91 1d       	adc	r25, r1
+ b04:	08 95       	ret
 
-00000af2 <_exit>:
- af2:	f8 94       	cli
+00000b06 <_exit>:
+ b06:	f8 94       	cli
 
-00000af4 <__stop_program>:
- af4:	ff cf       	rjmp	.-2      	; 0xaf4 <__stop_program>
+00000b08 <__stop_program>:
+ b08:	ff cf       	rjmp	.-2      	; 0xb08 <__stop_program>

@@ -9,7 +9,7 @@ void runHighestPriorityTask() ;
 void pendSV(void);
 // Define the task functions
 void Task1Callback(void) {
-	// Toggle PB0 LED
+	// Toggle PB0 RED LED
 	DIO_Config led = {DIO_PORTB, DIO_PIN0, DIO_PIN_OUTPUT};
 	DIO_U8TogglePin(&led);
 }
@@ -97,10 +97,21 @@ void pendSV(void) {
 }
 
 void runHighestPriorityTask() {
-	for (u8 i = 0; i < NUM_TASKS; i++) {
-		if (tasks[i].counter >= tasks[i].period) {
-			tasks[i].counter = 0;
-			tasks[i].taskFunc();
+	while (queueSize > 0) {
+		// Execute the task at the front of the queue
+		TaskControlBlock* currentTask = taskQueue[0];
+
+		// Execute the task
+		if (currentTask->counter >= currentTask->period) {
+			currentTask->counter = 0;
+			currentTask->taskFunc();
 		}
+
+		// Remove the executed task from the queue
+		for (u8 i = 0; i < queueSize - 1; i++) {
+			taskQueue[i] = taskQueue[i + 1];
+		}
+		queueSize--;
 	}
 }
+
