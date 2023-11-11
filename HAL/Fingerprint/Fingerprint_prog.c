@@ -18,9 +18,9 @@ u8 byte_no = 0;
 
 void clearBuffer()
 {
-	for(int i=0; i<25;i++){
+	for(int i=0; i<24;i++){
 		buffer[i]=0xFF;
-	}	
+	}
 	byte_no = 0;
 }
 
@@ -31,50 +31,64 @@ void receiveCallback(u8 data){
 
 
 u8 FingerPS_strTemplate(u8 bufferId, u16 pageId){
+	//clearBuffer();
 	byte_no = 0;
 	
-	u8 store[15]={0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x06, 0x06, bufferId, (pageId & 0xFF00) >> 8 , pageId, 0x00, 0x0E};
+	u8 store[15]={0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x06, 0x06, bufferId, pageId  >> 8 , pageId, 0x00, 0x0E};
+	u16 checkSum = FingerPS_calcCheckSum(store,15);
+	
+	store[13]=checkSum>>8;
+	store[14]=checkSum;
 	
 	for (u8 i = 0; i < 15; i++)
 	{
 		UART_sendByte(store[i]);
 	}
 	UART_receiveByteAsynchCallBack(receiveCallback);
-	_delay_ms(5);
-	//while(byte_no != 12);
+	_delay_ms(500);
+	 checkSum = FingerPS_calcCheckSum(buffer,byte_no);
 	
-	//calc checksum
-	//buffer[9] == 0 return SUCESS else return error code
-	//clearBuffer()
+	if(checkSum == (buffer[byte_no-1]+buffer[byte_no-2]))
+	{
+		return buffer[9];
+
+	}
 	
-	return buffer[9];
+	return -1 ;
 
 }
 
 
 u8 FingerPS_searchFinger(u8 bufferId, u16 startPage, u16 pageNum){
+	//clearBuffer();
 	byte_no = 0;
-	u8 search[17]={0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x08, 0x04, bufferId, (startPage & 0xFF00) >> 8, startPage, (pageNum & 0xFF00) >> 8, pageNum, 0x01, 0x0D};
+	u8 search[17]={0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x08, 0x04, bufferId, startPage >> 8, startPage, pageNum >> 8, pageNum, 0x01, 0x0D};
+		u16 checkSum = FingerPS_calcCheckSum(search,17);
+		
+		search[15]=checkSum>>8;
+		search[16]=checkSum;
 	for (u8 i = 0; i < 17; i++)
 	{
 		UART_sendByte(search[i]);
 	}
 	UART_receiveByteAsynchCallBack(receiveCallback);
 	
-	_delay_ms(5);
-	//while(byte_no != 16);
+	_delay_ms(500);
+	 checkSum = FingerPS_calcCheckSum(buffer,byte_no);
 	
-	//calc checksum
-	//buffer[9] == 0 return SUCESS else return error code
-	//clearBuffer();
+	if(checkSum == (buffer[byte_no-1]+buffer[byte_no-2]))
+	{
+		return buffer[9];
+
+	}
 	
-	return buffer[9];
+	return -1 ;
 }
 
 u8 FingerPS_handShake()
 {
-	byte_no = 0;
 	//clearBuffer();
+	byte_no = 0;
 	u8 HandFrame[12]={0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x03, 0x40, 0x00, 0x44};
 	//u8 size=sizeof(HandFrame)/sizeof(HandFrame[0]);
 	
@@ -84,7 +98,7 @@ u8 FingerPS_handShake()
 	}
 	
 	UART_receiveByteAsynchCallBack(receiveCallback);
-	_delay_ms(5);
+	_delay_ms(500);
 	//while(byte_no != 2);
 	
 	//Call Check Sum Func()
@@ -96,6 +110,7 @@ u8 FingerPS_handShake()
 
 u8 FingerPS_genImg()
 {
+	//clearBuffer();
 	byte_no = 0;
 	u8 GetImgFrame[]={0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x03, 0x01, 0x00, 0x05};
 	u8 size=sizeof(GetImgFrame)/sizeof(GetImgFrame[0]);
@@ -106,46 +121,93 @@ u8 FingerPS_genImg()
 	}
 	
 	UART_receiveByteAsynchCallBack(receiveCallback);
-	_delay_ms(5);
-	
-	return buffer[9];
-	
+	//_delay_ms(500);
+	while(byte_no!=12);
 	//Call Check Sum Func()
 	//Call Clear Buffer()
+	u16 checkSum = FingerPS_calcCheckSum(buffer,byte_no);
+	
+	if(checkSum == (buffer[byte_no-1]+buffer[byte_no-2]))
+	{
+		return buffer[9];
+
+	}
+	
+	return 0x10;
 }
 
 
 u8 FingerPS_genTemplate(void)
 {
+	//clearBuffer();
 	byte_no = 0;
 	char arr [13]={0xEF,0x01,0xFF,0xFF,0xFF,0xFF,0x01,0x00,0x03,0x05,0x00,0x09};
 
-		for (int i = 0; i<12 ;i++)
-		{
-			UART_sendByte(arr[i]);
-			
-		}
+	for (int i = 0; i<12 ;i++)
+	{
+		UART_sendByte(arr[i]);
+		
+	}
 	
 	UART_receiveByteAsynchCallBack(receiveCallback);
-	_delay_ms(5);
+	_delay_ms(500);
+
 	
-	return buffer[9];
+	
+	u16 checkSum = FingerPS_calcCheckSum(buffer,byte_no);
+	
+	if(checkSum == (buffer[byte_no-1]+buffer[byte_no-2]))
+	{
+		return buffer[9];
+
+	}
+	
+	return -1 ;
 }
 
 u8 FingerPS_convertImg2CharFile(u8 bufferID)
 {
+	//clearBuffer();
 	byte_no = 0;
 	char arr [13]={0xEF,0x01,0xFF,0xFF,0xFF,0xFF,0x01,0x00,0x04,0x02,bufferID,0x00,0x08};
+	
+	if(bufferID==1)
+	{
+		
+	}
+	else
+	{
+		arr[12]=0x09;
+	}
 
-		for (int i = 0; i<13 ;i++)
-		{
-			UART_sendByte(arr[i]);			
-		}			
+	for (int i = 0; i<13 ;i++)
+	{
+		UART_sendByte(arr[i]);
+	}
 	UART_receiveByteAsynchCallBack(receiveCallback);
-	_delay_ms(5);
+	_delay_ms(500);
 	
-	return buffer[9];
+	u16 checkSum = FingerPS_calcCheckSum(buffer,byte_no);
 	
+	if(checkSum == (buffer[byte_no-1]+buffer[byte_no-2]))
+	{
+		return buffer[9];
+
+	}
+	
+	return -1 ;
+	
+}
+
+u16 FingerPS_calcCheckSum(char*arr , u8 length)
+{
+	u16 sum = 0 ;
+	
+	for(int i = 6 ; i<length-2 ; i++)
+	{
+		sum = sum + arr[i];
+	}
+	return sum ;
 }
 
 
