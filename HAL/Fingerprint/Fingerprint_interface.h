@@ -22,6 +22,8 @@ u8 FingerPS_genImg();
 
 u8 FingerPS_strTemplate(u8 bufferId, u16 pageId);
 u8 FingerPS_searchFinger(u8 bufferId, u16 startPage, u16 pageNum);
+u8 FingerPS_genTemplate(void);
+u8 FingerPS_convertImg2CharFile(u8 bufferID);
 
 
 

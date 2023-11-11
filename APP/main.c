@@ -26,7 +26,7 @@
 
 #include <util/delay.h>
 
-
+extern u8 buffer[25];
 
 int main(void) {
 	GIE_enable();
@@ -34,12 +34,55 @@ int main(void) {
 	H_LCD_void_Init();
 	//FingerPS_strTemplate(0x01, 0xF769);
 	
-	while (1) {
 		H_LCD_void_clearScreen();
 		
 		u8 key = FingerPS_genImg();
 		H_LCD_void_sendHexNum(key);
+		//for (u8 i =0;i<12;i++)
+		//{
+			//H_LCD_void_sendHexNum(buffer[i]);
+		//}
 		_delay_ms(1000);
+		//key=FingerPS_convertImg2CharFile(1);
+		//H_LCD_void_sendHexNum(key);
+		//_delay_ms(1000);
+		//key = FingerPS_genImg();
+		//H_LCD_void_sendHexNum(key);
+		//_delay_ms(1000);
+		//key=FingerPS_convertImg2CharFile(2);
+		//H_LCD_void_sendHexNum(key);
+		//_delay_ms(1000);
+		//key=FingerPS_genTemplate();
+		//H_LCD_void_sendHexNum(key);
+		//_delay_ms(1000);
+		//
+		//key=FingerPS_strTemplate(2,0);
+		//H_LCD_void_sendHexNum(key);
+		//_delay_ms(1000);
+		
+
+	
+	while (1) {
+			//H_LCD_void_clearScreen();
+			//key = FingerPS_genImg();
+			//H_LCD_void_sendHexNum(key);
+			//_delay_ms(1000);
+			//key=FingerPS_convertImg2CharFile(1);
+			//H_LCD_void_sendHexNum(key);
+			//_delay_ms(1000);
+			//key = FingerPS_genImg();
+			//H_LCD_void_sendHexNum(key);
+			//_delay_ms(1000);
+			//key=FingerPS_convertImg2CharFile(2);
+			//H_LCD_void_sendHexNum(key);
+			//_delay_ms(1000);
+			//key=FingerPS_genTemplate();
+			//H_LCD_void_sendHexNum(key);
+			//_delay_ms(1000);
+			//key =FingerPS_searchFinger(1, 0, 4);
+			//H_LCD_void_sendHexNum(key);
+			//_delay_ms(2000);
+		
 	}
 
 	return 0;
