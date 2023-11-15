@@ -13,16 +13,9 @@
 #include "Fingerprint_private.h"
 #include <util/delay.h>
 
-u8 buffer[25];
-u8 byte_no = 0;
+volatile u8 buffer[30];
+volatile static u8 byte_no = 0;
 
-void clearBuffer()
-{
-	for(int i=0; i<24;i++){
-		buffer[i]=0xFF;
-	}
-	byte_no = 0;
-}
 
 void receiveCallback(u8 data){
 	buffer[byte_no] = data;
@@ -30,176 +23,168 @@ void receiveCallback(u8 data){
 }
 
 
-u8 FingerPS_strTemplate(u8 bufferId, u16 pageId){
-	//clearBuffer();
-	byte_no = 0;
-	
-	u8 store[15]={0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x06, 0x06, bufferId, pageId  >> 8 , pageId, 0x00, 0x0E};
-	u16 checkSum = FingerPS_calcCheckSum(store,15);
-	
-	store[13]=checkSum>>8;
-	store[14]=checkSum;
-	
-	for (u8 i = 0; i < 15; i++)
-	{
-		UART_sendByte(store[i]);
-	}
-	UART_receiveByteAsynchCallBack(receiveCallback);
-	_delay_ms(500);
-	 checkSum = FingerPS_calcCheckSum(buffer,byte_no);
-	
-	if(checkSum == (buffer[byte_no-1]+buffer[byte_no-2]))
-	{
-		return buffer[9];
-
-	}
-	
-	return -1 ;
-
-}
-
-
-u8 FingerPS_searchFinger(u8 bufferId, u16 startPage, u16 pageNum){
-	//clearBuffer();
-	byte_no = 0;
-	u8 search[17]={0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x08, 0x04, bufferId, startPage >> 8, startPage, pageNum >> 8, pageNum, 0x01, 0x0D};
-		u16 checkSum = FingerPS_calcCheckSum(search,17);
-		
-		search[15]=checkSum>>8;
-		search[16]=checkSum;
-	for (u8 i = 0; i < 17; i++)
-	{
-		UART_sendByte(search[i]);
-	}
-	UART_receiveByteAsynchCallBack(receiveCallback);
-	
-	_delay_ms(500);
-	 checkSum = FingerPS_calcCheckSum(buffer,byte_no);
-	
-	if(checkSum == (buffer[byte_no-1]+buffer[byte_no-2]))
-	{
-		return buffer[9];
-
-	}
-	
-	return -1 ;
-}
-
-u8 FingerPS_handShake()
+Error_FingerPS_t FingerPS_Init(void)
 {
-	//clearBuffer();
-	byte_no = 0;
-	u8 HandFrame[12]={0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x03, 0x40, 0x00, 0x44};
-	//u8 size=sizeof(HandFrame)/sizeof(HandFrame[0]);
+	Error_FingerPS_t ret= FAILED_TO_OPERATE_COMM_PORT;
+
+	UART_receiveByteAsynchCallBack(receiveCallback);
+
+	return ret;
+}
+
+
+Error_FingerPS_t FingerPS_AuraLedControl(AuraLightControl_t l_code, u8 l_speed, AuraColorControl_t l_color, u8 l_count)
+{
+	Error_FingerPS_t ret= FAILED_TO_OPERATE_COMM_PORT;
+
+	u8 i;
+	u8 Frame_TX[16]= {0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x07, 0x35, l_code, l_speed, l_color, l_count, 0x00, 0x00};
+	u16 sum= 0;
+
+	sum= FingerPS_calcCheckSum(Frame_TX, 16);
+	Frame_TX[14]= (u8)(sum >> 8);
+	Frame_TX[15]= (u8)(sum & 0x00FF);
+
+	/* Send Command Frame using UART Sync */
+	for(i= 0; i<16; i++)
+	{
+		UART_sendByte(Frame_TX[i]);
+	}
+
+	/* Wait till Receive ACK Frame (Using RX Interrupt) */
+	while(byte_no < 12);
+	ret= buffer[9];
+	byte_no= 0;
+
+	return ret;
+}
+
+
+Error_FingerPS_t FingerPS_handShake(void)
+{
+	Error_FingerPS_t ret= FAILED_TO_OPERATE_COMM_PORT;
+	u8 Frame_TX[12]= {0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x03, 0x40, 0x00, 0x44};
 	
 	for (u8 i = 0; i < 12; i++)
 	{
-		UART_sendByte(HandFrame[i]);
+		UART_sendByte(Frame_TX[i]);
 	}
 	
-	UART_receiveByteAsynchCallBack(receiveCallback);
-	_delay_ms(500);
-	//while(byte_no != 2);
-	
-	//Call Check Sum Func()
-	//Call Clear Buffer()
-	
-	return buffer[9];
+	/* Wait till Receive ACK Frame (Using RX Interrupt) */
+	while(byte_no < 12);
+	ret= buffer[9];
+	byte_no= 0;
+
+	return ret;
 }
 
 
-u8 FingerPS_genImg()
+Error_FingerPS_t FingerPS_genImg(void)
 {
-	//clearBuffer();
-	byte_no = 0;
-	u8 GetImgFrame[]={0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x03, 0x01, 0x00, 0x05};
-	u8 size=sizeof(GetImgFrame)/sizeof(GetImgFrame[0]);
-	
-	for (u8 i = 0; i < size; i++)
-	{
-		UART_sendByte(GetImgFrame[i]);
-	}
-	
-	UART_receiveByteAsynchCallBack(receiveCallback);
-	//_delay_ms(500);
-	while(byte_no!=12);
-	//Call Check Sum Func()
-	//Call Clear Buffer()
-	u16 checkSum = FingerPS_calcCheckSum(buffer,byte_no);
-	
-	if(checkSum == (buffer[byte_no-1]+buffer[byte_no-2]))
-	{
-		return buffer[9];
+	Error_FingerPS_t ret= FAILED_TO_OPERATE_COMM_PORT;
 
+	u8 Frame_TX[12]= {0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x03, 0x01, 0x00, 0x05};
+
+	for(u8 i= 0; i<12; i++)
+	{
+		UART_sendByte(Frame_TX[i]);
 	}
+
+	while(byte_no < 12);
+	ret= buffer[9];
+	byte_no= 0;
 	
-	return 0x10;
+	return ret;
 }
 
 
-u8 FingerPS_genTemplate(void)
+Error_FingerPS_t FingerPS_convertImg2CharFile(Template_Buffer_t bufferID)
 {
-	//clearBuffer();
-	byte_no = 0;
-	char arr [13]={0xEF,0x01,0xFF,0xFF,0xFF,0xFF,0x01,0x00,0x03,0x05,0x00,0x09};
+	Error_FingerPS_t ret= FAILED_TO_OPERATE_COMM_PORT;
 
-	for (int i = 0; i<12 ;i++)
+	u8 Frame_TX[13]= {0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x04, 0x02, bufferID, 0x00, 0x00};
+
+	u16 sum= FingerPS_calcCheckSum(Frame_TX, 13);
+	Frame_TX[11]= (u8)(sum >> 8);
+	Frame_TX[12]= (u8)(sum);
+
+	for(u8 i= 0; i<13; i++)
 	{
-		UART_sendByte(arr[i]);
-		
+		UART_sendByte(Frame_TX[i]);
 	}
-	
-	UART_receiveByteAsynchCallBack(receiveCallback);
-	_delay_ms(500);
 
+	while(byte_no < 12);
+	ret= buffer[9];
+	byte_no= 0;
 	
+	return ret;
 	
-	u16 checkSum = FingerPS_calcCheckSum(buffer,byte_no);
-	
-	if(checkSum == (buffer[byte_no-1]+buffer[byte_no-2]))
-	{
-		return buffer[9];
-
-	}
-	
-	return -1 ;
 }
 
-u8 FingerPS_convertImg2CharFile(u8 bufferID)
+
+Error_FingerPS_t FingerPS_genTemplate(void)
 {
-	//clearBuffer();
-	byte_no = 0;
-	char arr [13]={0xEF,0x01,0xFF,0xFF,0xFF,0xFF,0x01,0x00,0x04,0x02,bufferID,0x00,0x08};
-	
-	if(bufferID==1)
+	Error_FingerPS_t ret= FAILED_TO_OPERATE_COMM_PORT;
+
+	u8 Frame_TX[12]= {0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x03, 0x05, 0x00, 0x09};
+
+	for(u8 i= 0; i<12; i++)
 	{
-		
-	}
-	else
-	{
-		arr[12]=0x09;
+		UART_sendByte(Frame_TX[i]);
 	}
 
-	for (int i = 0; i<13 ;i++)
-	{
-		UART_sendByte(arr[i]);
-	}
-	UART_receiveByteAsynchCallBack(receiveCallback);
-	_delay_ms(500);
-	
-	u16 checkSum = FingerPS_calcCheckSum(buffer,byte_no);
-	
-	if(checkSum == (buffer[byte_no-1]+buffer[byte_no-2]))
-	{
-		return buffer[9];
-
-	}
-	
-	return -1 ;
-	
+	while(byte_no < 12);
+	ret= buffer[9];
+	byte_no= 0;
+	return ret;
 }
 
-u16 FingerPS_calcCheckSum(char*arr , u8 length)
+
+
+Error_FingerPS_t FingerPS_strTemplate(Template_Buffer_t bufferId, u16 pageId){
+	Error_FingerPS_t ret= FAILED_TO_OPERATE_COMM_PORT;
+
+	u8 Frame_TX[15]= {0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x06, 0x06, bufferId, (pageId>>8), pageId, 0x00, 0x00};
+	u16 sum= FingerPS_calcCheckSum(Frame_TX, 15);
+	Frame_TX[13]= (u8)(sum >> 8);
+	Frame_TX[14]= (u8)sum;
+
+	for(u8 i= 0; i<15; i++)
+	{
+		UART_sendByte(Frame_TX[i]);
+	}
+
+	while(byte_no < 12);
+	ret= buffer[9];
+	byte_no= 0;
+
+	return ret;
+
+}
+
+
+Error_FingerPS_t FingerPS_searchFinger(Template_Buffer_t bufferId, u16 startPage, u16 pageNum){
+	Error_FingerPS_t ret= FAILED_TO_OPERATE_COMM_PORT;
+	u8 Frame_TX[17]= {0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x08, 0x04, bufferId, (startPage>>8), (startPage), (pageNum>>8), (pageNum), 0x00, 0x00};
+	u16 sum= FingerPS_calcCheckSum(Frame_TX, 17);
+	Frame_TX[15]= (u8)(sum >> 8);
+	Frame_TX[16]= (u8)sum ;
+
+	for(u8 i= 0; i<17; i++)
+	{
+		UART_sendByte(Frame_TX[i]);
+	}
+
+	while(byte_no < 16);
+	ret= buffer[9];
+	byte_no= 0;
+
+	return ret;
+}
+
+
+
+static u16 FingerPS_calcCheckSum(u8 *arr , u8 length)
 {
 	u16 sum = 0 ;
 	

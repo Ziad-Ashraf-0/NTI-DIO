@@ -26,7 +26,6 @@
 
 #include <util/delay.h>
 
-extern u8 buffer[25];
 
 int main(void) {
 	GIE_enable();

@@ -11,6 +11,6 @@
 
 
 
-u16 FingerPS_calcCheckSum(char*arr , u8 length);
+static u16 FingerPS_calcCheckSum(u8 *arr , u8 length);
 
 #endif /* FINGERPRINT_PRIVATE_H_ */
