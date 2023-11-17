@@ -66,6 +66,8 @@ Error_FingerPS_t FingerPS_convertImg2CharFile(Template_Buffer_t bufferID);
 Error_FingerPS_t FingerPS_genTemplate(void);
 Error_FingerPS_t FingerPS_strTemplate(Template_Buffer_t bufferId, u16 pageId);
 Error_FingerPS_t FingerPS_searchFinger(Template_Buffer_t bufferId, u16 startPage, u16 pageNum);
+Error_FingerPS_t FingerPS_EmptyLibrary(void);
+Error_FingerPS_t FingerPS_DeleteFinger(u16 l_startPage, u16 l_numOfTemp);
 
 
 

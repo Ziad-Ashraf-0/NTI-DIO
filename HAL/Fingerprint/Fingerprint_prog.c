@@ -183,6 +183,48 @@ Error_FingerPS_t FingerPS_searchFinger(Template_Buffer_t bufferId, u16 startPage
 }
 
 
+Error_FingerPS_t FingerPS_DeleteFinger(u16 l_startPage, u16 l_numOfTemp)
+{
+	Error_FingerPS_t ret= FAILED_TO_OPERATE_COMM_PORT;
+	u8 i;
+	u8 Frame_TX[16]= {0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x07, 0x0C, (l_startPage>>8), l_startPage, (l_numOfTemp>>8), l_numOfTemp, 0x00, 0x00};
+	u16 sum= 0;
+
+	sum= FingerPS_calcCheckSum(Frame_TX, 16);
+	Frame_TX[14]= (u8)(sum >> 8);
+	Frame_TX[15]= (u8)sum;
+
+	for(i= 0; i<12; i++)
+	{
+		UART_sendByte(Frame_TX[i]);
+	}
+
+	while(byte_no < 12);
+	ret= buffer[9];
+	byte_no= 0;
+
+	return ret;
+}
+
+
+Error_FingerPS_t FingerPS_EmptyLibrary(void)
+{
+	Error_FingerPS_t ret= FAILED_TO_OPERATE_COMM_PORT;
+	u8 i;
+	u8 Frame_TX[12]= {0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x03, 0x0D, 0x00, 0x11};
+
+	for(i= 0; i<12; i++)
+	{
+		UART_sendByte(Frame_TX[i]);
+	}
+
+	while(byte_no < 12);
+	ret= buffer[9];
+	byte_no= 0;
+	return ret;
+}
+
+
 
 static u16 FingerPS_calcCheckSum(u8 *arr , u8 length)
 {

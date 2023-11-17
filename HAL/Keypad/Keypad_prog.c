@@ -56,7 +56,7 @@ u8 KEYPAD_getPressedKey(){
 					while (currentKey != DIO_PIN_HIGH) {
 						DIO_U8GetPinValue(&colPins[col], &currentKey);
 					}
-					return KEYPAD_4x4_adjustKeyNumber((col * KEYPAD_NUM_COLS) + row + 1);
+					return KEYPAD_4x4_adjustKeyNumber((row * KEYPAD_NUM_COLS) + col + 1);
 				}
 
 				prevKey = currentKey; // Update the previous key state
