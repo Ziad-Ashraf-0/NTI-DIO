@@ -17,7 +17,7 @@ volatile u8 buffer[30];
 volatile static u8 byte_no = 0;
 
 
-void receiveCallback(u8 data){
+static void receiveCallback(u8 data){
 	buffer[byte_no] = data;
 	byte_no++;
 }

@@ -12,6 +12,9 @@
 /*** 	NULL DEFINITION		***/
 #define NULL 		( (void*) 0 )
 
+#define true	1
+#define false	0
+
 /* PORTABLE DATA TYPES	*/
 
 typedef unsigned char u8;

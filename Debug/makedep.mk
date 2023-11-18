@@ -6,6 +6,8 @@ APP\main.c
 
 HAL\EEPROM\EEPROM_prog.c
 
+HAL\ESP8266\ESP32_program.c
+
 HAL\Fingerprint\Fingerprint_prog.c
 
 HAL\Keypad\Keypad_prog.c

@@ -10,7 +10,7 @@
 #define FINGERPRINT_PRIVATE_H_
 
 
-
+static void receiveCallback(u8 data);
 static u16 FingerPS_calcCheckSum(u8 *arr , u8 length);
 
 #endif /* FINGERPRINT_PRIVATE_H_ */

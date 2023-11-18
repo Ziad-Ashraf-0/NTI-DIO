@@ -135,6 +135,18 @@
     <Compile Include="HAL\EEPROM\EEPROM_prog.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="HAL\ESP8266\ESP32_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\ESP8266\ESP32_interface.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\ESP8266\ESP32_private.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\ESP8266\ESP32_program.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="HAL\Fingerprint\Fingerprint_config.h">
       <SubType>compile</SubType>
     </Compile>
@@ -339,6 +351,7 @@
     <Folder Include="HAL\EEPROM" />
     <Folder Include="HAL\Fingerprint" />
     <Folder Include="HAL\LM35" />
+    <Folder Include="HAL\ESP8266" />
     <Folder Include="HAL\RTC" />
     <Folder Include="HAL\Ultrasonic" />
     <Folder Include="HAL\Segment\" />
