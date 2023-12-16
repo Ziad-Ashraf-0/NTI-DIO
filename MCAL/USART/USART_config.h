@@ -11,7 +11,7 @@
 #define SIM   0
 #define FARES 1
 
-#define KIT  FARES
+#define KIT  SIM
 
 
 #if (KIT == SIM)
@@ -56,7 +56,7 @@ Choose one of the following :
 115200
 */
 
-#define BAUD_RATE	115200
+#define BAUD_RATE	9600
 
 
 
